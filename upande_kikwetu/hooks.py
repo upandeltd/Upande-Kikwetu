@@ -144,6 +144,32 @@ app_license = "mit"
 # 		"on_trash": "method"
 # 	}
 # }
+doc_events = {
+    "Sales Order": {
+        "on_submit":
+        "upande_kikwetu.server_scripts.pick_list_automation.create_pick_list_for_sales_order",
+        "before_submit":
+        "upande_kikwetu.upande_kikwetu.custom.sales_order_custom.validate_customer_check_limit",
+        "on_update":
+        "upande_kikwetu.server_scripts.so_delivery_warehouse.handle_sales_order_approval",
+        "on_cancel":
+        "upande_kikwetu.server_scripts.so_delivery_warehouse.handle_sales_order_cancellation"
+    },
+    "Consolidated Pack List": {
+        "on_submit":
+        "upande_kikwetu.server_scripts.create_sales_invoice.create_sales_invoice_from_packlist",
+        "before_submit":
+        "upande_kikwetu.server_scripts.completion_percentage.validate_completion_percentage"
+    },
+    "Sales Invoice": {
+        "on_submit":
+        "upande_kikwetu.server_scripts.sinv_approved_by.set_approved_by"
+    },
+    "Farm Pack List": {
+        "before_cancel":
+        "upande_kikwetu.server_scripts.fpl_to_cpl_link.before_cancel"
+    }
+}
 
 # Scheduled Tasks
 # ---------------
@@ -242,3 +268,13 @@ app_license = "mit"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+fixtures = [{
+    "dt":
+    "Print Format",
+    "filters": [[
+        "name", "in",
+        [
+            "Cliffe"
+        ]
+    ]]
+}]

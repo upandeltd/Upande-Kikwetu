@@ -20,6 +20,14 @@ app_license = "mit"
 # 		"has_permission": "upande_kikwetu.api.permission.has_app_permission"
 # 	}
 # ]
+app_include_js = [
+    "/assets/upande_kikwetu/client_scripts/fetch_item_grp_price.js",
+    "/assets/upande_kikwetu/client_scripts/update_stock_sales_inv.js",
+    "/assets/upande_kikwetu/client_scripts/se_rejection_reason.js",
+    "/assets/upande_kikwetu/client_scripts/so_stock_transfer.js",
+    "/assets/upande_kikwetu/client_scripts/autofetch_pricelist.js"
+]
+
 
 # Includes in <head>
 # ------------------
@@ -203,6 +211,17 @@ doc_events = {
 # override_whitelisted_methods = {
 # 	"frappe.desk.doctype.event.event.get_events": "upande_kikwetu.event.get_events"
 # }
+override_class = {
+    "erpnext.controllers.taxes_and_totals.calculate_taxes_and_totals":
+    "upande_kikwetu.overrides.standard_system_rate.CustomTaxesAndTotals"
+}
+
+whitelisted_methods = {
+    "get_item_group_price":
+    "upande_kikwetu.server_scripts.fetch_item_grp_price.get_item_group_price",
+    "create_sales_invoice":
+    "upande_kikwetu.server_scripts.create_sales_invoice.create_sales_invoice"
+}
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,

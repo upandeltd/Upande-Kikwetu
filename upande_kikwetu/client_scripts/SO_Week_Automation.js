@@ -4,7 +4,7 @@ frappe.ui.form.on('Sales Order', {
         console.log('Current delivery date value:', frm.doc.delivery_date);
         
         if (frm.doc.delivery_date) {
-            // Convert the delivery date string to a Date object
+            // Convert the delivery date string to a Date objects
             let currentDate = frappe.datetime.str_to_obj(frm.doc.delivery_date);
             console.log('Converted date object:', currentDate);
             

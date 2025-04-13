@@ -287,17 +287,47 @@ whitelisted_methods = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
-fixtures = [{
-    "dt":
-    "DocType",
-    "filters": [[
-        "name", "in",
-        [
-            "Scan Location", "QR Code", "Packing List", "Pack List Item",
-            "Scan", "Farm", "Box Label", "Box Label Item", "Label Print",
-            "Bucket QR Code", "Bunch QR Code", "Grader QR Code", "Harvest",
-            "Scanned Items", "Scan Check", "Scan Check List", "QR Sequence",
-            "Rejection Reason"
+fixtures = [
+    {
+        "dt":
+        "DocType",
+        "filters": [[
+            "name", "in",
+            [
+                "Scan Location", "QR Code", "Packing List", "Pack List Item",
+                "Scan", "Farm", "Box Label", "Box Label Item", "Label Print",
+                "Bucket QR Code", "Bunch QR Code", "Grader QR Code", "Harvest",
+                "Scanned Items", "Scan Check", "Scan Check List", "QR Sequence",
+                "Rejection Reason",
+            ]
+        ]]
+    },
+    {
+        "dt": "Print Format",
+        "filters": [
+            ["name", "in", [
+                "Purchase Order KF", "Purchase Receipt KF", "Purchase Invoice KF"
+            ]]
         ]
-    ]]
-},]
+    },
+    {
+        "dt": "Workflow",
+        "filters": [["name", "in", ["Kikwetu Purchase Order Approval"]]]
+    },
+    {
+        "dt": "Workflow State",
+        "filters": [
+            ["workflow_state_name", "in", [
+                "Draft", "Approved", "Rejected", "Awaiting Farm Managers Approval",
+                "Awaiting Finance Approval", "Awaiting Director Approval"
+            ]]
+        ]
+    },
+    {
+        "dt": "Workflow Action Master",
+        "filters": [["name", "in", [
+            "Approve", "Reject", "Submit for Approval", "Final Approval"
+        ]]]
+    }
+
+]

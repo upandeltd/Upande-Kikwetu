@@ -1,0 +1,56 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "ok-sign",
+  "modified": "2025-04-05 14:44:40.430421",
+  "name": "Approved",
+  "style": "Success",
+  "workflow_state_name": "Approved"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "remove",
+  "modified": "2025-04-05 14:44:40.431331",
+  "name": "Rejected",
+  "style": "Danger",
+  "workflow_state_name": "Rejected"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2025-04-12 23:05:12.430337",
+  "name": "Draft",
+  "style": "",
+  "workflow_state_name": "Draft"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2025-04-12 23:08:52.950147",
+  "name": "Awaiting Finance Approval",
+  "style": "",
+  "workflow_state_name": "Awaiting Finance Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2025-04-12 23:10:03.827564",
+  "name": "Awaiting Director Approval",
+  "style": "",
+  "workflow_state_name": "Awaiting Director Approval"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow State",
+  "icon": "",
+  "modified": "2025-04-13 00:05:04.395414",
+  "name": "Awaiting Farm Managers Approval",
+  "style": "",
+  "workflow_state_name": "Awaiting Farm Managers Approval"
+ }
+]

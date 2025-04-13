@@ -1,0 +1,44 @@
+[
+ {
+  "dimension_defaults": [
+   {
+    "automatically_post_balancing_accounting_entry": 0,
+    "company": "Kikwetu Flowers",
+    "default_dimension": null,
+    "mandatory_for_bs": 0,
+    "mandatory_for_pl": 0,
+    "offsetting_account": null,
+    "reference_document": "Warehouse"
+   }
+  ],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Accounting Dimension",
+  "document_type": "Warehouse",
+  "fieldname": "greenhouse",
+  "label": "Greenhouse",
+  "modified": "2025-04-12 15:35:57.479850",
+  "name": "Greenhouse"
+ },
+ {
+  "dimension_defaults": [
+   {
+    "automatically_post_balancing_accounting_entry": 0,
+    "company": "Kikwetu Flowers",
+    "default_dimension": null,
+    "mandatory_for_bs": 0,
+    "mandatory_for_pl": 0,
+    "offsetting_account": null,
+    "reference_document": "Farm"
+   }
+  ],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Accounting Dimension",
+  "document_type": "Farm",
+  "fieldname": "farm",
+  "label": "Farm",
+  "modified": "2025-04-12 15:38:42.583306",
+  "name": "Farm"
+ }
+]

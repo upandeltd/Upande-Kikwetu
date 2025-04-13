@@ -302,6 +302,11 @@ fixtures = [
             ]
         ]]
     },
+    {"dt": "Accounting Dimension"},
+    {
+        "dt": "Role",
+        "filters": [["name", "in", ["Farm Manager", "Finance Manager", "Director","Procurement Officer"]]]
+    },
     {
         "dt": "Print Format",
         "filters": [

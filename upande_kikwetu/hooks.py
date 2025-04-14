@@ -300,4 +300,19 @@ fixtures = [{
             "Rejection Reason"
         ]
     ]]
-},]
+},
+{
+    "dt":
+    "Print Format",
+    "filters": [[
+        "name", "in",
+        [
+            "QR Code Only", "Box Label", "Harvest Label",
+            "Grader QR Print Format", "Bunch QR Code",
+            "Trial Bunch Print Format", "Grader QR Print format 2",
+            "Harvest Label 2","Purchase Invoice KF","Purchase Order KF","Purchase Receipt KF",
+            "Sales Invoice KF"
+        ]
+    ]]
+}
+]

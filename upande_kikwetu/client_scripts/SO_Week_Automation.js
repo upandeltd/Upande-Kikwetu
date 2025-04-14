@@ -1,3 +1,5 @@
+// by david
+
 frappe.ui.form.on('Sales Order', {
     delivery_date: function(frm) {
         console.log('Delivery Date changed event triggered');

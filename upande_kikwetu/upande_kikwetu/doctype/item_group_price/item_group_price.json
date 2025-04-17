@@ -3,6 +3,7 @@
  "allow_rename": 1,
  "autoname": "format: PRC-{YYYY}-{item_group}-{length}",
  "creation": "2025-02-03 10:32:04.628785",
+ "custom": 1,
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [

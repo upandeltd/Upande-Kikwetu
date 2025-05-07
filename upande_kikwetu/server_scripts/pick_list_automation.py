@@ -100,7 +100,7 @@ def create_pick_list_for_sales_order(doc, method=None):
                         "custom_consignee": item.custom_consignee,
                         "custom_truck_details": item.custom_truck_details,
                         "custom_box_id": item.custom_box_id,
-                        "custom_box_label": item.custom_box_label
+                        "custom_box_label": item.custom_box_label,
                     })
 
                 # If item is against blanket order, set the reference

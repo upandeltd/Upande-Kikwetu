@@ -322,11 +322,22 @@
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Farm Pack List",
-  "enabled": 1,
-  "modified": "2025-04-26 11:45:05.441256",
+  "enabled": 0,
+  "modified": "2025-05-07 09:45:01.637303",
   "module": "Upande Tambuzi",
   "name": "OPL Stems Calc Automation to FPL",
   "script": "frappe.ui.form.on('Farm Pack List', {\n    refresh: function(frm) {\n        calculate_totals(frm);\n    },\n    validate: function(frm) {\n        calculate_totals(frm);\n    },\n    order_picklist: function(frm) {\n        // Recalculate when the linked Order Picklist changes\n        calculate_totals(frm);\n    }\n});\n\nfrappe.ui.form.on('Pack List Item', {\n    custom_number_of_stems: function(frm, cdt, cdn) {\n        calculate_totals(frm);\n    },\n    pack_list_item_remove: function(frm) {\n        calculate_totals(frm);\n    }\n});\n\nfunction calculate_totals(frm) {\n    // Calculate total stems in Farm Pack List\n    let total_stems = 0;\n    if (frm.doc.pack_list_item) {\n        frm.doc.pack_list_item.forEach(item => {\n            total_stems += flt(item.custom_number_of_stems) || 0;\n        });\n    }\n\n    // Update custom_total_stems only if changed\n    if (frm.doc.custom_total_stems !== total_stems) {\n        frm.set_value('custom_total_stems', total_stems);\n    }\n\n    // Calculate completion percentage\n    if (frm.doc.order_picklist) {\n        // Fetch total stems from Order Picklist\n        frappe.db.get_value('Order Picklist', frm.doc.order_picklist, 'total_stems', (r) => {\n            let order_total_stems = flt(r.total_stems) || 0;\n            let completion_percentage = 0;\n\n            // Calculate percentage: (packed stems / order stems) * 100\n            if (order_total_stems > 0) {\n                completion_percentage = (total_stems / order_total_stems) * 100;\n                // Round to 2 decimal places\n                completion_percentage = flt(completion_percentage, 2);\n            }\n\n            // Update completion percentage only if changed\n            if (frm.doc.custom_completion_percentage !== completion_percentage) {\n                frm.set_value('custom_completion_percentage', completion_percentage);\n            }\n        });\n    } else {\n        // If no Order Picklist is linked, set completion percentage to 0\n        if (frm.doc.custom_completion_percentage !== 0) {\n            frm.set_value('custom_completion_percentage', 0);\n        }\n    }\n}",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sales Invoice",
+  "enabled": 1,
+  "modified": "2025-05-07 11:27:45.197706",
+  "module": null,
+  "name": "Consignee Update",
+  "script": "frappe.ui.form.on('Sales Invoice', {\n    customer: function(frm) {\n        if (!frm.doc.customer) return;\n\n        frappe.call({\n            method: \"frappe.client.get\",\n            args: {\n                doctype: \"Customer\",\n                name: frm.doc.customer\n            },\n            callback: function(r) {\n                let options = ['']; // Start with empty option\n                if (r.message && r.message.custom_consignee_details) {\n                    (r.message.custom_consignee_details || []).forEach(function(row) {\n                        if (row.consignee_name) {\n                            options.push(row.consignee_name);\n                        }\n                    });\n                }\n\n                frm.set_df_property('custom_consignee', 'options', options);\n                frm.refresh_field('custom_consignee');\n            }\n        });\n    }\n});\n\nfrappe.ui.form.on('Sales Invoice', {\n    custom_consignee: function(frm) {\n        if (!frm.doc.customer || !frm.doc.custom_consignee) return;\n\n        frappe.call({\n            method: \"frappe.client.get\",\n            args: {\n                doctype: \"Customer\",\n                name: frm.doc.customer\n            },\n            callback: function(r) {\n                if (r.message && r.message.custom_consignee_details) {\n                    const match = r.message.custom_consignee_details.find(row => \n                        row.consignee_name === frm.doc.custom_consignee\n                    );\n\n                    if (match) {\n                        frm.set_value('custom_consignee_address', match.address || '');\n                    } else {\n                        frm.set_value('custom_consignee_address', '');\n                    }\n                }\n            }\n        });\n    }\n});\n\n",
   "view": "Form"
  }
 ]

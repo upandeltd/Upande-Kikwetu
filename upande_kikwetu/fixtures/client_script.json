@@ -339,5 +339,16 @@
   "name": "Consignee Update",
   "script": "frappe.ui.form.on('Sales Invoice', {\n    customer: function(frm) {\n        if (!frm.doc.customer) return;\n\n        frappe.call({\n            method: \"frappe.client.get\",\n            args: {\n                doctype: \"Customer\",\n                name: frm.doc.customer\n            },\n            callback: function(r) {\n                let options = ['']; // Start with empty option\n                if (r.message && r.message.custom_consignee_details) {\n                    (r.message.custom_consignee_details || []).forEach(function(row) {\n                        if (row.consignee_name) {\n                            options.push(row.consignee_name);\n                        }\n                    });\n                }\n\n                frm.set_df_property('custom_consignee', 'options', options);\n                frm.refresh_field('custom_consignee');\n            }\n        });\n    }\n});\n\nfrappe.ui.form.on('Sales Invoice', {\n    custom_consignee: function(frm) {\n        if (!frm.doc.customer || !frm.doc.custom_consignee) return;\n\n        frappe.call({\n            method: \"frappe.client.get\",\n            args: {\n                doctype: \"Customer\",\n                name: frm.doc.customer\n            },\n            callback: function(r) {\n                if (r.message && r.message.custom_consignee_details) {\n                    const match = r.message.custom_consignee_details.find(row => \n                        row.consignee_name === frm.doc.custom_consignee\n                    );\n\n                    if (match) {\n                        frm.set_value('custom_consignee_address', match.address || '');\n                    } else {\n                        frm.set_value('custom_consignee_address', '');\n                    }\n                }\n            }\n        });\n    }\n});\n\n",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Farm Pack List",
+  "enabled": 1,
+  "modified": "2025-05-07 16:24:31.070586",
+  "module": "Upande Kikwetu",
+  "name": "completion % on FPL",
+  "script": "frappe.ui.form.on('Farm Pack List', {\n    total_stems: function(frm) {\n        calculate_completion_percentage(frm);\n    },\n    custom_picked_total_stems: function(frm) {\n        calculate_completion_percentage(frm);\n    }\n});\n\nfunction calculate_completion_percentage(frm) {\n    let packed_stems = parseFloat(frm.doc.custom_total_stems) || 0;\n    let required_stems = parseFloat(frm.doc.custom_picked_total_stems) || 0;\n    let completion_percentage = 0;\n\n    if (required_stems > 0) {\n        completion_percentage = (packed_stems / required_stems) * 100;\n    }\n\n    frm.set_value('custom_completion_percentage', completion_percentage);\n}\n",
+  "view": "Form"
  }
 ]

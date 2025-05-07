@@ -298,7 +298,7 @@ fixtures = [
                             "Amount Calc Based on IGP", "SO Week Automation", "Ensure Bucket Is Scanned On Save", 
                             "Field Rejects Stock Entry", "Grading Traceability Symbols", "Ensure Uppercase in Bay Field", 
                             "Remove Read Only on Field", "Transfer Grading Stock", "Qr Code gen", "Scan QR Button", "Close Box Button",
-                            "Grading Stock Entry", "Archive Employee", "Scan Data Field Listener", "Populate Number of Items","Consignee Update"]]
+                            "Grading Stock Entry", "Archive Employee", "Scan Data Field Listener", "Populate Number of Items","Consignee Update","completion % on FPL"]]
         ]
     },
      {

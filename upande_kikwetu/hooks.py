@@ -324,15 +324,5 @@ fixtures = [
 
             ]]
         ]
-    }]
-# Fixtures: Export customizations to JSON files
-fixtures = [
-    {"dt": "Custom Field"},
-    {"dt": "Property Setter"},
-    {"dt": "Client Script"},
-    {"dt": "Server Script"},
-    {"dt": "Workflow"},
-    {"dt": "Print Format"},
-    {"dt": "Report"},
-    {"dt": "DocType", "filters": [["name", "=", "Internal Delivery Note"]]}
+    }
 ]

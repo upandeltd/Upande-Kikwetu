@@ -307,7 +307,7 @@ fixtures = [
             ["name", "in", ["Delivery Note Script", "CPL complete percentage tracker", "Material Transfer Submit",
                              "fetch stems from opl to fpl", "FPL Completeness Tracker", "Create cpl", "Amount Calc Based on IGP", 
                              "Create Box Labels", "Automate Rejects Material Issue", 
-                             "Harvest Stock Entry", "Stock Entry Script", "Stock Entry After Save"]]
+                             "Harvest Stock Entry","Income Account Toggle", "Stock Entry Script", "Stock Entry After Save"]]
         ]
     },
     {
@@ -316,9 +316,9 @@ fixtures = [
         ["name", "in", ["Box Label", "Box Label Item", "Breeders", "Bunch QR Code", 
                         "Bucket QR Code", "Consolidated Pack List", "Dispatch Form",
                         "Dispatch Item Form", "Farm", "Farm Pack List", "Grader QR Code",
-                        "Harvest", "Item Group Price", "Label Print", 
+                        "Harvest","Harvest Rejects","Harvest Reject Item", "Item Group Price", "Label Print", 
                         "Order Pick List", "Order QR Code", "Pack List Item", "Packing List",
-                        "Packing Qty Confirmation", "QR Code", "QR Codes", "QR Sequence", "Rejection Reason", "SKU Summary", "Scan",
+                        "Packing Qty Confirmation", "QR Code", "QR Codes", "QR Sequence","Reject Reason", "Rejection Reason", "SKU Summary", "Scan",
                         "Scan Check", "Scan Check List", "Scan Location", "Scanned Items", "Stem Length"
 
 

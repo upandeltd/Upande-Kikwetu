@@ -307,7 +307,7 @@ fixtures = [
             ["name", "in", ["Delivery Note Script", "CPL complete percentage tracker", "Material Transfer Submit",
                              "fetch stems from opl to fpl", "FPL Completeness Tracker", "Create cpl", "Amount Calc Based on IGP", 
                              "Create Box Labels", "Automate Rejects Material Issue", 
-                             "Harvest Stock Entry", "Stock Entry Script", "Stock Entry After Save"]]
+                             "Harvest Stock Entry","Income Account Toggle", "Stock Entry Script", "Stock Entry After Save"]]
         ]
     },
     {

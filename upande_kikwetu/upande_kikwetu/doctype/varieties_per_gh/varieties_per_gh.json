@@ -1,0 +1,74 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-05-07 14:21:53.415547",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "variety",
+  "color",
+  "breeder",
+  "year_of_prod",
+  "no_of_plants",
+  "size_m2",
+  "plants__m2",
+  "size_ha"
+ ],
+ "fields": [
+  {
+   "fieldname": "variety",
+   "fieldtype": "Link",
+   "label": "Variety",
+   "link_filters": "[[\"Item\",\"item_group\",\"=\",\"Roses\"]]",
+   "options": "Item"
+  },
+  {
+   "fieldname": "color",
+   "fieldtype": "Data",
+   "label": "Color"
+  },
+  {
+   "fieldname": "breeder",
+   "fieldtype": "Data",
+   "label": "Breeder"
+  },
+  {
+   "fieldname": "year_of_prod",
+   "fieldtype": "Data",
+   "label": "Year of Prod"
+  },
+  {
+   "fieldname": "no_of_plants",
+   "fieldtype": "Data",
+   "label": "No. of Plants"
+  },
+  {
+   "fieldname": "size_m2",
+   "fieldtype": "Data",
+   "label": "Size (m2)"
+  },
+  {
+   "fieldname": "plants__m2",
+   "fieldtype": "Data",
+   "label": "Plants / m2"
+  },
+  {
+   "fieldname": "size_ha",
+   "fieldtype": "Data",
+   "label": "Size (HA)"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-05-07 19:32:53.290897",
+ "modified_by": "Administrator",
+ "module": "Upande Kikwetu",
+ "name": "Varieties per GH",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

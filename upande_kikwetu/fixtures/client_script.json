@@ -234,8 +234,8 @@
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Bunch QR Code",
-  "enabled": 0,
-  "modified": "2025-04-27 20:25:12.006085",
+  "enabled": 1,
+  "modified": "2025-05-08 12:46:58.023167",
   "module": "Upande Kikwetu",
   "name": "Hide Filter Button",
   "script": "frappe.listview_settings[\"Bunch QR Code\"] = {\n    onload(listview) {\n        setTimeout(() => {\n            let filter_button = $(\".filter-section .filter-selector\");\n\n            if (filter_button.length) {\n                filter_button.hide();\n            }\n        }, 500);\n        \n    }\n};",
@@ -323,10 +323,10 @@
   "doctype": "Client Script",
   "dt": "Farm Pack List",
   "enabled": 0,
-  "modified": "2025-05-07 09:45:01.637303",
+  "modified": "2025-05-09 12:12:35.351452",
   "module": "Upande Tambuzi",
   "name": "OPL Stems Calc Automation to FPL",
-  "script": "frappe.ui.form.on('Farm Pack List', {\n    refresh: function(frm) {\n        calculate_totals(frm);\n    },\n    validate: function(frm) {\n        calculate_totals(frm);\n    },\n    order_picklist: function(frm) {\n        // Recalculate when the linked Order Picklist changes\n        calculate_totals(frm);\n    }\n});\n\nfrappe.ui.form.on('Pack List Item', {\n    custom_number_of_stems: function(frm, cdt, cdn) {\n        calculate_totals(frm);\n    },\n    pack_list_item_remove: function(frm) {\n        calculate_totals(frm);\n    }\n});\n\nfunction calculate_totals(frm) {\n    // Calculate total stems in Farm Pack List\n    let total_stems = 0;\n    if (frm.doc.pack_list_item) {\n        frm.doc.pack_list_item.forEach(item => {\n            total_stems += flt(item.custom_number_of_stems) || 0;\n        });\n    }\n\n    // Update custom_total_stems only if changed\n    if (frm.doc.custom_total_stems !== total_stems) {\n        frm.set_value('custom_total_stems', total_stems);\n    }\n\n    // Calculate completion percentage\n    if (frm.doc.order_picklist) {\n        // Fetch total stems from Order Picklist\n        frappe.db.get_value('Order Picklist', frm.doc.order_picklist, 'total_stems', (r) => {\n            let order_total_stems = flt(r.total_stems) || 0;\n            let completion_percentage = 0;\n\n            // Calculate percentage: (packed stems / order stems) * 100\n            if (order_total_stems > 0) {\n                completion_percentage = (total_stems / order_total_stems) * 100;\n                // Round to 2 decimal places\n                completion_percentage = flt(completion_percentage, 2);\n            }\n\n            // Update completion percentage only if changed\n            if (frm.doc.custom_completion_percentage !== completion_percentage) {\n                frm.set_value('custom_completion_percentage', completion_percentage);\n            }\n        });\n    } else {\n        // If no Order Picklist is linked, set completion percentage to 0\n        if (frm.doc.custom_completion_percentage !== 0) {\n            frm.set_value('custom_completion_percentage', 0);\n        }\n    }\n}",
+  "script": "frappe.ui.form.on('Farm Pack List', {\n    refresh: function(frm) {\n        calculate_totals(frm);\n    },\n    validate: function(frm) {\n        calculate_totals(frm);\n    },\n    order_picklist: function(frm) {\n        calculate_totals(frm);\n    }\n});\n\nfrappe.ui.form.on('Pack List Item', {\n    custom_number_of_stems: function(frm, cdt, cdn) {\n        calculate_totals(frm);\n    },\n    pack_list_item_remove: function(frm) {\n        calculate_totals(frm);\n    }\n});\n\nfunction calculate_totals(frm) {\n    // Calculate total stems in Farm Pack List\n    let total_stems = 0;\n    if (frm.doc.pack_list_item) {\n        frm.doc.pack_list_item.forEach(item => {\n            total_stems += flt(item.custom_number_of_stems) || 0;\n        });\n    }\n\n    // Update custom_total_stems only if changed\n    if (frm.doc.custom_total_stems !== total_stems) {\n        frm.set_value('custom_total_stems', total_stems);\n    }\n}\n",
   "view": "Form"
  },
  {
@@ -344,11 +344,22 @@
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Farm Pack List",
-  "enabled": 1,
-  "modified": "2025-05-07 16:24:31.070586",
+  "enabled": 0,
+  "modified": "2025-05-08 14:50:24.591918",
   "module": "Upande Kikwetu",
   "name": "completion % on FPL",
-  "script": "frappe.ui.form.on('Farm Pack List', {\n    total_stems: function(frm) {\n        calculate_completion_percentage(frm);\n    },\n    custom_picked_total_stems: function(frm) {\n        calculate_completion_percentage(frm);\n    }\n});\n\nfunction calculate_completion_percentage(frm) {\n    let packed_stems = parseFloat(frm.doc.custom_total_stems) || 0;\n    let required_stems = parseFloat(frm.doc.custom_picked_total_stems) || 0;\n    let completion_percentage = 0;\n\n    if (required_stems > 0) {\n        completion_percentage = (packed_stems / required_stems) * 100;\n    }\n\n    frm.set_value('custom_completion_percentage', completion_percentage);\n}\n",
+  "script": "frappe.ui.form.on('Farm Pack List', {\n    total_stems: function(frm) {\n        calculate_completion_percentage(frm);\n    },\n    custom_picked_total_stems: function(frm) {\n        calculate_completion_percentage(frm);\n    }\n});\n\nfunction calculate_completion_percentage(frm) {\n    let packed_stems = parseFloat(frm.doc.total_stems) || 0;\n    let required_stems = parseFloat(frm.doc.custom_picked_total_stems) || 0;\n    let completion_percentage = 0;\n\n    // Debug values using msgprint\n    frappe.msgprint(`Packed Stems: ${packed_stems}, Required Stems: ${required_stems}`);\n\n    if (required_stems > 0) {\n        completion_percentage = (packed_stems / required_stems) * 100;\n    }\n\n    // Debug the calculated percentage\n    frappe.msgprint(`Completion Percentage: ${completion_percentage}`);\n\n    frm.set_value('custom_completion_percentage', completion_percentage);\n}",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sales Invoice",
+  "enabled": 1,
+  "modified": "2025-05-15 09:44:20.583311",
+  "module": "Upande Kikwetu",
+  "name": "Income Account Toggle",
+  "script": "frappe.ui.form.on('Sales Invoice Item', {\n    custom_item_type: function(frm, cdt, cdn) {\n        let item = locals[cdt][cdn];\n\n        if (item.custom_item_type === 'Rose') {\n            item.income_account = '500101 - Flower Sales-Export - KF';\n        } else if (item.custom_item_type === 'Bud-wood') {\n            item.income_account = '500103 - Budwood Sales - KF';\n        }\n\n        frm.refresh_field('items');\n    }\n});\n",
   "view": "Form"
  }
 ]

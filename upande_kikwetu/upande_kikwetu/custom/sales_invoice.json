@@ -1294,15 +1294,9 @@
    "is_child_table": 0,
    "link_doctype": "POS Invoice",
    "link_fieldname": "consolidated_invoice",
-<<<<<<< HEAD
    "modified": "2025-05-15 12:10:57.123170",
    "modified_by": "Administrator",
    "name": "ifqi3k0efa",
-=======
-   "modified": "2025-05-15 01:43:30.231708",
-   "modified_by": "Administrator",
-   "name": "r9gk55k3s2",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "owner": "Administrator",
    "parent": "Sales Invoice",
    "parent_doctype": null,
@@ -1325,11 +1319,7 @@
    "field_name": "additional_discount_account",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.496152",
-=======
-   "modified": "2025-05-08 12:24:49.472821",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-additional_discount_account-hidden",
@@ -1352,11 +1342,7 @@
    "field_name": "additional_discount_account",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.511405",
-=======
-   "modified": "2025-05-08 12:24:49.482822",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-additional_discount_account-mandatory_depends_on",
@@ -1379,11 +1365,7 @@
    "field_name": "base_rounded_total",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.527514",
-=======
-   "modified": "2025-05-08 12:24:49.493352",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-base_rounded_total-hidden",
@@ -1406,11 +1388,7 @@
    "field_name": "base_rounded_total",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.542283",
-=======
-   "modified": "2025-05-08 12:24:49.503955",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-base_rounded_total-print_hide",
@@ -1433,11 +1411,7 @@
    "field_name": "disable_rounded_total",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.556404",
-=======
-   "modified": "2025-05-08 12:24:49.514395",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-disable_rounded_total-default",
@@ -1460,11 +1434,7 @@
    "field_name": "due_date",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.569325",
-=======
-   "modified": "2025-05-08 12:24:49.524735",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-due_date-print_hide",
@@ -1510,13 +1480,8 @@
    "field_name": "grand_total",
    "idx": 0,
    "is_system_generated": 1,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.582064",
    "modified_by": "Administrator",
-=======
-   "modified": "2025-05-09 14:09:06.462740",
-   "modified_by": "wycliffe@upande.com",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "module": null,
    "name": "Sales Invoice-grand_total-in_list_view",
    "owner": "wycliffe@upande.com",
@@ -1538,11 +1503,7 @@
    "field_name": "in_words",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.595109",
-=======
-   "modified": "2025-05-08 12:24:49.545943",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-in_words-hidden",
@@ -1565,11 +1526,7 @@
    "field_name": "in_words",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.608691",
-=======
-   "modified": "2025-05-08 12:24:49.556245",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-in_words-print_hide",
@@ -1592,11 +1549,7 @@
    "field_name": null,
    "idx": 0,
    "is_system_generated": 1,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.621787",
-=======
-   "modified": "2025-05-08 12:24:49.566566",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-main-default_print_format",
@@ -1611,11 +1564,7 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
-<<<<<<< HEAD
    "creation": "2025-05-15 21:34:21.412176",
-=======
-   "creation": "2025-05-08 15:09:52.502554",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "default_value": null,
    "doc_type": "Sales Invoice",
    "docstatus": 0,
@@ -1623,11 +1572,7 @@
    "field_name": null,
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 21:34:21.412176",
-=======
-   "modified": "2025-05-08 15:09:52.502554",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-main-field_order",
@@ -1650,11 +1595,7 @@
    "field_name": "naming_series",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.648340",
-=======
-   "modified": "2025-05-08 12:24:49.587892",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-naming_series-default",
@@ -1700,11 +1641,7 @@
    "field_name": "naming_series",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.661286",
-=======
-   "modified": "2025-05-08 12:24:49.598285",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-naming_series-options",
@@ -1773,11 +1710,7 @@
    "field_name": "payment_schedule",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.684160",
-=======
-   "modified": "2025-05-08 12:24:49.608702",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-payment_schedule-print_hide",
@@ -1800,11 +1733,7 @@
    "field_name": "rounded_total",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.697519",
-=======
-   "modified": "2025-05-08 12:24:49.618964",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-rounded_total-hidden",
@@ -1827,11 +1756,7 @@
    "field_name": "rounded_total",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.709951",
-=======
-   "modified": "2025-05-08 12:24:49.629422",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-rounded_total-print_hide",
@@ -1854,11 +1779,7 @@
    "field_name": "scan_barcode",
    "idx": 0,
    "is_system_generated": 1,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.722492",
-=======
-   "modified": "2025-05-08 12:24:49.639913",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-scan_barcode-hidden",
@@ -1881,13 +1802,8 @@
    "field_name": "status",
    "idx": 0,
    "is_system_generated": 1,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.735084",
    "modified_by": "Administrator",
-=======
-   "modified": "2025-05-09 14:09:06.476349",
-   "modified_by": "wycliffe@upande.com",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "module": null,
    "name": "Sales Invoice-status-in_list_view",
    "owner": "wycliffe@upande.com",
@@ -1909,11 +1825,7 @@
    "field_name": "tax_id",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.748106",
-=======
-   "modified": "2025-05-08 12:24:49.660584",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-tax_id-hidden",
@@ -1936,11 +1848,7 @@
    "field_name": "tax_id",
    "idx": 0,
    "is_system_generated": 0,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.762933",
-=======
-   "modified": "2025-05-08 12:24:49.670771",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice-tax_id-print_hide",
@@ -1963,13 +1871,8 @@
    "field_name": "title",
    "idx": 0,
    "is_system_generated": 1,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.777337",
    "modified_by": "Administrator",
-=======
-   "modified": "2025-05-09 14:09:06.449000",
-   "modified_by": "wycliffe@upande.com",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "module": null,
    "name": "Sales Invoice-title-in_list_view",
    "owner": "wycliffe@upande.com",
@@ -1991,13 +1894,8 @@
    "field_name": "workflow_state",
    "idx": 0,
    "is_system_generated": 1,
-<<<<<<< HEAD
    "modified": "2025-05-15 20:11:57.793351",
    "modified_by": "Administrator",
-=======
-   "modified": "2025-05-09 14:09:06.429841",
-   "modified_by": "wycliffe@upande.com",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "module": null,
    "name": "Sales Invoice-workflow_state-in_list_view",
    "owner": "wycliffe@upande.com",

@@ -229,16 +229,11 @@
  },
  {
   "allow_guest": 0,
-<<<<<<< HEAD
   "api_method": null,
-=======
-  "api_method": "get_pick_list_with_farm_pack_list",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "cron_format": null,
   "disabled": 0,
   "docstatus": 0,
   "doctype": "Server Script",
-<<<<<<< HEAD
   "doctype_event": "After Save",
   "enable_rate_limit": 0,
   "event_frequency": "All",
@@ -250,18 +245,5 @@
   "reference_doctype": "Farm Pack List",
   "script": "opl_total = float(doc.get('opl_total_stems') or 0)\ncustom_total = float(doc.get('custom_total_stems') or 0)\n\nif opl_total != 0:\n    packed = (custom_total / opl_total) * 100\nelse:\n    packed = 0\n\ndoc.db_set('packed', packed)\n",
   "script_type": "DocType Event"
-=======
-  "doctype_event": "Before Insert",
-  "enable_rate_limit": 0,
-  "event_frequency": "All",
-  "modified": "2025-05-15 09:29:10.708730",
-  "module": "Upande Kikwetu",
-  "name": "Get Pick List with Farm Packlist",
-  "rate_limit_count": 5,
-  "rate_limit_seconds": 86400,
-  "reference_doctype": null,
-  "script": "pick_list_id = frappe.form_dict.get('pick_list_id')\n\ntry:\n    order_pick_list = frappe.get_doc('Order Pick List', pick_list_id).as_dict()\n    \n    farm_pack_list_names = frappe.db.get_all(\n        'Farm Pack List',\n        filters={'custom_order_pick_list': pick_list_id},\n        fields=['name']\n    )\n\n    farm_pack_list_with_items = []\n    for fp in farm_pack_list_names:\n        doc = frappe.get_doc('Farm Pack List', fp.name).as_dict()\n        farm_pack_list_with_items.append(doc)\n        \n    frappe.response['data'] = {\n        'order_pick_list': order_pick_list,\n        'farm_pack_lists': farm_pack_list_with_items\n    }\n\nexcept Exception as e:\n    frappe.log_error(f\"Error in get_pick_list_with_farm_packs: {e}\")\n    frappe.response['data'] = None\n",
-  "script_type": "API"
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
  }
 ]

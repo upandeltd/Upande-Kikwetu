@@ -414,7 +414,6 @@
     "unique": 0,
     "width": null
    },
-<<<<<<< HEAD
    {
     "allow_bulk_edit": 0,
     "allow_in_quick_entry": 0,
@@ -479,8 +478,6 @@
     "unique": 0,
     "width": null
    },
-=======
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    {
     "allow_bulk_edit": 0,
     "allow_in_quick_entry": 0,
@@ -564,13 +561,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:44.421884",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:28.027584",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Packing List",
   "naming_rule": "By \"Naming Series\" field",
@@ -1254,13 +1246,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:44.997684",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:28.200718",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Consolidated Pack List",
   "naming_rule": "By \"Naming Series\" field",
@@ -1796,7 +1783,6 @@
     "trigger": null,
     "unique": 0,
     "width": null
-<<<<<<< HEAD
    },
    {
     "allow_bulk_edit": 0,
@@ -1861,8 +1847,6 @@
     "trigger": null,
     "unique": 0,
     "width": null
-=======
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    }
   ],
   "force_re_route_to_default_view": 0,
@@ -1883,13 +1867,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:45.482075",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:28.355869",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Stem Length",
   "naming_rule": "By \"Naming Series\" field",
@@ -2182,17 +2161,10 @@
     "depends_on": null,
     "description": null,
     "documentation_url": null,
-<<<<<<< HEAD
     "fetch_from": "",
     "fetch_if_empty": 0,
     "fieldname": "custom_total_stems",
     "fieldtype": "Data",
-=======
-    "fetch_from": null,
-    "fetch_if_empty": 0,
-    "fieldname": "amended_from",
-    "fieldtype": "Link",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
     "hidden": 0,
     "hide_border": 0,
     "hide_days": 0,
@@ -2205,56 +2177,32 @@
     "in_preview": 0,
     "in_standard_filter": 0,
     "is_virtual": 0,
-<<<<<<< HEAD
     "label": "Total stems",
-=======
-    "label": "Amended From",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
     "length": 0,
     "link_filters": null,
     "make_attachment_public": 0,
     "mandatory_depends_on": null,
     "max_height": null,
-<<<<<<< HEAD
     "no_copy": 0,
     "non_negative": 0,
     "oldfieldname": null,
     "oldfieldtype": null,
     "options": null,
-=======
-    "no_copy": 1,
-    "non_negative": 0,
-    "oldfieldname": null,
-    "oldfieldtype": null,
-    "options": "Farm Pack List",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
     "parent": "Farm Pack List",
     "parentfield": "fields",
     "parenttype": "DocType",
     "permlevel": 0,
     "placeholder": null,
-<<<<<<< HEAD
     "precision": "",
     "print_hide": 0,
     "print_hide_if_no_value": 0,
     "print_width": null,
     "read_only": 0,
-=======
-    "precision": null,
-    "print_hide": 1,
-    "print_hide_if_no_value": 0,
-    "print_width": null,
-    "read_only": 1,
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
     "read_only_depends_on": null,
     "remember_last_selected_value": 0,
     "report_hide": 0,
     "reqd": 0,
-<<<<<<< HEAD
     "search_index": 0,
-=======
-    "search_index": 1,
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
     "set_only_once": 0,
     "show_dashboard": 0,
     "show_on_timeline": 0,
@@ -2279,11 +2227,7 @@
     "documentation_url": null,
     "fetch_from": null,
     "fetch_if_empty": 0,
-<<<<<<< HEAD
     "fieldname": "custom_order_pick_list",
-=======
-    "fieldname": "amended_from",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
     "fieldtype": "Link",
     "hidden": 0,
     "hide_border": 0,
@@ -2608,13 +2552,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:45.966975",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:28.528759",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Farm Pack List",
   "naming_rule": "By \"Naming Series\" field",
@@ -4386,13 +4325,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:46.458809",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:28.723700",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Item Group Price",
   "naming_rule": "Expression",
@@ -5460,13 +5394,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:46.858639",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:28.916662",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Order Pick List",
   "naming_rule": "By \"Naming Series\" field",
@@ -6086,13 +6015,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:47.298706",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:29.093558",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Dispatch Form",
   "naming_rule": "By \"Naming Series\" field",
@@ -6776,13 +6700,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:47.622546",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:29.227519",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "SKU Summary",
   "naming_rule": null,
@@ -7186,13 +7105,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:47.927061",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:29.338318",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Packing Qty Confirmation",
   "naming_rule": null,
@@ -7340,13 +7254,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:48.239326",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:29.448657",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Breeders",
   "naming_rule": null,
@@ -7838,13 +7747,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:48.628498",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:29.573674",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "QR Code",
   "naming_rule": "Expression",
@@ -8592,13 +8496,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:48.929161",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:29.697385",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Pack List Item",
   "naming_rule": "",
@@ -9962,13 +9861,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:49.581719",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:29.898483",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Scan",
   "naming_rule": "Expression",
@@ -10324,13 +10218,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:49.908226",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:30.012042",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Scan Location",
   "naming_rule": "By fieldname",
@@ -10758,13 +10647,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:50.235713",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:30.141060",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Farm",
   "naming_rule": "Expression",
@@ -11768,13 +11652,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:50.751589",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:30.326621",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Box Label",
   "naming_rule": "Expression",
@@ -12253,13 +12132,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:51.048969",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:30.440783",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Box Label Item",
   "naming_rule": "",
@@ -13471,13 +13345,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:51.539988",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:30.638571",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Label Print",
   "naming_rule": "Expression",
@@ -14107,13 +13976,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:52.015778",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:30.811044",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Bucket QR Code",
   "naming_rule": "By fieldname",
@@ -14848,13 +14712,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:52.495531",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:30.980807",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Bunch QR Code",
   "naming_rule": "By fieldname",
@@ -15461,13 +15320,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:53.040394",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:31.143675",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Grader QR Code",
   "naming_rule": "Expression",
@@ -16289,13 +16143,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:53.422499",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:31.288018",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Harvest",
   "naming_rule": "Expression",
@@ -16641,13 +16490,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:53.704315",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:31.409417",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Scanned Items",
   "naming_rule": "",
@@ -16859,13 +16703,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:54.209674",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:31.580065",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Scan Check",
   "naming_rule": "Expression",
@@ -17326,13 +17165,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:54.498843",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:31.688983",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Scan Check List",
   "naming_rule": "",
@@ -17608,13 +17442,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:54.776997",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 17:51:31.786385",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "QR Sequence",
   "naming_rule": "",
@@ -17850,13 +17679,8 @@
   "make_attachments_public": 0,
   "max_attachments": 0,
   "menu_index": null,
-<<<<<<< HEAD
   "migration_hash": "8b79989352797356b5c42f879183d545",
   "modified": "2025-05-15 20:11:55.328537",
-=======
-  "migration_hash": "603ed4427b0ec84bc7cb7e074272d162",
-  "modified": "2025-05-15 09:16:46.279408",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "module": "Upande Kikwetu",
   "name": "Rejection Reason",
   "naming_rule": "By fieldname",

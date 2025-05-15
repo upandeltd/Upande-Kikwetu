@@ -274,7 +274,11 @@
    "field_name": "barcode",
    "idx": 0,
    "is_system_generated": 1,
+<<<<<<< HEAD
+   "modified": "2025-05-15 20:11:58.390850",
+=======
    "modified": "2025-05-08 12:24:52.676216",
+>>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice Item-barcode-hidden",
@@ -297,7 +301,11 @@
    "field_name": "discount_account",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
+   "modified": "2025-05-15 20:11:58.407642",
+=======
    "modified": "2025-05-08 12:24:52.688531",
+>>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice Item-discount_account-hidden",
@@ -320,7 +328,11 @@
    "field_name": "discount_account",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
+   "modified": "2025-05-15 20:11:58.421906",
+=======
    "modified": "2025-05-08 12:24:52.701574",
+>>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice Item-discount_account-mandatory_depends_on",
@@ -335,7 +347,7 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
-   "creation": "2025-04-23 20:10:45.249382",
+   "creation": "2025-05-15 19:54:18.132004",
    "default_value": null,
    "doc_type": "Sales Invoice Item",
    "docstatus": 0,
@@ -343,15 +355,19 @@
    "field_name": "item_code",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
+   "modified": "2025-05-15 20:11:58.438834",
+=======
    "modified": "2025-05-08 12:24:52.714080",
+>>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice Item-item_code-link_filters",
-   "owner": "wycliffe@upande.com",
+   "owner": "Administrator",
    "property": "link_filters",
    "property_type": "JSON",
    "row_name": null,
-   "value": "[[\"Item\",\"item_group\",\"in\",[\"Roses\",\"Garden Sprays\"]]]"
+   "value": "[[\"Item\",\"item_group\",\"in\",[\"SPECIAL SPRAY ROSES\",\"SUPER INTERMEDIATE ROSES\",\"PREMIUM ROSES\",\"PREMIUM SCENTED GARDEN ROSES\",\"PREMIUM GARDEN ROSES\",\"Roses\"]]]"
   },
   {
    "_assign": null,
@@ -366,7 +382,11 @@
    "field_name": "item_group",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
+   "modified": "2025-05-15 20:11:58.455263",
+=======
    "modified": "2025-05-08 12:24:52.725187",
+>>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice Item-item_group-in_list_view",
@@ -381,7 +401,11 @@
    "_comments": null,
    "_liked_by": null,
    "_user_tags": null,
+<<<<<<< HEAD
+   "creation": "2025-05-15 19:54:18.000083",
+=======
    "creation": "2025-05-15 09:41:15.523154",
+>>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "default_value": null,
    "doc_type": "Sales Invoice Item",
    "docstatus": 0,
@@ -389,15 +413,24 @@
    "field_name": null,
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
+   "modified": "2025-05-15 20:11:58.474183",
+   "modified_by": "Administrator",
+=======
    "modified": "2025-05-15 09:41:15.523154",
    "modified_by": "judah@upande.com",
+>>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "module": null,
    "name": "Sales Invoice Item-main-field_order",
    "owner": "judah@upande.com",
    "property": "field_order",
    "property_type": "Data",
    "row_name": null,
+<<<<<<< HEAD
+   "value": "[\"barcode\", \"has_item_scanned\", \"item_code\", \"col_break1\", \"item_name\", \"customer_item_code\", \"description_section\", \"description\", \"item_group\", \"brand\", \"image_section\", \"image\", \"image_view\", \"quantity_and_rate\", \"qty\", \"stock_uom\", \"custom_length\", \"col_break2\", \"uom\", \"conversion_factor\", \"stock_qty\", \"section_break_17\", \"price_list_rate\", \"base_price_list_rate\", \"discount_and_margin\", \"margin_type\", \"margin_rate_or_amount\", \"rate_with_margin\", \"column_break_19\", \"discount_percentage\", \"discount_amount\", \"base_rate_with_margin\", \"section_break1\", \"rate\", \"amount\", \"item_tax_template\", \"col_break3\", \"base_rate\", \"base_amount\", \"pricing_rules\", \"stock_uom_rate\", \"is_free_item\", \"grant_commission\", \"section_break_21\", \"net_rate\", \"net_amount\", \"column_break_24\", \"base_net_rate\", \"base_net_amount\", \"drop_ship\", \"delivered_by_supplier\", \"accounting\", \"income_account\", \"is_fixed_asset\", \"asset\", \"finance_book\", \"col_break4\", \"expense_account\", \"discount_account\", \"deferred_revenue\", \"deferred_revenue_account\", \"service_stop_date\", \"enable_deferred_revenue\", \"column_break_50\", \"service_start_date\", \"service_end_date\", \"section_break_18\", \"weight_per_unit\", \"total_weight\", \"column_break_21\", \"weight_uom\", \"warehouse_and_reference\", \"warehouse\", \"target_warehouse\", \"quality_inspection\", \"pick_serial_and_batch\", \"serial_and_batch_bundle\", \"use_serial_batch_fields\", \"col_break5\", \"allow_zero_valuation_rate\", \"incoming_rate\", \"item_tax_rate\", \"actual_batch_qty\", \"section_break_eoec\", \"serial_no\", \"column_break_ytgd\", \"batch_no\", \"available_quantity_section\", \"actual_qty\", \"column_break_ogff\", \"company_total_stock\", \"edit_references\", \"sales_order\", \"so_detail\", \"sales_invoice_item\", \"column_break_74\", \"delivery_note\", \"dn_detail\", \"delivered_qty\", \"internal_transfer_section\", \"purchase_order\", \"column_break_92\", \"purchase_order_item\", \"accounting_dimensions_section\", \"farm\", \"cost_center\", \"dimension_col_break\", \"greenhouse\", \"project\", \"section_break_54\", \"page_break\"]"
+=======
    "value": "[\"barcode\", \"has_item_scanned\", \"item_code\", \"col_break1\", \"item_name\", \"customer_item_code\", \"item_type\", \"description_section\", \"description\", \"item_group\", \"brand\", \"image_section\", \"image\", \"image_view\", \"quantity_and_rate\", \"qty\", \"stock_uom\", \"custom_length\", \"col_break2\", \"uom\", \"conversion_factor\", \"stock_qty\", \"section_break_17\", \"price_list_rate\", \"base_price_list_rate\", \"discount_and_margin\", \"margin_type\", \"margin_rate_or_amount\", \"rate_with_margin\", \"column_break_19\", \"discount_percentage\", \"discount_amount\", \"base_rate_with_margin\", \"section_break1\", \"rate\", \"amount\", \"item_tax_template\", \"col_break3\", \"base_rate\", \"base_amount\", \"pricing_rules\", \"stock_uom_rate\", \"is_free_item\", \"grant_commission\", \"section_break_21\", \"net_rate\", \"net_amount\", \"column_break_24\", \"base_net_rate\", \"base_net_amount\", \"drop_ship\", \"delivered_by_supplier\", \"accounting\", \"income_account\", \"is_fixed_asset\", \"asset\", \"finance_book\", \"col_break4\", \"expense_account\", \"discount_account\", \"deferred_revenue\", \"deferred_revenue_account\", \"service_stop_date\", \"enable_deferred_revenue\", \"column_break_50\", \"service_start_date\", \"service_end_date\", \"section_break_18\", \"weight_per_unit\", \"total_weight\", \"column_break_21\", \"weight_uom\", \"warehouse_and_reference\", \"warehouse\", \"target_warehouse\", \"quality_inspection\", \"pick_serial_and_batch\", \"serial_and_batch_bundle\", \"use_serial_batch_fields\", \"col_break5\", \"allow_zero_valuation_rate\", \"incoming_rate\", \"item_tax_rate\", \"actual_batch_qty\", \"section_break_eoec\", \"serial_no\", \"column_break_ytgd\", \"batch_no\", \"actual_qty\", \"edit_references\", \"sales_order\", \"so_detail\", \"sales_invoice_item\", \"column_break_74\", \"delivery_note\", \"dn_detail\", \"delivered_qty\", \"internal_transfer_section\", \"purchase_order\", \"column_break_92\", \"purchase_order_item\", \"accounting_dimensions_section\", \"farm\", \"cost_center\", \"dimension_col_break\", \"greenhouse\", \"project\", \"section_break_54\", \"page_break\"]"
+>>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   },
   {
    "_assign": null,
@@ -412,7 +445,11 @@
    "field_name": "qty",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
+   "modified": "2025-05-15 20:11:58.495709",
+=======
    "modified": "2025-05-08 12:24:52.751317",
+>>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice Item-qty-label",
@@ -435,7 +472,11 @@
    "field_name": "stock_qty",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
+   "modified": "2025-05-15 20:11:58.515149",
+=======
    "modified": "2025-05-08 12:24:52.762640",
+>>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice Item-stock_qty-label",
@@ -458,7 +499,11 @@
    "field_name": "target_warehouse",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
+   "modified": "2025-05-15 20:11:58.539004",
+=======
    "modified": "2025-05-08 12:24:52.774965",
+>>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice Item-target_warehouse-hidden",
@@ -481,7 +526,11 @@
    "field_name": "uom",
    "idx": 0,
    "is_system_generated": 0,
+<<<<<<< HEAD
+   "modified": "2025-05-15 20:11:58.557199",
+=======
    "modified": "2025-05-08 12:24:52.786717",
+>>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
    "modified_by": "Administrator",
    "module": null,
    "name": "Sales Invoice Item-uom-label",

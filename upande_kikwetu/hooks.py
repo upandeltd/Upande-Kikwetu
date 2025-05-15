@@ -298,7 +298,7 @@ fixtures = [
                             "Amount Calc Based on IGP", "SO Week Automation", "Ensure Bucket Is Scanned On Save",
                             "Field Rejects Stock Entry", "Grading Traceability Symbols", "Ensure Uppercase in Bay Field",
                             "Remove Read Only on Field", "Transfer Grading Stock", "Qr Code gen", "Scan QR Button", "Close Box Button",
-                            "Grading Stock Entry", "Archive Employee", "Scan Data Field Listener", "Populate Number of Items", "Consignee Update", "completion % on FPL",
+                            "Grading Stock Entry", "Archive Employee", "Scan Data Field Listener", "Populate Number of Items", "Consignee Update", "CPL NO OF STEMS CALC","Sales order Consignee",
                             "Income Account Toggle"]]
         ]
     },
@@ -306,9 +306,9 @@ fixtures = [
         "dt": "Server Script",
         "filters": [
             ["name", "in", ["Delivery Note Script", "CPL complete percentage tracker", "Material Transfer Submit",
-                            "fetch stems from opl to fpl", "FPL Completeness Tracker", "Create cpl", "Amount Calc Based on IGP",
+                             "Create cpl", "Amount Calc Based on IGP",
                             "Create Box Labels", "Automate Rejects Material Issue",
-                            "Harvest Stock Entry", "Stock Entry Script", "Stock Entry After Save","Get Pick List with Farm Packlist"]]
+                            "Harvest Stock Entry", "Stock Entry Script", "Stock Entry After Save","Get Pick List with Farm Packlist","Packed% on FPL"]]
         ]
     },
     {

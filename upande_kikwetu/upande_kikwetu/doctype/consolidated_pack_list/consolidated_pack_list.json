@@ -9,7 +9,6 @@
  "field_order": [
   "section_break_npj3",
   "company",
-  "amended_from",
   "naming_series",
   "items",
   "approval_status",
@@ -20,16 +19,7 @@
    "fieldname": "section_break_npj3",
    "fieldtype": "Section Break"
   },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Consolidated Pack List",
-   "print_hide": 1,
-   "read_only": 1,
-   "search_index": 1
-  },
+
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",

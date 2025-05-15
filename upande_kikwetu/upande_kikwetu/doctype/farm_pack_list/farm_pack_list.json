@@ -2,14 +2,17 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "naming_series:",
- "creation": "2025-02-03 09:31:23.896172",
- "custom": 1,
+ "creation": "2025-05-15 20:11:45.592580",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "company",
   "pack_list_item",
   "naming_series",
+  "custom_total_stems",
+  "custom_order_pick_list",
+  "opl_total_stems",
+  "packed",
   "amended_from"
  ],
  "fields": [
@@ -40,13 +43,34 @@
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"
+  },
+  {
+   "fieldname": "custom_total_stems",
+   "fieldtype": "Data",
+   "label": "Total stems"
+  },
+  {
+   "fieldname": "custom_order_pick_list",
+   "fieldtype": "Link",
+   "label": "Order Pick List",
+   "options": "Order Pick List"
+  },
+  {
+   "fetch_from": "custom_order_pick_list.custom_total_stems",
+   "fieldname": "opl_total_stems",
+   "fieldtype": "Int",
+   "label": "Total stems on OPL"
+  },
+  {
+   "fieldname": "packed",
+   "fieldtype": "Int",
+   "label": "Packed%"
   }
  ],
- "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-01 00:46:35.412622",
+ "modified": "2025-05-15 20:29:25.599320",
  "modified_by": "Administrator",
  "module": "Upande Kikwetu",
  "name": "Farm Pack List",
@@ -68,5 +92,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }

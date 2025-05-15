@@ -291,38 +291,39 @@ fixtures = [
     {
         "dt": "Client Script",
         "filters": [
-            ["name", "in", ["Hide Filter Button", "Generate Bucket Codes", "OPL Stems Calc Automation to FPL", 
+            ["name", "in", ["Hide Filter Button", "Generate Bucket Codes", "OPL Stems Calc Automation to FPL",
                             "Sales invoice Status", "Chemical Request", "Scan QR IN SCAN", "Change status after save",
-                            "Harvest Scan V2", "Scan via honeywell v2", "New Form After Save", "Harvest Scan", "Scan Via Honeywell", 
+                            "Harvest Scan V2", "Scan via honeywell v2", "New Form After Save", "Harvest Scan", "Scan Via Honeywell",
                             "Sales Tracker Button", "Sales Order connection with FPL and OPL", "Calculation Of Total Stems",
-                            "Amount Calc Based on IGP", "SO Week Automation", "Ensure Bucket Is Scanned On Save", 
-                            "Field Rejects Stock Entry", "Grading Traceability Symbols", "Ensure Uppercase in Bay Field", 
+                            "Amount Calc Based on IGP", "SO Week Automation", "Ensure Bucket Is Scanned On Save",
+                            "Field Rejects Stock Entry", "Grading Traceability Symbols", "Ensure Uppercase in Bay Field",
                             "Remove Read Only on Field", "Transfer Grading Stock", "Qr Code gen", "Scan QR Button", "Close Box Button",
-                            "Grading Stock Entry", "Archive Employee", "Scan Data Field Listener", "Populate Number of Items","Consignee Update","CPL NO OF STEMS CALC","Sales order Consignee"]]
+                            "Grading Stock Entry", "Archive Employee", "Scan Data Field Listener", "Populate Number of Items", "Consignee Update", "CPL NO OF STEMS CALC","Sales order Consignee",
+                            "Income Account Toggle"]]
         ]
     },
-     {
+    {
         "dt": "Server Script",
         "filters": [
             ["name", "in", ["Delivery Note Script", "CPL complete percentage tracker", "Material Transfer Submit",
-                              "Create cpl", "Amount Calc Based on IGP", 
-                             "Create Box Labels", "Automate Rejects Material Issue", 
-                             "Harvest Stock Entry", "Stock Entry Script", "Stock Entry After Save","Packed% on FPL"]]
+                             "Create cpl", "Amount Calc Based on IGP",
+                            "Create Box Labels", "Automate Rejects Material Issue",
+                            "Harvest Stock Entry", "Stock Entry Script", "Stock Entry After Save","Get Pick List with Farm Packlist","Packed% on FPL"]]
         ]
     },
     {
         "dt": "DocType",
         "filters": [
-        ["name", "in", ["Box Label", "Box Label Item", "Breeders", "Bunch QR Code", 
-                        "Bucket QR Code", "Consolidated Pack List", "Dispatch Form",
-                        "Dispatch Item Form", "Farm", "Farm Pack List", "Grader QR Code",
-                        "Harvest", "Item Group Price", "Label Print", 
-                        "Order Pick List", "Order QR Code", "Pack List Item", "Packing List",
-                        "Packing Qty Confirmation", "QR Code", "QR Codes", "QR Sequence", "Rejection Reason", "SKU Summary", "Scan",
-                        "Scan Check", "Scan Check List", "Scan Location", "Scanned Items", "Stem Length"
+            ["name", "in", ["Box Label", "Box Label Item", "Breeders", "Bunch QR Code",
+                            "Bucket QR Code", "Consolidated Pack List", "Dispatch Form",
+                            "Dispatch Item Form", "Farm", "Farm Pack List", "Grader QR Code",
+                            "Harvest", "Item Group Price", "Label Print",
+                            "Order Pick List", "Order QR Code", "Pack List Item", "Packing List",
+                            "Packing Qty Confirmation", "QR Code", "QR Codes", "QR Sequence", "Rejection Reason", "SKU Summary", "Scan",
+                            "Scan Check", "Scan Check List", "Scan Location", "Scanned Items", "Stem Length","Harvest Rejects","Harvest Reject Items"
 
 
-            ]]
+                            ]]
         ]
     }
 ]

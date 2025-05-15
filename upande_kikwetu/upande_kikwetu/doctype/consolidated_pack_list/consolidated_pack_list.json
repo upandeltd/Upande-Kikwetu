@@ -7,11 +7,8 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_npj3",
-<<<<<<< HEAD
   "amended_from",
-=======
   "company",
->>>>>>> 30ba68516ca46dcddeeaa658d51065ecd379c9aa
   "naming_series",
   "sales_order_id_cpl",
   "items",

@@ -3541,7 +3541,7 @@
     "trigger": null,
     "unique": 0,
     "width": null
-   },
+   }
 
   ],
   "force_re_route_to_default_view": 0,
@@ -4675,7 +4675,7 @@
     "trigger": null,
     "unique": 0,
     "width": null
-   },
+   }
 
   ],
   "force_re_route_to_default_view": 0,

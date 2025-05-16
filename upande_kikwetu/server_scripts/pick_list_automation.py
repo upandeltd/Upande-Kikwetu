@@ -2,7 +2,7 @@ import frappe
 from frappe.utils import nowdate
 from collections import defaultdict
 
-from upande_tambuzi.server_scripts.opl_qr_code_gen import generate_qr_code
+from upande_kikwetu.server_scripts.opl_qr_code_gen import generate_qr_code
 
 
 @frappe.whitelist()
@@ -46,7 +46,7 @@ def create_pick_list_for_sales_order(doc, method=None):
             "item_code", "item_name", "stock_uom", "uom", "qty",
             "custom_source_warehouse", "conversion_factor", "stock_qty",
             "custom_length", "against_blanket_order", "custom_box_id",
-            "custom_box_label"
+            "custom_box_label","custom_number_of_boxes"
         ])
     # Validate and group items
     for item in sales_order_items:
@@ -90,7 +90,8 @@ def create_pick_list_for_sales_order(doc, method=None):
                         "stock_uom": item.stock_uom,
                         "uom": item.uom,
                         "qty": item.qty,
-                        "length": item.length,
+                        "custom_stem_length": item.custom_length,
+                        "custom_number_of_boxes":item.custom_number_of_boxes,
                         "stock_qty": item.stock_qty,
                         "conversion_factor": item.conversion_factor,
                         "warehouse": item.

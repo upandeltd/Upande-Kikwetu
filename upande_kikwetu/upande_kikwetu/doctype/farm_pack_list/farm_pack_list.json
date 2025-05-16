@@ -2,7 +2,7 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "naming_series:",
- "creation": "2025-05-15 20:11:45.592580",
+ "creation": "2025-05-16 12:22:28.125281",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -10,10 +10,10 @@
   "pack_list_item",
   "naming_series",
   "custom_total_stems",
-  "custom_order_pick_list",
+  "amended_from",
   "opl_total_stems",
   "packed",
-  "amended_from"
+  "custom_order_pick_list"
  ],
  "fields": [
   {
@@ -56,7 +56,6 @@
    "options": "Order Pick List"
   },
   {
-   "fetch_from": "custom_order_pick_list.custom_total_stems",
    "fieldname": "opl_total_stems",
    "fieldtype": "Int",
    "label": "Total stems on OPL"
@@ -70,7 +69,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-05-15 20:29:25.599320",
+ "modified": "2025-05-16 12:24:50.282973",
  "modified_by": "Administrator",
  "module": "Upande Kikwetu",
  "name": "Farm Pack List",
@@ -92,6 +91,5 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": [],
- "track_changes": 1
+ "states": []
 }

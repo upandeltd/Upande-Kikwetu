@@ -74,6 +74,7 @@ def create_pick_list_for_sales_order(doc, method=None):
             order_pick_list.purpose = "Delivery"
             order_pick_list.sales_order = sales_order.name
             order_pick_list.customer = sales_order.customer
+            order_pick_list.custom_stems = "custom_stems"
             order_pick_list.date_created = nowdate()
 
             # Calculate total quantity for this warehouse
@@ -113,6 +114,7 @@ def create_pick_list_for_sales_order(doc, method=None):
             order_pick_list.flags.ignore_permissions = True
 
             # Save and submit with error handling
+            # Save and submit with error handling
             try:
                 order_pick_list.save()
 
@@ -120,16 +122,19 @@ def create_pick_list_for_sales_order(doc, method=None):
                 opl_url = f"{frappe.utils.get_url()}/app/order-pick-list/{order_pick_list.name}"
                 qr_code_url = generate_qr_code(opl_url, order_pick_list.name)
 
-                order_pick_list = frappe.get_doc("Order Pick List",
-                                                 order_pick_list.name)
+                order_pick_list = frappe.get_doc("Order Pick List", order_pick_list.name)
                 order_pick_list.custom_qr_code = qr_code_url
 
-                order_pick_list.save()
+                custom_stems = sum([loc.stock_qty or 0 for loc in order_pick_list.locations])
+                order_pick_list.custom_stems = custom_stems
 
+                order_pick_list.save()
                 order_pick_list.submit()
                 order_pick_list_names.append(order_pick_list.name)
 
                 order_pick_list.save()
+
+               
             except Exception as e:
                 frappe.log_error(
                     f"Failed to create Order Pick List for warehouse {warehouse}: {str(e)}"

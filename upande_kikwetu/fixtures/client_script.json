@@ -2,6 +2,50 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
+  "dt": "Consolidated Pack List",
+  "enabled": 1,
+  "modified": "2025-05-15 21:24:04.413661",
+  "module": "Upande Tambuzi",
+  "name": "CPL NO OF STEMS CALC",
+  "script": "frappe.ui.form.on('Consolidated Pack List', {\n    validate: calculate_totals,\n    before_save: calculate_totals\n});\n\nfrappe.ui.form.on('Dispatch Form Item', {\n    custom_number_of_stems: function(frm, cdt, cdn) {\n        // Optional live feedback — not necessary for Save\n        calculate_totals(frm);\n    },\n    items_remove: function(frm) {\n        calculate_totals(frm);\n    }\n});\n\nfunction calculate_totals(frm) {\n    let total_stems = 0;\n\n    if (frm.doc.items && frm.doc.items.length > 0) {\n        frm.doc.items.forEach(item => {\n            total_stems += flt(item.custom_number_of_stems);\n        });\n    }\n\n    // Just update the field — save will handle persistence\n    if (frm.doc.custom_total_number_of_stems_on_cpl !== total_stems) {\n        frm.set_value('custom_total_number_of_stems_on_cpl', total_stems);\n        console.log('Calculated and set total stems:', total_stems);\n    }\n}\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sales Order",
+  "enabled": 1,
+  "modified": "2025-05-15 22:21:03.602153",
+  "module": null,
+  "name": "Sales order Consignee",
+  "script": "frappe.ui.form.on('Sales Order', {\n    customer: function(frm) {\n        if (!frm.doc.customer) return;\n\n        frappe.call({\n            method: \"frappe.client.get\",\n            args: {\n                doctype: \"Customer\",\n                name: frm.doc.customer\n            },\n            callback: function(r) {\n                let options = ['']; // Start with empty option\n                if (r.message && r.message.custom_consignee_details) {\n                    (r.message.custom_consignee_details || []).forEach(function(row) {\n                        if (row.consignee_name) {\n                            options.push(row.consignee_name);\n                        }\n                    });\n                }\n\n                frm.set_df_property('custom_consignee', 'options', options);\n                frm.refresh_field('custom_consignee');\n            }\n        });\n    }\n});\n\nfrappe.ui.form.on('Sales Order', {\n    custom_consignee: function(frm) {\n        if (!frm.doc.customer || !frm.doc.custom_consignee) return;\n\n        frappe.call({\n            method: \"frappe.client.get\",\n            args: {\n                doctype: \"Customer\",\n                name: frm.doc.customer\n            },\n            callback: function(r) {\n                if (r.message && r.message.custom_consignee_details) {\n                    const match = r.message.custom_consignee_details.find(row => \n                        row.consignee_name === frm.doc.custom_consignee\n                    );\n\n                    if (match) {\n                        frm.set_value('custom_consignee_address', match.address || '');\n                    } else {\n                        frm.set_value('custom_consignee_address', '');\n                    }\n                }\n            }\n        });\n    }\n});\n\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sales Invoice",
+  "enabled": 1,
+  "modified": "2025-05-07 11:27:45.197706",
+  "module": null,
+  "name": "Consignee Update",
+  "script": "frappe.ui.form.on('Sales Invoice', {\n    customer: function(frm) {\n        if (!frm.doc.customer) return;\n\n        frappe.call({\n            method: \"frappe.client.get\",\n            args: {\n                doctype: \"Customer\",\n                name: frm.doc.customer\n            },\n            callback: function(r) {\n                let options = ['']; // Start with empty option\n                if (r.message && r.message.custom_consignee_details) {\n                    (r.message.custom_consignee_details || []).forEach(function(row) {\n                        if (row.consignee_name) {\n                            options.push(row.consignee_name);\n                        }\n                    });\n                }\n\n                frm.set_df_property('custom_consignee', 'options', options);\n                frm.refresh_field('custom_consignee');\n            }\n        });\n    }\n});\n\nfrappe.ui.form.on('Sales Invoice', {\n    custom_consignee: function(frm) {\n        if (!frm.doc.customer || !frm.doc.custom_consignee) return;\n\n        frappe.call({\n            method: \"frappe.client.get\",\n            args: {\n                doctype: \"Customer\",\n                name: frm.doc.customer\n            },\n            callback: function(r) {\n                if (r.message && r.message.custom_consignee_details) {\n                    const match = r.message.custom_consignee_details.find(row => \n                        row.consignee_name === frm.doc.custom_consignee\n                    );\n\n                    if (match) {\n                        frm.set_value('custom_consignee_address', match.address || '');\n                    } else {\n                        frm.set_value('custom_consignee_address', '');\n                    }\n                }\n            }\n        });\n    }\n});\n\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sales Invoice",
+  "enabled": 1,
+  "modified": "2025-05-15 09:44:20.583311",
+  "module": "Upande Kikwetu",
+  "name": "Income Account Toggle",
+  "script": "frappe.ui.form.on('Sales Invoice Item', {\n    custom_item_type: function(frm, cdt, cdn) {\n        let item = locals[cdt][cdn];\n\n        if (item.custom_item_type === 'Rose') {\n            item.income_account = '500101 - Flower Sales-Export - KF';\n        } else if (item.custom_item_type === 'Bud-wood') {\n            item.income_account = '500103 - Budwood Sales - KF';\n        }\n\n        frm.refresh_field('items');\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
   "dt": "Sales Order",
   "enabled": 1,
   "modified": "2025-04-15 10:59:54.636399",

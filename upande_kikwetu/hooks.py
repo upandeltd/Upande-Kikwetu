@@ -299,7 +299,7 @@ fixtures = [
                             "Field Rejects Stock Entry", "Grading Traceability Symbols", "Ensure Uppercase in Bay Field",
                             "Remove Read Only on Field", "Transfer Grading Stock", "Qr Code gen", "Scan QR Button", "Close Box Button",
                             "Grading Stock Entry", "Archive Employee", "Scan Data Field Listener", "Populate Number of Items", "Consignee Update", "CPL NO OF STEMS CALC","Sales order Consignee",
-                            "Income Account Toggle"]]
+                            "Income Account Toggle", "Vehicle Mileage and Registration", "Employee and Cost Center"]]
         ]
     },
     {
@@ -308,7 +308,8 @@ fixtures = [
             ["name", "in", ["Delivery Note Script", "CPL complete percentage tracker", "Material Transfer Submit",
                              "Create cpl", "Amount Calc Based on IGP",
                             "Create Box Labels", "Automate Rejects Material Issue",
-                            "Harvest Stock Entry", "Stock Entry Script", "Stock Entry After Save","Get Pick List with Farm Packlist","Packed% on FPL","Completeness tracker CPL"]]
+                            "Harvest Stock Entry", "Stock Entry Script", "Stock Entry After Save","Get Pick List with Farm Packlist","Packed% on FPL","Completeness tracker CPL",
+                            "Delivery Note Script", "Validate Stock Entry"]]
         ]
     },
     {
@@ -320,7 +321,8 @@ fixtures = [
                             "Harvest", "Item Group Price", "Label Print",
                             "Order Pick List", "Order QR Code", "Pack List Item", "Packing List",
                             "Packing Qty Confirmation", "QR Code", "QR Codes", "QR Sequence", "Rejection Reason", "SKU Summary", "Scan",
-                            "Scan Check", "Scan Check List", "Scan Location", "Scanned Items", "Stem Length","Harvest Rejects","Harvest Reject Items"
+                            "Scan Check", "Scan Check List", "Scan Location", "Scanned Items", "Stem Length","Harvest Rejects","Harvest Reject Items", "Internal Delivery Note",
+                            "Internal Delivery Note Item"
 
 
                             ]]

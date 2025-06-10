@@ -220,8 +220,10 @@ whitelisted_methods = {
     "get_item_group_price":
     "upande_kikwetu.server_scripts.fetch_item_grp_price.get_item_group_price",
     "create_sales_invoice":
-    "upande_kikwetu.server_scripts.create_sales_invoice.create_sales_invoice"
-}
+    "upande_kikwetu.server_scripts.create_sales_invoice.create_sales_invoice",
+#     "create_sales_invoice_from_packlist_button":
+#     "upande_kikwetu.server_scripts.make_si_from_cpl_button.create_sales_invoice_from_packlist_button"
+ }
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
@@ -299,7 +301,7 @@ fixtures = [
                             "Field Rejects Stock Entry", "Grading Traceability Symbols", "Ensure Uppercase in Bay Field",
                             "Remove Read Only on Field", "Transfer Grading Stock", "Qr Code gen", "Scan QR Button", "Close Box Button",
                             "Grading Stock Entry", "Archive Employee", "Scan Data Field Listener", "Populate Number of Items", "Consignee Update", "CPL NO OF STEMS CALC","Sales order Consignee",
-                            "Income Account Toggle", "Vehicle Mileage and Registration", "Employee and Cost Center"]]
+                            "Income Account Toggle","Get-Items-From-button(SI)","Sales order Consignee","Available quantity in sales order"]]
         ]
     },
     {
@@ -308,8 +310,7 @@ fixtures = [
             ["name", "in", ["Delivery Note Script", "CPL complete percentage tracker", "Material Transfer Submit",
                              "Create cpl", "Amount Calc Based on IGP",
                             "Create Box Labels", "Automate Rejects Material Issue",
-                            "Harvest Stock Entry", "Stock Entry Script", "Stock Entry After Save","Get Pick List with Farm Packlist","Packed% on FPL","Completeness tracker CPL",
-                            "Delivery Note Script", "Validate Stock Entry"]]
+                            "Harvest Stock Entry", "Stock Entry Script", "Stock Entry After Save","Get Pick List with Farm Packlist","Packed% on FPL","Completeness tracker CPL"]]
         ]
     },
     {
@@ -321,8 +322,7 @@ fixtures = [
                             "Harvest", "Item Group Price", "Label Print",
                             "Order Pick List", "Order QR Code", "Pack List Item", "Packing List",
                             "Packing Qty Confirmation", "QR Code", "QR Codes", "QR Sequence", "Rejection Reason", "SKU Summary", "Scan",
-                            "Scan Check", "Scan Check List", "Scan Location", "Scanned Items", "Stem Length","Harvest Rejects","Harvest Reject Items", "Internal Delivery Note",
-                            "Internal Delivery Note Item"
+                            "Scan Check", "Scan Check List", "Scan Location", "Scanned Items", "Stem Length","Harvest Rejects","Harvest Reject Items"
 
 
                             ]]

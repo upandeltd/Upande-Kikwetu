@@ -220,8 +220,10 @@ whitelisted_methods = {
     "get_item_group_price":
     "upande_kikwetu.server_scripts.fetch_item_grp_price.get_item_group_price",
     "create_sales_invoice":
-    "upande_kikwetu.server_scripts.create_sales_invoice.create_sales_invoice"
-}
+    "upande_kikwetu.server_scripts.create_sales_invoice.create_sales_invoice",
+#     "create_sales_invoice_from_packlist_button":
+#     "upande_kikwetu.server_scripts.make_si_from_cpl_button.create_sales_invoice_from_packlist_button"
+ }
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
@@ -299,7 +301,7 @@ fixtures = [
                             "Field Rejects Stock Entry", "Grading Traceability Symbols", "Ensure Uppercase in Bay Field",
                             "Remove Read Only on Field", "Transfer Grading Stock", "Qr Code gen", "Scan QR Button", "Close Box Button",
                             "Grading Stock Entry", "Archive Employee", "Scan Data Field Listener", "Populate Number of Items", "Consignee Update", "CPL NO OF STEMS CALC","Sales order Consignee",
-                            "Income Account Toggle"]]
+                            "Income Account Toggle","Get-Items-From-button(SI)","Sales order Consignee","Available quantity in sales order"]]
         ]
     },
     {

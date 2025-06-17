@@ -2,15 +2,14 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "naming_series:",
- "creation": "2025-05-15 20:11:44.569592",
+ "creation": "2025-05-23 21:01:24.332628",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "section_break_npj3",
   "amended_from",
-  "company",
   "naming_series",
-  "sales_order_id_cpl",
+  "sales_order_id",
   "items",
   "approval_status",
   "completion_percentage"
@@ -20,7 +19,6 @@
    "fieldname": "section_break_npj3",
    "fieldtype": "Section Break"
   },
-
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
@@ -45,16 +43,25 @@
    "label": "Completion Percentage"
   },
   {
-   "fieldname": "sales_order_id_cpl",
+   "fieldname": "amended_from",
    "fieldtype": "Link",
-   "label": "Sales Order ID (CPL)",
-   "options": "Sales Order"
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Consolidated Pack List",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "sales_order_id",
+   "fieldtype": "Data",
+   "label": "Sales Order Id"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-05-15 20:33:14.115913",
+ "modified": "2025-06-17 15:13:04.943853",
  "modified_by": "Administrator",
  "module": "Upande Kikwetu",
  "name": "Consolidated Pack List",

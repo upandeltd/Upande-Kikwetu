@@ -2,6 +2,17 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
+  "dt": "Sales Order",
+  "enabled": 1,
+  "modified": "2025-05-12 17:42:52.516152",
+  "module": null,
+  "name": "Available quantity in sales order",
+  "script": "frappe.ui.form.on(\"Sales Order Item\", {\n    item_code: function(frm, cdt, cdn) {\n        let row = locals[cdt][cdn];\n        if (!row.item_code) return; \n\n        if (row.__last_call && (new Date() - row.__last_call) < 500) return;\n        row.__last_call = new Date();\n\n        frappe.call({\n            method: \"frappe.client.get_list\",\n            args: {\n                doctype: \"Bin\",\n                filters: {\n                    item_code: row.item_code,\n                    warehouse: [\"like\", \"%Dispatch Coldstore%\"]\n                },\n                fields: [\"warehouse\", \"actual_qty\"],\n                order_by: \"actual_qty desc\",\n                limit_page_length: 50\n            },\n            callback: function(r) {\n                if (r.message && Array.isArray(r.message) && r.message.length > 0) {\n                    let total_available = 0;\n                    let stock_info = \"\";\n\n                    r.message.forEach(bin => {\n                        total_available += bin.actual_qty;\n                        stock_info += `<b>${bin.warehouse}:</b> ${bin.actual_qty} units<br>`;\n                    });\n\n                    frappe.model.set_value(cdt, cdn, \"custom_available_stock\", total_available);\n\n                    const message = `\n                        <b>Dispatch Coldstore Stock for <i>${row.item_code}</i>:</b><br>\n                        ${stock_info}\n                    `;\n\n                    frappe.msgprint({\n                        title: __(\"Stock Overview\"),\n                        message: message,\n                        indicator: \"green\",\n                        auto_close: true,\n                        auto_close_delay: 5\n                    });\n                } else {\n                    frappe.model.set_value(cdt, cdn, \"custom_available_stock\", 0);\n                    frappe.msgprint({\n                        title: __(\"No Stock Found\"),\n                        message: `No stock found for <b>${row.item_code}</b> in Dispatch Coldstore.`,\n                        indicator: \"red\",\n                        auto_close: true,\n                        auto_close_delay: 5\n                    });\n                }\n            },\n            error: function(err) {\n                frappe.msgprint({\n                    title: __(\"Error\"),\n                    message: __(\"Failed to fetch stock details for <b>{0}</b>. Please try again.\", [row.item_code]),\n                    indicator: \"red\"\n                });\n                console.error(\"Stock fetch error:\", err);\n            }\n        });\n    }\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
   "dt": "Consolidated Pack List",
   "enabled": 1,
   "modified": "2025-05-15 21:24:04.413661",
@@ -92,10 +103,10 @@
   "doctype": "Client Script",
   "dt": "Label Print",
   "enabled": 1,
-  "modified": "2025-03-28 14:28:09.020556",
+  "modified": "2025-06-09 11:59:19.146587",
   "module": "Upande Kikwetu",
   "name": "Generate Bucket Codes",
-  "script": "frappe.ui.form.on('Label Print', {\n\tafter_save(frm) {\n\t    let variety;\n\t    let number_of_labels;\n\t    let doc_name;\n\t    let action;\n\t    let farm;\n\t    let stem_length;\n\t    let bunch_size, grader, day_code;\n\t    \n\t    let args = {\n\t        action : frm.doc.action,\n\t        label_doc_name: frm.doc.name,\n\t        \n\t    };\n\t    \n\t    if (frm.doc.action === 'Harvesting Label') {\n\t        args.variety = frm.doc.item_code;\n    \t\targs.no_of_labels = frm.doc.number_of_labels;\n\n\t    } else if (frm.doc.action === 'Bunch Label') {\n\t        args.variety = frm.doc.variety;\n\t        args.no_of_labels = frm.doc.no_of_labels;\n\t        args.farm = frm.doc.farm;\n\t        args.stem_length = frm.doc.stem_length;\n\t        args.bunch_size = frm.doc.bunch_size;\n\t        \n\t    } else if (frm.doc.action === 'Grader Label') {\n\t        args.grader = frm.doc.grader;\n\t        args.no_of_labels = frm.doc.qty_of_labels;\n\t        args.day_code = frm.doc.day_code;\n\t    }\n\t    \n\t    \n\t\t\n\t\tlet bucket_id;\n\t\t\n\t\tfrappe.call({\n\t\t    method: \"upande_kikwetu.server_scripts.gen_label_id.generate_id\",\n\t\t    args: args,\n\t\t    callback:(response) => {\n\t\t        console.log(response);\n\t\t    }\n\t\t});\n\t\t\n\t}\n})",
+  "script": "frappe.ui.form.on('Label Print', {\n\tafter_save(frm) {\n\t    let variety;\n\t    let number_of_labels;\n\t    let doc_name;\n\t    let action;\n\t    let farm;\n\t    let stem_length;\n\t    let greenhouse;\n\t    let bunch_size, grader, day_code;\n\t    \n\t    let args = {\n\t        action : frm.doc.action,\n\t        label_doc_name: frm.doc.name,\n\t        \n\t    };\n\t    \n\t    if (frm.doc.action === 'Harvesting Label') {\n\t        args.variety = frm.doc.item_code;\n    \t\targs.no_of_labels = frm.doc.number_of_labels;\n\n\t    } else if (frm.doc.action === 'Bunch Label') {\n\t        args.variety = frm.doc.variety;\n\t        args.no_of_labels = frm.doc.no_of_labels;\n\t        args.farm = frm.doc.farm;\n\t        args.stem_length = frm.doc.stem_length;\n\t        args.bunch_size = frm.doc.bunch_size;\n\t        args.greenhouse = frm.doc.greenhouse;\n\t        \n\t    } else if (frm.doc.action === 'Grader Label') {\n\t        args.grader = frm.doc.grader;\n\t        args.no_of_labels = frm.doc.qty_of_labels;\n\t        args.day_code = frm.doc.day_code;\n\t    }\n\t    \n\t    \n\t\t\n\t\tlet bucket_id;\n\t\t\n\t\tfrappe.call({\n\t\t    method: \"upande_kikwetu.server_scripts.gen_label_id.generate_id\",\n\t\t    args: args,\n\t\t    callback:(response) => {\n\t\t        console.log(response);\n\t\t    }\n\t\t});\n\t\t\n\t}\n})",
   "view": "Form"
  },
  {
@@ -146,8 +157,8 @@
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Stock Entry",
-  "enabled": 1,
-  "modified": "2025-02-22 14:41:27.648541",
+  "enabled": 0,
+  "modified": "2025-06-09 11:54:49.223234",
   "module": "Upande Kikwetu",
   "name": "Grading Stock Entry",
   "script": "frappe.ui.form.on('Stock Entry', {\n    custom_farm: function(frm) {\n        if (frm.doc.stock_entry_type === \"Grading\") {\n            let warehouseMapping = {\n                \"Burguret\": { source: \"Burguret Receiving Cold Store - TL\", target: \"Burguret Graded General - TL\" },\n                \"Turaco\": { source: \"Turaco Receiving Cold Store - TL\", target: \"Turaco Graded General - TL\" },\n                \"Pendekeza\": { source: \"Pendekeza Receiving Cold Store - TL\", target: \"Pendekeza Graded General - TL\" }\n            };\n\n            let selectedFarm = frm.doc.custom_farm;\n\n            if (selectedFarm && warehouseMapping[selectedFarm]) {\n                frm.set_value(\"from_warehouse\", warehouseMapping[selectedFarm].source);\n                frm.set_value(\"to_warehouse\", warehouseMapping[selectedFarm].target);\n            }\n        }\n    },\n    \n    custom_bunched_by: function(frm) {\n        if (frm.doc.stock_entry_type === \"Grading\") {\n            if (frm.doc.custom_bunched_by) {\n                let bunched_by_value = frm.doc.custom_bunched_by;\n\n                if (frm.doc.items && frm.doc.items.length > 0) {\n                    frm.doc.items.forEach((item, idx) => {\n                        frappe.model.set_value(item.doctype, item.name, 'uom', bunched_by_value); \n                    });\n                \n                } else {\n                    frappe.throw(\"No items found in the child table.\");\n                }\n\n            }\n        }\n    },\n\n    stock_entry_type: function(frm) {\n        if (frm.doc.stock_entry_type === \"Grading\") {\n            frm.trigger(\"custom_farm\");\n            frm.trigger(\"custom_bunched_by\");\n        }\n    }\n});\n",
@@ -211,17 +222,6 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
-  "dt": "Stock Entry",
-  "enabled": 0,
-  "modified": "2025-03-13 02:53:00.320459",
-  "module": "Upande Kikwetu",
-  "name": "Transfer Grading Stock",
-  "script": "frappe.listview_settings['Stock Entry'] = {\r\n    onload: function(listview) {\r\n        listview.page.add_button('Transfer Graded Stock', () => {\r\n            // Get all stock entries from the list that were created in the last 24 hours\r\n            let selected_entries = listview.data.filter(entry => {\r\n                let entryDate = new Date(entry.creation);\r\n                let last24Hours = new Date();\r\n                last24Hours.setHours(last24Hours.getHours() - 24);\r\n\r\n                return (\r\n                    entry.docstatus === 1 &&\r\n                    entryDate >= last24Hours && \r\n                    [\"Grading\", \"Grading Without Receiving\"].includes(entry.stock_entry_type)\r\n                );\r\n            }).map(entry => entry.name);\r\n            \r\n            if (selected_entries.length === 0) {\r\n                frappe.msgprint(__('No recent graded stock entries found.'));\r\n                return;\r\n            }\r\n\r\n            // Call the API to process the stock transfer\r\n            frappe.call({\r\n                method: \"upande_kikwetu.server_scripts.transfer_graded_stock.transfer_stock\",\r\n                args: { stock_entries: selected_entries },\r\n                freeze: true,\r\n                freeze_message: \"Processing stock transfer...\",\r\n                callback: function(response) {\r\n\r\n                    if (response.message) {\r\n                        frappe.msgprint(`Stock Transfers Created: ${response.message.transferred_entries.join(\", \")}`);\r\n                        listview.refresh();\r\n                    } else {\r\n                        frappe.msgprint(\"Failed to create stock transfers.\");\r\n                    }\r\n                }\r\n            });\r\n\r\n        }, 'Action');\r\n    }\r\n};\r\n",
-  "view": "List"
- },
- {
-  "docstatus": 0,
-  "doctype": "Client Script",
   "dt": "Harvest",
   "enabled": 0,
   "modified": "2025-04-24 22:30:55.026287",
@@ -256,8 +256,8 @@
   "docstatus": 0,
   "doctype": "Client Script",
   "dt": "Bunch QR Code",
-  "enabled": 1,
-  "modified": "2025-05-08 12:46:58.023167",
+  "enabled": 0,
+  "modified": "2025-05-27 19:01:52.222864",
   "module": "Upande Kikwetu",
   "name": "Hide Filter Button",
   "script": "frappe.listview_settings[\"Bunch QR Code\"] = {\n    onload(listview) {\n        setTimeout(() => {\n            let filter_button = $(\".filter-section .filter-selector\");\n\n            if (filter_button.length) {\n                filter_button.hide();\n            }\n        }, 500);\n        \n    }\n};",
@@ -371,6 +371,17 @@
   "module": "Upande Kikwetu",
   "name": "Income Account Toggle",
   "script": "frappe.ui.form.on('Sales Invoice Item', {\n    custom_item_type: function(frm, cdt, cdn) {\n        let item = locals[cdt][cdn];\n\n        if (item.custom_item_type === 'Rose') {\n            item.income_account = '500101 - Flower Sales-Export - KF';\n        } else if (item.custom_item_type === 'Bud-wood') {\n            item.income_account = '500103 - Budwood Sales - KF';\n        }\n\n        frm.refresh_field('items');\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sales Invoice",
+  "enabled": 1,
+  "modified": "2025-06-12 12:01:41.658939",
+  "module": "Upande Kikwetu",
+  "name": "Get-Items-From-button(SI)",
+  "script": "frappe.ui.form.on(\"Sales Invoice\", {\n    refresh(frm) {\n        if (frm.doc.docstatus === 0) {\n            frm.add_custom_button(__(\"Consolidated Pack List\"), function () {\n                erpnext.utils.map_current_doc({\n                    method: \"upande_kikwetu.server_scripts.make_si_from_cpl_button.make_sales_invoice_from_pack_list\",\n                    source_doctype: \"Consolidated Pack List\",\n                    target: frm,\n                    setters: [\n                        {\n                            fieldtype: \"Link\",\n                            label: __(\"Customer\"),\n                            options: \"Customer\",\n                            fieldname: \"custom_customer\",\n                            default: frm.doc.customer,\n                        }\n                    ],\n                    get_query_filters: {\n                        docstatus: 1\n                        // exclude company or custom_sales_invoice for now\n                    }\n                });\n            }, __(\"Get Items From\"));\n        }\n    }\n});\n",
   "view": "Form"
  }
 ]

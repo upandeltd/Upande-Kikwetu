@@ -1,93 +1,83 @@
 import frappe
-import json
+from frappe.model.mapper import get_mapped_doc
 from frappe.utils import getdate, today
+from erpnext.accounts.party import get_party_account
+from erpnext.selling.doctype.sales_order.sales_order import get_item_defaults, get_item_group_defaults
 
 @frappe.whitelist()
-def create_sales_invoice_from_packlist_button(source_names, target_doc=None):
-    # Parse inputs
-    if isinstance(source_names, str):
-        if not source_names:
-            frappe.throw("No Consolidated Pack List selected.")
-        try:
-            source_names = json.loads(source_names)
-        except (json.JSONDecodeError, TypeError):
-            # Handle single string case (e.g., "CPL-001" instead of "[\"CPL-001\"]")
-            source_names = [source_names]
-    elif isinstance(source_names, (list, tuple)):
-        pass  # Already a list, no need to parse
-    else:
-        frappe.throw(f"Invalid source_names type: {type(source_names)}. Expected a JSON string or list.")
+def make_sales_invoice_from_pack_list(source_name, target_doc=None, ignore_permissions=False):
+    def postprocess(source, target):
+        target.flags.ignore_permissions = True
+        target.custom_consolidated_packlist = source.name
+        target.update_stock = 1
 
-    if not source_names:
-        frappe.throw("No Consolidated Pack List selected.")
+        if source.items:
+            target.set_warehouse = source.items[0].source_warehouse
 
-    # Initialize Sales Invoice
-    sales_invoice = frappe.get_doc(target_doc) if target_doc else frappe.new_doc("Sales Invoice")
-    created_so_ids = set()
+        # Get first linked Sales Order from items
+        sales_orders = list({item.sales_order_id for item in source.items if item.sales_order_id})
+        if sales_orders:
+            so = frappe.get_doc("Sales Order", sales_orders[0])
+            target.taxes_and_charges = so.taxes_and_charges
+            target.taxes = so.taxes
+            target.customer = so.customer
+            target.custom_shipping_agent = so.custom_shipping_agent
+            target.custom_destination = so.custom_delivery_point
+            target.custom_consignee = so.custom_consignee
+            target.custom_comment = so.custom_comment
+            target.debit_to = get_party_account("Customer", so.customer, so.company)
 
-    # Validate custom fields
-    required_fields = ["custom_shipping_agent", "custom_destination", "custom_consignee", "custom_comment"]
-    for field in required_fields:
-        if not frappe.get_meta("Sales Invoice").has_field(field):
-            frappe.throw(f"Custom field '{field}' not found in Sales Invoice.")
+        target.run_method("set_missing_values")
+        target.run_method("calculate_taxes_and_totals")
 
-    for cpl_name in source_names:
-        try:
-            cpl = frappe.get_doc("Consolidated Pack List", cpl_name)
-        except frappe.DoesNotExistError:
-            frappe.msgprint(f"Consolidated Pack List {cpl_name} does not exist. Skipping.")
-            continue
+    def update_item(source, target, source_parent):
+        if not source.sales_order_id:
+            frappe.throw(f"Missing Sales Order for item {source.item_code} in {source_parent.name}")
+        
+        so = frappe.get_doc("Sales Order", source.sales_order_id)
+        so_item = next((i for i in so.items if i.item_code == source.item_code), None)
 
-        for item in cpl.items:
-            if not item.sales_order_id or item.sales_order_id in created_so_ids:
-                continue
+        if not so_item:
+            frappe.throw(f"Item {source.item_code} not found in Sales Order {source.sales_order_id}")
 
-            try:
-                sales_order = frappe.get_doc("Sales Order", item.sales_order_id)
-            except frappe.DoesNotExistError:
-                frappe.msgprint(f"Sales Order {item.sales_order_id} does not exist. Skipping.")
-                continue
+        target.qty = source.bunch_qty
+        target.uom = source.bunch_uom
+        target.rate = so_item.rate
+        target.custom_number_of_stems = source.custom_number_of_stems
+        target.custom_length = so_item.custom_length
+        target.discount_percentage = so_item.discount_percentage
+        target.so_detail = so_item.name
+        target.sales_order = so.name
 
-            created_so_ids.add(item.sales_order_id)
+        # Set cost center
+        if so.project:
+            target.cost_center = frappe.db.get_value("Project", so.project, "cost_center")
 
-            # Set standard fields (first match only)
-            if not sales_invoice.get("customer"):
-                sales_invoice.customer = sales_order.customer
-                sales_invoice.custom_shipping_agent = sales_order.custom_shipping_agent
-                sales_invoice.custom_destination = sales_order.custom_delivery_point
-                sales_invoice.custom_consignee = sales_order.custom_consignee
-                sales_invoice.custom_comment = sales_order.custom_comment
-                sales_invoice.set_warehouse = item.source_warehouse or sales_order.set_warehouse
-                sales_invoice.posting_date = today()
-                sales_invoice.update_stock = 1
-                delivery_date = sales_order.delivery_date or sales_invoice.posting_date
-                sales_invoice.due_date = getdate(delivery_date) if delivery_date else getdate(sales_invoice.posting_date)
-                
-                # Validate taxes consistency
-                if sales_invoice.taxes_and_charges and sales_invoice.taxes_and_charges != sales_order.taxes_and_charges:
-                    frappe.msgprint(f"Warning: Taxes and charges differ in Sales Order {sales_order.name}. Using first Sales Order's taxes.")
-                else:
-                    sales_invoice.taxes_and_charges = sales_order.taxes_and_charges
-                    sales_invoice.taxes = sales_order.taxes
+        item_defaults = get_item_defaults(source.item_code, so.company)
+        item_group_defaults = get_item_group_defaults(source.item_code, so.company)
+        cost_center = item_defaults.get("selling_cost_center") or item_group_defaults.get("selling_cost_center")
+        if cost_center:
+            target.cost_center = cost_center
 
-            # Match item and append
-            so_item = next((i for i in sales_order.items if i.item_code == item.item_code), None)
-            if not so_item or not item.bunch_qty or item.bunch_qty <= 0:
-                continue
+    doc = get_mapped_doc(
+        "Consolidated Pack List",  # parent Doctype
+        source_name,
+        {
+            "Consolidated Pack List": {
+                "doctype": "Sales Invoice",
+            },
+            "Dispatch Form Item": {  # correct child table Doctype
+                "doctype": "Sales Invoice Item",
+                "field_map": {
+                    "item_code": "item_code",
+                },
+                "postprocess": update_item,
+                "condition": lambda d: d.sales_order_id and d.bunch_qty > 0,
+            },
+        },
+        target_doc,
+        postprocess,
+        ignore_permissions=ignore_permissions
+    )
 
-            sales_invoice.append("items", {
-                "item_code": item.item_code,
-                "qty": item.bunch_qty,
-                "uom": item.bunch_uom,
-                "bunch_qty": item.bunch_qty,
-                "bunch_uom": item.bunch_uom,
-                "custom_number_of_stems": item.custom_number_of_stems,
-                "rate": so_item.rate,
-                "custom_length": so_item.custom_length,
-                "discount_percentage": so_item.discount_percentage
-            })
-
-    if not sales_invoice.items:
-        frappe.throw("No valid items found to create Sales Invoice.")
-
-    return sales_invoice
+    return doc

@@ -2,6 +2,17 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
+  "dt": "Stock Entry",
+  "enabled": 0,
+  "modified": "2025-03-13 02:53:00.320459",
+  "module": "Upande Kikwetu",
+  "name": "Transfer Grading Stock",
+  "script": "frappe.listview_settings['Stock Entry'] = {\r\n    onload: function(listview) {\r\n        listview.page.add_button('Transfer Graded Stock', () => {\r\n            // Get all stock entries from the list that were created in the last 24 hours\r\n            let selected_entries = listview.data.filter(entry => {\r\n                let entryDate = new Date(entry.creation);\r\n                let last24Hours = new Date();\r\n                last24Hours.setHours(last24Hours.getHours() - 24);\r\n\r\n                return (\r\n                    entry.docstatus === 1 &&\r\n                    entryDate >= last24Hours && \r\n                    [\"Grading\", \"Grading Without Receiving\"].includes(entry.stock_entry_type)\r\n                );\r\n            }).map(entry => entry.name);\r\n            \r\n            if (selected_entries.length === 0) {\r\n                frappe.msgprint(__('No recent graded stock entries found.'));\r\n                return;\r\n            }\r\n\r\n            // Call the API to process the stock transfer\r\n            frappe.call({\r\n                method: \"upande_kikwetu.server_scripts.transfer_graded_stock.transfer_stock\",\r\n                args: { stock_entries: selected_entries },\r\n                freeze: true,\r\n                freeze_message: \"Processing stock transfer...\",\r\n                callback: function(response) {\r\n\r\n                    if (response.message) {\r\n                        frappe.msgprint(`Stock Transfers Created: ${response.message.transferred_entries.join(\", \")}`);\r\n                        listview.refresh();\r\n                    } else {\r\n                        frappe.msgprint(\"Failed to create stock transfers.\");\r\n                    }\r\n                }\r\n            });\r\n\r\n        }, 'Action');\r\n    }\r\n};\r\n",
+  "view": "List"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
   "dt": "Sales Order",
   "enabled": 1,
   "modified": "2025-05-12 17:42:52.516152",

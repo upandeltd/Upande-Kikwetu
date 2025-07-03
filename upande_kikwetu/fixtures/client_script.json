@@ -2,6 +2,28 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
+  "dt": "Journal Entry",
+  "enabled": 1,
+  "modified": "2025-05-18 23:46:46.461216",
+  "module": "Upande Kikwetu",
+  "name": "WHT Calculator W-VAT Template",
+  "script": "frappe.ui.form.on('Journal Entry Account', {\n    reference_name(frm, cdt, cdn) {\n         if (frm.doc.from_template !== 'W-VAT Template') {\n            return;\n        }\n        let row = locals[cdt][cdn];\n\n        if (row.reference_type === 'Purchase Invoice' && row.reference_name) {\n            frappe.db.get_doc('Purchase Invoice', row.reference_name)\n                .then(doc => {\n                    const two_percent = flt(doc.total) * 0.02;\n\n                    setTimeout(() => {\n                        console.log(\"Overriding default with 2% values:\");\n                        console.log(\"Total:\", doc.total);\n                        console.log(\"2% of Total:\", two_percent);\n\n                        frm.doc.accounts.forEach(acc => {\n                            acc.debit_in_account_currency = 0;\n                            acc.credit_in_account_currency = 0;\n                        });\n\n                        frm.doc.accounts.forEach(acc => {\n                            if (acc.account === 'Trade Payables - KF') {\n                                acc.debit_in_account_currency = two_percent;\n                            } else if (acc.account === '200218 - Withholding Vat Payable - KF') {\n                                acc.credit_in_account_currency = two_percent;\n                            }\n                        });\n                        frm.doc.total_debit=two_percent\n                        frm.doc.total_credit=two_percent\n                        \n                        frm.refresh_field('total_debit');\n                        frm.refresh_field('total_credit');\n                        frm.refresh_field('accounts');\n\n                        frm.doc.difference=frm.doc.total_debit - frm.doc.total_credit\n                        frm.refresh_field('difference');\n                    }, 100); // 100ms delay to override ERPNext logic\n                    \n                })\n                .catch(err => {\n                    console.error(\"Failed to fetch Purchase Invoice:\", err);\n                });\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Journal Entry",
+  "enabled": 1,
+  "modified": "2025-05-18 23:47:09.722673",
+  "module": "Upande Kikwetu",
+  "name": "WHT Calculator WHT Payment Template",
+  "script": "frappe.ui.form.on('Journal Entry Account', {\n    reference_name(frm, cdt, cdn) {\n         if (frm.doc.from_template !== 'WHT Payment Template') {\n            return;\n        }\n        let row = locals[cdt][cdn];\n\n        if (row.reference_type === 'Purchase Invoice' && row.reference_name) {\n            frappe.db.get_doc('Purchase Invoice', row.reference_name)\n                .then(doc => {\n                    const five_percent = flt(doc.total) * 0.05;\n\n                    setTimeout(() => {\n                        console.log(\"Overriding default with 5% values:\");\n                        console.log(\"Total:\", doc.total);\n                        console.log(\"5% of Total:\", five_percent);\n\n                        frm.doc.accounts.forEach(acc => {\n                            acc.debit_in_account_currency = 0;\n                            acc.credit_in_account_currency = 0;\n                        });\n\n                        frm.doc.accounts.forEach(acc => {\n                            if (acc.account === 'Trade Payables - KF') {\n                                acc.debit_in_account_currency = five_percent;\n                            } else if (acc.account === '200217 - Withholding Tax Payable - KF') {\n                                acc.credit_in_account_currency = five_percent;\n                            }\n                        });\n                        frm.doc.total_debit=five_percent\n                        frm.doc.total_credit=five_percent\n                        \n                        frm.refresh_field('total_debit');\n                        frm.refresh_field('total_credit');\n                        frm.refresh_field('accounts');\n\n                        frm.doc.difference=frm.doc.total_debit - frm.doc.total_credit\n                        frm.refresh_field('difference');\n                    }, 100); // 100ms delay to override ERPNext logic\n                    \n                })\n                .catch(err => {\n                    console.error(\"Failed to fetch Purchase Invoice:\", err);\n                });\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
   "dt": "Stock Entry",
   "enabled": 0,
   "modified": "2025-03-13 02:53:00.320459",

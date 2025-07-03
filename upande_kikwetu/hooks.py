@@ -176,8 +176,8 @@ doc_events = {
     "Farm Pack List": {
         "before_cancel":
         "upande_kikwetu.server_scripts.fpl_to_cpl_link.before_cancel",
-        "on_submit":
-        "upande_kikwetu.server_scripts.box_label_creation.generate_box_labels_with_qr"
+        # "on_submit":
+        # "upande_kikwetu.server_scripts.create_box_sticker.create_box_sticker"
     }
 }
 
@@ -312,7 +312,7 @@ fixtures = [
             ["name", "in", ["Delivery Note Script", "CPL complete percentage tracker", "Material Transfer Submit",
                              "Create cpl", "Amount Calc Based on IGP",
                             "Create Box Labels", "Automate Rejects Material Issue",
-                            "Harvest Stock Entry", "Stock Entry Script", "Stock Entry After Save","Get Pick List with Farm Packlist","Packed% on FPL","Completeness tracker CPL"]]
+                            "Harvest Stock Entry", "Stock Entry Script", "Stock Entry After Save","Get Pick List with Farm Packlist","Packed% on FPL","Completeness tracker CPL","Box label"]]
         ]
     },
     {
@@ -324,7 +324,7 @@ fixtures = [
                             "Harvest", "Item Group Price", "Label Print",
                             "Order Pick List", "Order QR Code", "Pack List Item", "Packing List",
                             "Packing Qty Confirmation", "QR Code", "QR Codes", "QR Sequence", "Rejection Reason", "SKU Summary", "Scan",
-                            "Scan Check", "Scan Check List", "Scan Location", "Scanned Items", "Stem Length","Harvest Rejects","Harvest Reject Items"
+                            "Scan Check", "Scan Check List", "Scan Location", "Scanned Items", "Stem Length","Harvest Rejects","Harvest Reject Items","Get-Items-From-button(SI)","Repack Items"
 
 
                             ]]

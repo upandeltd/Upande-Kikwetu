@@ -303,7 +303,7 @@ fixtures = [
                             "Field Rejects Stock Entry", "Grading Traceability Symbols", "Ensure Uppercase in Bay Field",
                             "Remove Read Only on Field", "Transfer Grading Stock", "Qr Code gen", "Scan QR Button", "Close Box Button",
                             "Grading Stock Entry", "Archive Employee", "Scan Data Field Listener", "Populate Number of Items", "Consignee Update", "CPL NO OF STEMS CALC","Sales order Consignee",
-                            "Income Account Toggle","Get-Items-From-button(SI)","Sales order Consignee","Available quantity in sales order","WHT Calculator W-VAT Template","WHT Calculator WHT Payment Template"]]
+                            "Income Account Toggle","Get-Items-From-button(SI)","Sales order Consignee","Available quantity in sales order","WHT Calculator W-VAT Template","WHT Calculator WHT Payment Template","Repack Items"]]
         ]
     },
     {

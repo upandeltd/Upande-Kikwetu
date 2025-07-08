@@ -178,6 +178,9 @@ doc_events = {
         "upande_kikwetu.server_scripts.fpl_to_cpl_link.before_cancel",
         # "on_submit":
         # "upande_kikwetu.server_scripts.create_box_sticker.create_box_sticker"
+        "on_submit":
+        "upande_kikwetu.server_scripts.box_label_creation.generate_box_labels_with_qr"
+    
     }
 }
 
@@ -303,7 +306,7 @@ fixtures = [
                             "Field Rejects Stock Entry", "Grading Traceability Symbols", "Ensure Uppercase in Bay Field",
                             "Remove Read Only on Field", "Transfer Grading Stock", "Qr Code gen", "Scan QR Button", "Close Box Button",
                             "Grading Stock Entry", "Archive Employee", "Scan Data Field Listener", "Populate Number of Items", "Consignee Update", "CPL NO OF STEMS CALC","Sales order Consignee",
-                            "Income Account Toggle","Get-Items-From-button(SI)","Sales order Consignee","Available quantity in sales order"]]
+                            "Income Account Toggle","Get-Items-From-button(SI)","Sales order Consignee","Available quantity in sales order","Repack Items"]]
         ]
     },
     {
@@ -324,7 +327,7 @@ fixtures = [
                             "Harvest", "Item Group Price", "Label Print",
                             "Order Pick List", "Order QR Code", "Pack List Item", "Packing List",
                             "Packing Qty Confirmation", "QR Code", "QR Codes", "QR Sequence", "Rejection Reason", "SKU Summary", "Scan",
-                            "Scan Check", "Scan Check List", "Scan Location", "Scanned Items", "Stem Length","Harvest Rejects","Harvest Reject Items","Get-Items-From-button(SI)","Repack Items"
+                            "Scan Check", "Scan Check List", "Scan Location", "Scanned Items", "Stem Length","Harvest Rejects","Harvest Reject Items","Repack Items"
 
 
                             ]]

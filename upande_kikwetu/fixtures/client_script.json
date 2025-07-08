@@ -2,6 +2,72 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
+  "dt": "Bucket QR Code",
+  "enabled": 0,
+  "modified": "2025-04-24 10:47:51.084973",
+  "module": null,
+  "name": "All harvest labels in use",
+  "script": "frappe.call({\n    method: \"frappe.client.get_list\",\n    args: {\n        doctype: \"Bucket QR Code\",\n        fields: [\"name\"],\n        filters: { status: [\"is\", \"not set\"] }\n    },\n    callback: function(response) {\n        const buckets = response.message;\n        buckets.forEach(bucket => {\n            frappe.call({\n                method: \"frappe.client.set_value\",\n                args: {\n                    doctype: \"Bucket QR Code\",\n                    name: bucket.name,\n                    fieldname: \"custom_status\",\n                    value: \"Available\"\n                }\n            });\n        });\n    }\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Farm Pack List",
+  "enabled": 0,
+  "modified": "2025-05-12 17:46:16.500717",
+  "module": "Upande Kikwetu",
+  "name": "FPL Completion %",
+  "script": "frappe.ui.form.on('Farm Pack List', {\n    total_stems: function(frm) {\n        calculate_completion_percentage(frm);\n    },\n    custom_picked_total_stems: function(frm) {\n        calculate_completion_percentage(frm);\n    }\n});\n\nfunction calculate_completion_percentage(frm) {\n    let packed_stems = parseFloat(frm.doc.total_stems) || 0;\n    let required_stems = parseFloat(frm.doc.custom_picked_total_stems) || 0;\n    let completion_percentage = 0;\n\n    // Debug values using msgprint\n    frappe.msgprint(`Packed Stems: ${packed_stems}, Required Stems: ${required_stems}`);\n\n    if (required_stems > 0) {\n        completion_percentage = (packed_stems / required_stems) * 100;\n    }\n\n    // Debug the calculated percentage\n    frappe.msgprint(`Completion Percentage: ${completion_percentage}`);\n\n    frm.set_value('custom_completion_percentage', completion_percentage);\n}",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sales Order",
+  "enabled": 0,
+  "modified": "2025-05-12 17:42:04.881133",
+  "module": null,
+  "name": "Set default Target warehouse",
+  "script": "frappe.ui.form.on(\"Sales Order Item\", {\n    refresh: function(frm) {\n        // Set warehouse and custom_source_warehouse for all existing rows on form load or refresh\n        frm.doc.items.forEach(row => {\n            if (!row.warehouse || row.warehouse !== \"Goods sold - KF\") {\n                frappe.model.set_value(row.doctype, row.name, \"warehouse\", \"Goods sold - KF\");\n            }\n            if (!row.custom_source_warehouse || row.custom_source_warehouse !== \"Main Dispatch Coldstore - KF\") {\n                frappe.model.set_value(row.doctype, row.name, \"custom_source_warehouse\", \"Main Dispatch Coldstore - KF\");\n            }\n        });\n        frm.refresh_field(\"items\");\n    },\n    item_code: function(frm, cdt, cdn) {\n        let row = locals[cdt][cdn];\n        if (!row.item_code) return; // Exit if no item_code\n\n        // Set warehouse to \"Goods sold - KF\"\n        const target_warehouse = \"Goods sold - KF\";\n        frappe.model.set_value(cdt, cdn, \"warehouse\", target_warehouse).then(() => {\n            // Confirm warehouse update\n            if (row.warehouse === target_warehouse) {\n                frappe.msgprint({\n                    title: __(\"Warehouse Updated\"),\n                    message: __(\"Warehouse set to <b>{0}</b> for item <b>{1}</b>.\", [target_warehouse, row.item_code]),\n                    indicator: \"blue\",\n                    auto_close: true,\n                    auto_close_delay: 3\n                });\n            } else {\n                frappe.msgprint({\n                    title: __(\"Warehouse Update Failed\"),\n                    message: __(\"Failed to set Warehouse to <b>{0}</b>. Current value: <b>{1}</b>. Check field name or permissions.\", [target_warehouse, row.warehouse || \"None\"]),\n                    indicator: \"red\"\n                });\n            }\n        }).catch(err => {\n            frappe.msgprint({\n                title: __(\"Error\"),\n                message: __(\"Error setting Warehouse for <b>{0}</b>: {1}\", [row.item_code, err.message]),\n                indicator: \"red\"\n            });\n            console.error(\"Warehouse set error:\", err);\n        });\n\n        // Set custom_source_warehouse to \"Main Dispatch Coldstore - KF\"\n        const target_source_warehouse = \"Main Dispatch Coldstore - KF\";\n        frappe.model.set_value(cdt, cdn, \"custom_source_warehouse\", target_source_warehouse).then(() => {\n            // Confirm custom_source_warehouse update\n            if (row.custom_source_warehouse === target_source_warehouse) {\n                frappe.msgprint({\n                    historia_title: __(\"Custom Source Warehouse Updated\"),\n                    message: __(\"Custom Source Warehouse set to <b>{0}</b> for item <b>{1}</b>.\", [target_source_warehouse, row.item_code]),\n                    indicator: \"blue\",\n                    auto_close: true,\n                    auto_close_delay: 3\n                });\n            } else {\n                frappe.msgprint({\n                    title: __(\"Custom Source Warehouse Update Failed\"),\n                    message: __(\"Failed to set Custom Source Warehouse to <b>{0}</b>. Current value: <b>{1}</b>. Check field name or permissions.\", [target_source_warehouse, row.custom_source_warehouse || \"None\"]),\n                    indicator: \"red\"\n                });\n            }\n            // Force child table refresh\n            frm.refresh_field(\"items\");\n        }).catch(err => {\n            frappe.msgprint({\n                title: __(\"Error\"),\n                message: __(\"Error setting Custom Source Warehouse for <b>{0}</b>: {1}\", [row.item_code, err.message]),\n                indicator: \"red\"\n            });\n            console.error(\"Custom Source Warehouse set error:\", err);\n        });\n\n        // Validate warehouse existence\n        frappe.db.exists(\"Warehouse\", target_warehouse).then(exists => {\n            if (!exists) {\n                frappe.msgprint({\n                    title: __(\"Warehouse Not Found\"),\n                    message: __(\"Warehouse <b>{0}</b> does not exist. Please create it or correct the name.\", [target_warehouse]),\n                    indicator: \"orange\"\n                });\n            }\n        });\n\n        frappe.db.exists(\"Warehouse\", target_source_warehouse).then(exists => {\n            if (!exists) {\n                frappe.msgprint({\n                    title: __(\"Warehouse Not Found\"),\n                    message: __(\"Warehouse <b>{0}</b> does not exist. Please create it or correct the name.\", [target_source_warehouse]),\n                    indicator: \"orange\"\n                });\n            }\n        });\n    }\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Farm Pack List",
+  "enabled": 0,
+  "modified": "2025-05-15 20:18:45.416336",
+  "module": "Upande Kikwetu",
+  "name": "completion % on FPL",
+  "script": "frappe.ui.form.on('Farm Pack List', {\n    total_stems: function(frm) {\n        calculate_completion_percentage(frm);\n    },\n    custom_picked_total_stems: function(frm) {\n        calculate_completion_percentage(frm);\n    }\n});\n\nfunction calculate_completion_percentage(frm) {\n    let packed_stems = parseFloat(frm.doc.total_stems) || 0;\n    let required_stems = parseFloat(frm.doc.custom_picked_total_stems) || 0;\n    let completion_percentage = 0;\n\n    // Debug values using msgprint\n    frappe.msgprint(`Packed Stems: ${packed_stems}, Required Stems: ${required_stems}`);\n\n    if (required_stems > 0) {\n        completion_percentage = (packed_stems / required_stems) * 100;\n    }\n\n    // Debug the calculated percentage\n    frappe.msgprint(`Completion Percentage: ${completion_percentage}`);\n\n    frm.set_value('custom_completion_percentage', completion_percentage);\n}",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sales Order",
+  "enabled": 1,
+  "modified": "2025-05-16 09:28:40.197676",
+  "module": null,
+  "name": "Default Warehouse setting SO",
+  "script": "frappe.ui.form.on('Sales Order', {\n    onload: function(frm) {\n        frm.fields_dict.items.grid.get_field('warehouse').df.read_only = 1;\n    }\n});\n\nfrappe.ui.form.on('Sales Order Item', {\n    item_code: function(frm, cdt, cdn) {\n        frappe.model.set_value(cdt, cdn, 'warehouse', 'Goods sold - KF');\n    },\n\n    warehouse: function(frm, cdt, cdn) {\n        let item = locals[cdt][cdn];\n        if (item.warehouse !== 'Goods sold - KF') {\n            frappe.model.set_value(cdt, cdn, 'warehouse', 'Goods sold - KF');\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Material Request",
+  "enabled": 0,
+  "modified": "2025-06-03 11:10:37.078792",
+  "module": "Upande Kikwetu",
+  "name": "Employee and Cost Center",
+  "script": "frappe.ui.form.on('Material Request', {\n  validate: function(frm) {\n    if (\n      frm.doc.material_request_type === 'Material Issue' &&\n      !['Chemical', 'Fertiliser'].includes(frm.doc.custom_type)\n    ) {\n      if (!frm.doc.custom_employee) {\n        frappe.throw(__('Please select an Employee'));\n      }\n      if (!frm.doc.custom_cost_center) {\n        frappe.throw(__('Please select a Cost Center'));\n      }\n    }\n  }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
   "dt": "Journal Entry",
   "enabled": 1,
   "modified": "2025-05-18 23:46:46.461216",
@@ -19,6 +85,17 @@
   "module": "Upande Kikwetu",
   "name": "WHT Calculator WHT Payment Template",
   "script": "frappe.ui.form.on('Journal Entry Account', {\n    reference_name(frm, cdt, cdn) {\n         if (frm.doc.from_template !== 'WHT Payment Template') {\n            return;\n        }\n        let row = locals[cdt][cdn];\n\n        if (row.reference_type === 'Purchase Invoice' && row.reference_name) {\n            frappe.db.get_doc('Purchase Invoice', row.reference_name)\n                .then(doc => {\n                    const five_percent = flt(doc.total) * 0.05;\n\n                    setTimeout(() => {\n                        console.log(\"Overriding default with 5% values:\");\n                        console.log(\"Total:\", doc.total);\n                        console.log(\"5% of Total:\", five_percent);\n\n                        frm.doc.accounts.forEach(acc => {\n                            acc.debit_in_account_currency = 0;\n                            acc.credit_in_account_currency = 0;\n                        });\n\n                        frm.doc.accounts.forEach(acc => {\n                            if (acc.account === 'Trade Payables - KF') {\n                                acc.debit_in_account_currency = five_percent;\n                            } else if (acc.account === '200217 - Withholding Tax Payable - KF') {\n                                acc.credit_in_account_currency = five_percent;\n                            }\n                        });\n                        frm.doc.total_debit=five_percent\n                        frm.doc.total_credit=five_percent\n                        \n                        frm.refresh_field('total_debit');\n                        frm.refresh_field('total_credit');\n                        frm.refresh_field('accounts');\n\n                        frm.doc.difference=frm.doc.total_debit - frm.doc.total_credit\n                        frm.refresh_field('difference');\n                    }, 100); // 100ms delay to override ERPNext logic\n                    \n                })\n                .catch(err => {\n                    console.error(\"Failed to fetch Purchase Invoice:\", err);\n                });\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Material Request",
+  "enabled": 0,
+  "modified": "2025-06-03 11:10:46.213616",
+  "module": "Upande Kikwetu",
+  "name": "Vehicle Registration and Mileages",
+  "script": "frappe.ui.form.on('Material Request', {\n    validate: function(frm) {\n        if (frm.doc.custom_type === \"Fuel\") {\n            if (!frm.doc.custom_vehicle_mileages || !frm.doc.custom_registration_number) {\n                frappe.throw(\"Please enter Vehicle Mileages and Registration Number for fuel requisition.\");\n            }\n        }\n    }\n});\n",
   "view": "Form"
  },
  {
@@ -420,12 +497,23 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
-  "dt": "Consolidated Pack List",
+  "dt": "Tendepay Statement Importer",
   "enabled": 1,
-  "modified": "2025-06-29 16:01:13.512296",
-  "module": null,
-  "name": "Repack Items",
-  "script": "frappe.ui.form.on('Consolidated Pack List', {\n    refresh(frm) {\n        frm.add_custom_button(\"Repack Items\", () => {\n            if (!frm.doc.repack_items || frm.doc.repack_items.length === 0) {\n                frappe.msgprint(\"Please fill in the Repack Items table before proceeding.\");\n                return;\n            }\n\n            frappe.call({\n                method: \"your_app.api.repack_items\",\n                args: {\n                    docname: frm.doc.name\n                },\n                callback(r) {\n                    if (!r.exc) {\n                        frappe.msgprint(\"Repack completed successfully.\");\n                        frm.reload_doc();\n                    }\n                }\n            });\n        });\n    }\n});\n",
+  "modified": "2025-07-03 16:04:22.536602",
+  "module": "Upande Kikwetu",
+  "name": "Tende Pay Statement Imports",
+  "script": "frappe.ui.form.on('Tendepay Statement Importer', {\n    refresh: function(frm) {\n        if (!frm.is_new()) {\n            frm.add_custom_button('Process Statement', () => {\n                if (!frm.doc.statement_file) {\n                    frappe.msgprint(\"Please attach a CSV file before processing.\");\n                    return;\n                }\n\n                frappe.call({\n                    method: \"upande_kikwetu.server_scripts.tende_pay_statement_importer.extract_csv_data\",\n                    args: {\n                        docname: frm.doc.name,\n                        doctype: frm.doc.doctype\n                    },\n                    callback: function(r) {\n                        frappe.msgprint(r.message);\n                        frm.reload_doc();\n                    },\n                    freeze: true,\n                    freeze_message: \"Processing CSV...\"\n                });\n            }, 'Actions');\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Update hooks file",
+  "enabled": 1,
+  "modified": "2025-07-08 19:07:21.529006",
+  "module": "Upande Kikwetu",
+  "name": "Hooks Updater",
+  "script": "frappe.ui.form.on('Update hooks file', {\n    pull_latest_customizations(frm) {\n        frappe.call({\n            method: \"upande_kikwetu.server_scripts.update_hooks_from_recent_customizations.update_hooks_file\",\n            callback: function(response) {\n                const data = response.message;\n\n                if (data && data.fixtures) {\n                    frm.set_value(\"customizations\", data.fixtures);\n\n                    if (data.skipped) {\n                        const skipped_text = Object.entries(data.skipped)\n                            .map(([doctype, names]) => `${doctype}: ${names.join(\", \")}`)\n                            .join(\"\\n\");\n\n                        frm.set_value(\"skipped_duplicates\", skipped_text);\n                    } else {\n                        frm.set_value(\"skipped_duplicates\", \"\");\n                    }\n\n                    frappe.show_alert({\n                        message: __(\"✅ Fixtures pulled and updated.\"),\n                        indicator: 'green'\n                    });\n\n                    // Autosave the form\n                    frm.save();\n                } else {\n                    frappe.msgprint(\"⚠️ No data returned from server.\");\n                }\n            },\n            error: function(err) {\n                frappe.msgprint(\"❌ Server error.\");\n                console.error(err);\n            }\n        });\n    }\n});\n",
   "view": "Form"
  }
 ]

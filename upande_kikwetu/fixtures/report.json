@@ -1,0 +1,1518 @@
+[
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-05-07 12:37:36.873580",
+  "module": "Upande Kikwetu",
+  "name": "Test dpl",
+  "prepared_report": 0,
+  "query": "SELECT \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t5.customer, '</div>'), t5.customer)\n         ELSE '' END AS Customer,\n         \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t5.priority_level, '</div>'), t5.priority_level)\n         ELSE '' END AS \"Priority Level\",\n         \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         CONCAT('<img src=\"', t5.custom_qr_code, '\" width=\"100\"/>') \n         ELSE '' END AS qr_image,\n         \n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t4.item_name, '</div>'), t4.item_name) AS Variety,\n    \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t5.custom_total_stems, '</div>'), t5.custom_total_stems)\n         ELSE '' END AS \"Total Stems\",\n         \n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t4.uom, '</div>'), t4.uom) AS UOM,\n    \n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', FORMAT(t4.qty, 0), '</div>'), FORMAT(t4.qty, 0)) AS Bunches,\n    \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t5.sales_order, '</div>'), t5.sales_order)\n         ELSE '' END AS sales_order\n         \nFROM (\n    SELECT\n        t0.name,\n        t0.sales_order,\n        t0.priority_level,\n        t0.source_warehouse,\n        t0.customer,\n        t0.custom_qr_code,\n        t0.custom_warehouse,\n        t0.custom_comment,\n        t0.is_addition,\n        t0.custom_total_stems,\n        t0.creation\n    FROM `tabOrder Pick List` AS t0\n    \n) AS t5\nLEFT JOIN (\n    SELECT\n        t1.parent,\n        t1.sales_order AS tabpick_list_item_sales_order,\n        t1.item_group,\n        t1.item_code,\n        t1.warehouse,\n        t1.description,\n        t1.custom__stem_length,\n        t1.qty,\n        t1.uom,\n        t1.item_name\n    FROM `tabPick List Item` AS t1\n) AS t4\n    ON t5.sales_order COLLATE utf8mb4_unicode_ci = t4.tabpick_list_item_sales_order COLLATE utf8mb4_unicode_ci\nORDER BY t5.priority_level ASC, t5.name;\n",
+  "ref_doctype": "Order Pick List",
+  "reference_report": null,
+  "report_name": "Test dpl",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Test dpl",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Packing Supervisor"
+   },
+   {
+    "parent": "Test dpl",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "Today",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "Start Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "Today",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "End Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "Discards-Ungraded",
+    "fieldname": "stock_entry_type",
+    "fieldtype": "Select",
+    "label": "Discard/Reject",
+    "mandatory": 1,
+    "options": "\nDiscards-Ungraded\nDiscards-Graded\nGraded Rejects",
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "",
+    "fieldname": "farm",
+    "fieldtype": "Link",
+    "label": " Farm",
+    "mandatory": 1,
+    "options": "Farm",
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Tambuzi",
+  "modified": "2025-03-27 13:06:24.539974",
+  "module": "Stock",
+  "name": "Packhouse Discards/Rejects Report",
+  "prepared_report": 0,
+  "query": "SELECT\r\n    se.posting_date AS \"Date:Date:120\",\r\n    se.stock_entry_type AS \"Discard/Reject Type:Link/Stock Entry Type:150\",\r\n    i.item_group AS \"Item Group:Link/Item Group:160\",\r\n    sed.item_code AS \"Item Code:Link/Item:200\",\r\n    se.custom_farm AS \"Farm:Link/Farm:140\",\r\n    sed.custom_rejection_reason AS \"Reason:Select:180\",\r\n    SUM(sed.qty) AS \"Qty:Int:70\"\r\nFROM\r\n    `tabStock Entry` se\r\nJOIN\r\n    `tabStock Entry Detail` sed ON sed.parent = se.name\r\nJOIN\r\n    `tabItem` i ON sed.item_code = i.item_code    \r\nWHERE\r\n    se.docstatus = 1\r\n    AND se.posting_date BETWEEN %(from_date)s AND %(to_date)s\r\n    AND (\r\n        %(stock_entry_type)s IS NULL \r\n        OR se.stock_entry_type = %(stock_entry_type)s\r\n    )\r\n    AND (\r\n        se.custom_farm = %(farm)s\r\n    )\r\n    \r\nGROUP BY\r\n    se.posting_date, se.stock_entry_type, i.item_group, sed.item_code, se.custom_farm, sed.custom_rejection_reason\r\nORDER BY\r\n    se.posting_date, se.stock_entry_type, i.item_group, sed.item_code;",
+  "ref_doctype": "Stock Entry",
+  "reference_report": null,
+  "report_name": "Packhouse Discards/Rejects Report",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   },
+   {
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Manufacturing Manager"
+   },
+   {
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Manufacturing User"
+   },
+   {
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Agronomist Clerk"
+   },
+   {
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Production Manager"
+   },
+   {
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Harvest Manager"
+   },
+   {
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Harvest User"
+   },
+   {
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Packing Supervisor"
+   },
+   {
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Pendekeza Packhouse Manager"
+   },
+   {
+    "parent": "Packhouse Discards/Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Turacco Packhouse Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "Today",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Field Rejects Report",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "Today",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Field Rejects Report",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": null,
+    "fieldname": "farm",
+    "fieldtype": "Link",
+    "label": "Farm",
+    "mandatory": 1,
+    "options": "Farm",
+    "parent": "Field Rejects Report",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Tambuzi",
+  "modified": "2025-03-27 11:34:53.158815",
+  "module": "Stock",
+  "name": "Field Rejects Report",
+  "prepared_report": 0,
+  "query": "SELECT\r\n    se.posting_date AS \"Date:Date:120\",\r\n    i.item_group AS \"Item Group:Link/Item Group:160\",\r\n    sed.item_code AS \"Item Code:Link/Item:200\",\r\n    se.custom_farm AS \"Farm:Link/Farm:140\",\r\n    sed.custom_reason AS \"Reason:Select:180\",\r\n    sed.custom_rejection_reason AS \"Reason:Select:180\",\r\n    SUM(sed.qty) AS \"Qty:Int:70\"\r\nFROM\r\n    `tabStock Entry` se\r\nJOIN\r\n    `tabStock Entry Detail` sed ON sed.parent = se.name\r\nJOIN\r\n    `tabItem` i ON sed.item_code = i.item_code    \r\nWHERE\r\n    se.docstatus = 1\r\n    AND se.posting_date BETWEEN %(from_date)s AND %(to_date)s\r\n    AND se.custom_farm= %(farm)s\r\n    AND se.stock_entry_type = \"Field Rejects\"\r\nGROUP BY\r\n    se.posting_date, i.item_group, sed.item_code, se.custom_farm, sed.custom_reason, custom_rejection_reason\r\nORDER BY\r\n    se.posting_date, i.item_group, sed.item_code;",
+  "ref_doctype": "Stock Entry",
+  "reference_report": null,
+  "report_name": "Field Rejects Report",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Field Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Field Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   },
+   {
+    "parent": "Field Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Manufacturing Manager"
+   },
+   {
+    "parent": "Field Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Manufacturing User"
+   },
+   {
+    "parent": "Field Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Agronomist Clerk"
+   },
+   {
+    "parent": "Field Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Production Manager"
+   },
+   {
+    "parent": "Field Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Harvest Manager"
+   },
+   {
+    "parent": "Field Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Harvest User"
+   },
+   {
+    "parent": "Field Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Packing Supervisor"
+   },
+   {
+    "parent": "Field Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Pendekeza Packhouse Manager"
+   },
+   {
+    "parent": "Field Rejects Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Turacco Packhouse Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{}",
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-04-16 12:11:58.069045",
+  "module": "Upande Kikwetu",
+  "name": "#rep Order Pick List",
+  "prepared_report": 0,
+  "query": "SELECT\n  `t5`.`name`,\n  `t5`.`sales_order`,\n  `t5`.`priority_level`,\n  `t5`.`source_warehouse`,\n  `t5`.`customer`,\nCONCAT(\n  '<img src=\"', `t5`.`custom_qr_code`, '\" ',\n  'style=\"width: 120px; height: 120px; display: block; margin: 4px auto;\" />'\n) AS `qr_image`,     \n  `t5`.`custom_warehouse`,\n  `t5`.`custom_comment`,\n  `t4`.`tabpick_list_item_sales_order`,\n  `t4`.`item_group`,\n  `t4`.`item_code`,\n  `t4`.`warehouse`,\n  `t4`.`description`,\n  `t4`.`item_name`\nFROM (\n  SELECT\n    `t0`.`name`,\n    `t0`.`sales_order`,\n    `t0`.`priority_level`,\n    `t0`.`source_warehouse`,\n    `t0`.`customer`,\n    `t0`.`custom_qr_code`,\n    `t0`.`custom_warehouse`,\n    `t0`.`custom_comment`\n  FROM `tabOrder Pick List` AS `t0`\n) AS `t5`\nINNER JOIN (\n  SELECT\n    `t1`.`sales_order` AS `tabpick_list_item_sales_order`,\n    `t1`.`item_group`,\n    `t1`.`item_code`,\n    `t1`.`warehouse`,\n    `t1`.`description`,\n    `t1`.`item_name`\n  FROM `tabPick List Item` AS `t1`\n) AS `t4`\n  ON CAST(`t5`.`sales_order` AS BINARY) = `t4`.`tabpick_list_item_sales_order`\nORDER BY `t5`.`priority_level` DESC;\n",
+  "ref_doctype": "Order Pick List",
+  "reference_report": null,
+  "report_name": "#rep Order Pick List",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "#rep Order Pick List",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Packing Supervisor"
+   },
+   {
+    "parent": "#rep Order Pick List",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-04-16 13:12:46.927250",
+  "module": "Upande Kikwetu",
+  "name": "Rep opl",
+  "prepared_report": 0,
+  "query": "SELECT\n  `t5`.`name`,\n  `t5`.`sales_order`,\n  `t5`.`priority_level`,\n  `t5`.`source_warehouse`,\n  `t5`.`customer`,\n  CONCAT('<img src=\"', `t5`.`custom_qr_code`, '\" width=\"100\"/>') AS `qr_image`,\n  `t5`.`custom_warehouse`,\n  `t5`.`custom_comment`,\n  `t4`.`tabpick_list_item_sales_order`,\n  `t4`.`item_group`,\n  `t4`.`item_code`,\n  `t4`.`warehouse`,\n  `t4`.`description`,\n  `t4`.`item_name`\nFROM (\n  SELECT\n    `t0`.`name`,\n    `t0`.`sales_order`,\n    `t0`.`priority_level`,\n    `t0`.`source_warehouse`,\n    `t0`.`customer`,\n    `t0`.`custom_qr_code`,\n    `t0`.`custom_warehouse`,\n    `t0`.`custom_comment`\n  FROM `tabOrder Pick List` AS `t0`\n) AS `t5`\nINNER JOIN (\n  SELECT\n    `t1`.`sales_order` AS `tabpick_list_item_sales_order`,\n    `t1`.`item_group`,\n    `t1`.`item_code`,\n    `t1`.`warehouse`,\n    `t1`.`description`,\n    `t1`.`item_name`\n  FROM `tabPick List Item` AS `t1`\n) AS `t4`\n  ON CAST(`t5`.`sales_order` AS BINARY) = `t4`.`tabpick_list_item_sales_order`\nORDER BY `t5`.`priority_level` DESC;\n",
+  "ref_doctype": "Order Pick List",
+  "reference_report": null,
+  "report_name": "Rep opl",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Rep opl",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Packing Supervisor"
+   },
+   {
+    "parent": "Rep opl",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-04-22 22:57:46.963712",
+  "module": "Upande Kikwetu",
+  "name": "opl",
+  "prepared_report": 0,
+  "query": "SELECT \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level DESC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.name, '</div>'), t5.name)\n         ELSE '' END AS name,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level DESC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.sales_order, '</div>'), t5.sales_order)\n         ELSE '' END AS sales_order,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level DESC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.priority_level, '</div>'), t5.priority_level)\n         ELSE '' END AS priority_level,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level DESC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.source_warehouse, '</div>'), t5.source_warehouse)\n         ELSE '' END AS source_warehouse,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level DESC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.customer, '</div>'), t5.customer)\n         ELSE '' END AS customer,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level DESC) = 1 THEN \n         CONCAT('<img src=\"', t5.custom_qr_code, '\" width=\"100\"/>') \n         ELSE '' END AS qr_image,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level DESC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.custom_warehouse, '</div>'), t5.custom_warehouse)\n         ELSE '' END AS custom_warehouse,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level DESC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.custom_comment, '</div>'), t5.custom_comment)\n         ELSE '' END AS custom_comment,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t4.item_code, '</div>'), t4.item_code) AS item_code,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t4.item_name, '</div>'), t4.item_name) AS item_name,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t4.item_group, '</div>'), t4.item_group) AS item_group,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t4.warehouse, '</div>'), t4.warehouse) AS warehouse,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t4.description, '</div>'), t4.description) AS description\nFROM (\n    SELECT\n        t0.name,\n        t0.sales_order,\n        t0.priority_level,\n        t0.source_warehouse,\n        t0.customer,\n        t0.custom_qr_code,\n        t0.custom_warehouse,\n        t0.custom_comment,\n        t0.is_addition,\n        t0.creation\n    FROM `tabOrder Pick List` AS t0\n    WHERE DATE(t0.creation) = CURDATE()\n) AS t5\nLEFT JOIN (\n    SELECT\n        t1.parent,\n        t1.sales_order AS tabpick_list_item_sales_order,\n        t1.item_group,\n        t1.item_code,\n        t1.warehouse,\n        t1.description,\n        t1.item_name\n    FROM `tabPick List Item` AS t1\n) AS t4\n    ON t5.sales_order COLLATE utf8mb4_unicode_ci = t4.tabpick_list_item_sales_order COLLATE utf8mb4_unicode_ci\nORDER BY t5.name, t5.priority_level DESC;",
+  "ref_doctype": "Order Pick List",
+  "reference_report": null,
+  "report_name": "opl",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "opl",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Packing Supervisor"
+   },
+   {
+    "parent": "opl",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-04-22 22:13:41.984945",
+  "module": "Upande Kikwetu",
+  "name": "opl color",
+  "prepared_report": 0,
+  "query": "SELECT\n  IF(t5.is_addition, CONCAT('<div style=\"background-color:#f8d7da\">', t5.name, '</div>'), t5.name) AS name,\n  IF(t5.is_addition, CONCAT('<div style=\"background-color:#f8d7da\">', t5.sales_order, '</div>'), t5.sales_order) AS sales_order,\n  IF(t5.is_addition, CONCAT('<div style=\"background-color:#f8d7da\">', t5.priority_level, '</div>'), t5.priority_level) AS priority_level,\n  IF(t5.is_addition, CONCAT('<div style=\"background-color:#f8d7da\">', t5.source_warehouse, '</div>'), t5.source_warehouse) AS source_warehouse,\n  IF(t5.is_addition, CONCAT('<div style=\"background-color:#f8d7da\">', t5.customer, '</div>'), t5.customer) AS customer,\n  IF(t5.is_addition, CONCAT('<div style=\"background-color:#f8d7da\"><img src=\"', t5.custom_qr_code, '\" width=\"100\"/></div>'),\n                          CONCAT('<img src=\"', t5.custom_qr_code, '\" width=\"100\"/>')) AS qr_image,\n  IF(t5.is_addition, CONCAT('<div style=\"background-color:#f8d7da\">', t5.custom_warehouse, '</div>'), t5.custom_warehouse) AS custom_warehouse,\n  IF(t5.is_addition, CONCAT('<div style=\"background-color:#f8d7da\">', t5.custom_comment, '</div>'), t5.custom_comment) AS custom_comment,\n  IF(t5.is_addition, CONCAT('<div style=\"background-color:#f8d7da\">', t4.tabpick_list_item_sales_order, '</div>'), t4.tabpick_list_item_sales_order) AS tabpick_list_item_sales_order,\n  IF(t5.is_addition, CONCAT('<div style=\"background-color:#f8d7da\">', t4.item_group, '</div>'), t4.item_group) AS item_group,\n  IF(t5.is_addition, CONCAT('<div style=\"background-color:#f8d7da\">', t4.item_code, '</div>'), t4.item_code) AS item_code,\n  IF(t5.is_addition, CONCAT('<div style=\"background-color:#f8d7da\">', t4.warehouse, '</div>'), t4.warehouse) AS warehouse,\n  IF(t5.is_addition, CONCAT('<div style=\"background-color:#f8d7da\">', t4.description, '</div>'), t4.description) AS description,\n  IF(t5.is_addition, CONCAT('<div style=\"background-color:#f8d7da\">', t4.item_name, '</div>'), t4.item_name) AS item_name\nFROM (\n  SELECT\n    t0.name,\n    t0.sales_order,\n    t0.priority_level,\n    t0.source_warehouse,\n    t0.customer,\n    t0.custom_qr_code,\n    t0.custom_warehouse,\n    t0.custom_comment,\n    t0.is_addition,\n    t0.creation\n  FROM `tabOrder Pick List` AS t0\n  WHERE DATE(t0.creation) = CURDATE()\n) AS t5\nINNER JOIN (\n  SELECT\n    t1.sales_order AS tabpick_list_item_sales_order,\n    t1.item_group,\n    t1.item_code,\n    t1.warehouse,\n    t1.description,\n    t1.item_name\n  FROM `tabPick List Item` AS t1\n) AS t4\n  ON CAST(t5.sales_order AS BINARY) = t4.tabpick_list_item_sales_order\nORDER BY t5.priority_level DESC;\n",
+  "ref_doctype": "Order Pick List",
+  "reference_report": null,
+  "report_name": "opl color",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "opl color",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Packing Supervisor"
+   },
+   {
+    "parent": "opl color",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 1,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-05-09 13:06:55.246563",
+  "module": "Upande Kikwetu",
+  "name": "Daily Order Pick List",
+  "prepared_report": 0,
+  "query": "\nSELECT \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.name, '</div>'), t5.name)\n         ELSE '' END AS name,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.sales_order, '</div>'), t5.sales_order)\n         ELSE '' END AS sales_order,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.priority_level, '</div>'), t5.priority_level)\n         ELSE '' END AS priority_level,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.source_warehouse, '</div>'), t5.source_warehouse)\n         ELSE '' END AS source_warehouse,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.customer, '</div>'), t5.customer)\n         ELSE '' END AS customer,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         CONCAT('<img src=\"', t5.custom_qr_code, '\" width=\"100\"/>') \n         ELSE '' END AS qr_image,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.custom_warehouse, '</div>'), t5.custom_warehouse)\n         ELSE '' END AS custom_warehouse,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.custom_total_stems, '</div>'), t5.custom_total_stems)\n         ELSE '' END AS custom_total_stems,\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t5.custom_comment, '</div>'), t5.custom_comment)\n         ELSE '' END AS custom_comment,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t4.item_code, '</div>'), t4.item_code) AS item_code,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t4.item_name, '</div>'), t4.item_name) AS item_name,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t4.item_group, '</div>'), t4.item_group) AS item_group,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t4.custom__stem_length, '</div>'), t4.custom__stem_length) AS custom__stem_length,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t4.warehouse, '</div>'), t4.warehouse) AS warehouse,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t4.qty, '</div>'), t4.qty) AS Bunches,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t4.uom, '</div>'), t4.uom) AS UOM,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#f8d7da\">', t4.description, '</div>'), t4.description) AS description\nFROM (\n    SELECT\n        t0.name,\n        t0.sales_order,\n        t0.priority_level,\n        t0.source_warehouse,\n        t0.customer,\n        t0.custom_qr_code,\n        t0.custom_warehouse,\n        t0.custom_comment,\n        t0.is_addition,\n        t0.custom_total_stems,\n        t0.creation\n    FROM `tabOrder Pick List` AS t0\n    WHERE DATE(t0.creation) IN (CURDATE(), CURDATE() - INTERVAL 1 DAY)\n) AS t5\nLEFT JOIN (\n    SELECT\n        t1.parent,\n        t1.sales_order AS tabpick_list_item_sales_order,\n        t1.item_group,\n        t1.item_code,\n        t1.warehouse,\n        t1.description,\n        t1.custom__stem_length,\n        t1.qty,\n        t1.uom,\n        t1.item_name\n    FROM `tabPick List Item` AS t1\n) AS t4\n    ON t5.sales_order COLLATE utf8mb4_unicode_ci = t4.tabpick_list_item_sales_order COLLATE utf8mb4_unicode_ci\nORDER BY t5.priority_level ASC, t5.name;",
+  "ref_doctype": "Order Pick List",
+  "reference_report": null,
+  "report_name": "Daily Order Pick List",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Daily Order Pick List",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Packing Supervisor"
+   },
+   {
+    "parent": "Daily Order Pick List",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 1,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"columns\":[{\"label\":\"name\",\"fieldname\":\"name\",\"id\":\"name\",\"name\":\"name\",\"width\":null,\"editable\":false,\"compareValue\":null},{\"label\":\"customer\",\"fieldname\":\"customer\",\"id\":\"customer\",\"name\":\"customer\",\"width\":null,\"editable\":false,\"compareValue\":null},{\"label\":\"item_name\",\"fieldname\":\"item_name\",\"id\":\"item_name\",\"name\":\"item_name\",\"width\":null,\"editable\":false,\"compareValue\":null},{\"label\":\"priority_level\",\"fieldname\":\"priority_level\",\"id\":\"priority_level\",\"name\":\"priority_level\",\"width\":null,\"editable\":false,\"compareValue\":null},{\"label\":\"qr_image\",\"fieldname\":\"qr_image\",\"id\":\"qr_image\",\"name\":\"qr_image\",\"width\":null,\"editable\":false,\"compareValue\":null},{\"label\":\"custom_total_stems\",\"fieldname\":\"custom_total_stems\",\"id\":\"custom_total_stems\",\"name\":\"custom_total_stems\",\"width\":null,\"editable\":false,\"compareValue\":null},{\"label\":\"custom__stem_length\",\"fieldname\":\"custom__stem_length\",\"id\":\"custom__stem_length\",\"name\":\"custom__stem_length\",\"width\":null,\"editable\":false,\"compareValue\":null},{\"label\":\"custom_comment\",\"fieldname\":\"custom_comment\",\"id\":\"custom_comment\",\"name\":\"custom_comment\",\"width\":null,\"editable\":false,\"compareValue\":null},{\"label\":\"sales_order\",\"fieldname\":\"sales_order\",\"id\":\"sales_order\",\"name\":\"sales_order\",\"width\":null,\"editable\":false,\"compareValue\":null},{\"label\":\"item_code\",\"fieldname\":\"item_code\",\"id\":\"item_code\",\"name\":\"item_code\",\"width\":null,\"editable\":false,\"compareValue\":null},{\"label\":\"source_warehouse\",\"fieldname\":\"source_warehouse\",\"id\":\"source_warehouse\",\"name\":\"source_warehouse\",\"width\":null,\"editable\":false,\"compareValue\":null},{\"label\":\"item_group\",\"fieldname\":\"item_group\",\"id\":\"item_group\",\"name\":\"item_group\",\"width\":null,\"editable\":false,\"compareValue\":null},{\"label\":\"custom_warehouse\",\"fieldname\":\"custom_warehouse\",\"id\":\"custom_warehouse\",\"name\":\"custom_warehouse\",\"width\":null,\"editable\":false,\"compareValue\":null},{\"label\":\"warehouse\",\"fieldname\":\"warehouse\",\"id\":\"warehouse\",\"name\":\"warehouse\",\"width\":null,\"editable\":false,\"compareValue\":null},{\"label\":\"description\",\"fieldname\":\"description\",\"id\":\"description\",\"name\":\"description\",\"width\":null,\"editable\":false,\"compareValue\":null}],\"filters\":{}}",
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-04-27 20:28:05.985872",
+  "module": "Upande Kikwetu",
+  "name": "Daily Order Pick List.",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Order Pick List",
+  "reference_report": "Daily Order Pick List",
+  "report_name": "Daily Order Pick List.",
+  "report_script": null,
+  "report_type": "Custom Report",
+  "roles": [
+   {
+    "parent": "Daily Order Pick List.",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Packing Supervisor"
+   },
+   {
+    "parent": "Daily Order Pick List.",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-06-11 11:05:24.235576",
+  "module": "Upande Kikwetu",
+  "name": "Daily Order Pick List..",
+  "prepared_report": 0,
+  "query": "SELECT \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t5.customer, '</div>'), t5.customer)\n         ELSE '' END AS Customer,\n         \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t5.priority_level, '</div>'), t5.priority_level)\n         ELSE '' END AS \"Priority Level\",\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t5.number_of_boxes, '</div>'), t5.number_of_boxes)\n         ELSE '' END AS \"Total Boxes\",\n         \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         CONCAT('<img src=\"', t5.custom_qr_code, '\" width=\"100\"/>') \n         ELSE '' END AS qr_image,\n         \n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t4.item_name, '</div>'), t4.item_name) AS Variety,\n    \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t5.custom_total_stems, '</div>'), t5.custom_total_stems)\n         ELSE '' END AS \"Total Stems\",\n         \n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t4.uom, '</div>'), t4.uom) AS UOM,\n    \n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', FORMAT(t4.qty, 0), '</div>'), FORMAT(t4.qty, 0)) AS Bunches,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', FORMAT(t4.qty, 0), '</div>'), FORMAT(t4.custom_stem_length, 0)) AS \"Stem Length\",\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', FORMAT(t4.qty, 0), '</div>'), FORMAT(t4.custom_number_of_boxes, 0)) AS \"Number of Boxes\",\n\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t5.sales_order, '</div>'), t5.sales_order)\n         ELSE '' END AS sales_order\n         \nFROM (\n    SELECT\n        t0.name,\n        t0.sales_order,\n        t0.priority_level,\n        t0.source_warehouse,\n        t0.customer,\n        t0.custom_qr_code,\n        t0.custom_warehouse,\n        t0.custom_comment,\n        t0.is_addition,\n        t0.custom_total_stems,\n        t0.number_of_boxes,\n        t0.packing_date,\n        t0.creation\n    FROM `tabOrder Pick List` AS t0\n    WHERE DATE(t0.packing_date) IN (CURDATEtoday))\n) AS t5\nLEFT JOIN (\n    SELECT\n        t1.parent,\n        t1.sales_order AS tabpick_list_item_sales_order,\n        t1.item_group,\n        t1.item_code,\n        t1.warehouse,\n        t1.description,\n        t1.custom_stem_length,\n        t1.custom_number_of_boxes,\n        t1.qty,\n        t1.uom,\n        t1.item_name\n    FROM `tabPick List Item` AS t1\n) AS t4\n    ON t5.sales_order COLLATE utf8mb4_unicode_ci = t4.tabpick_list_item_sales_order COLLATE utf8mb4_unicode_ci\nORDER BY t5.priority_level ASC, t5.name;\n",
+  "ref_doctype": "Order Pick List",
+  "reference_report": null,
+  "report_name": "Daily Order Pick List..",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Daily Order Pick List..",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Packing Supervisor"
+   },
+   {
+    "parent": "Daily Order Pick List..",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{}",
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-04-30 14:11:25.075709",
+  "module": "Upande Kikwetu",
+  "name": "Simplified Stock Balance Report",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Stock Ledger Entry",
+  "reference_report": "",
+  "report_name": "Simplified Stock Balance Report",
+  "report_script": "def execute(filters=None):\n    columns = [\n        {\"label\": \"Item Code\", \"fieldname\": \"item_code\", \"fieldtype\": \"Link\", \"options\": \"Item\", \"width\": 150},\n        {\"label\": \"Warehouse\", \"fieldname\": \"warehouse\", \"fieldtype\": \"Link\", \"options\": \"Warehouse\", \"width\": 150},\n        {\"label\": \"Opening Stock\", \"fieldname\": \"opening_stock\", \"fieldtype\": \"Float\", \"width\": 120},\n        {\"label\": \"Quantity In\", \"fieldname\": \"quantity_in\", \"fieldtype\": \"Float\", \"width\": 120},\n        {\"label\": \"Quantity Out\", \"fieldname\": \"quantity_out\", \"fieldtype\": \"Float\", \"width\": 120},\n        {\"label\": \"Closing Stock\", \"fieldname\": \"closing_stock\", \"fieldtype\": \"Float\", \"width\": 120},\n    ]\n\n    data = []\n\n    from_date = filters.get(\"from_date\")\n    to_date = filters.get(\"to_date\")\n    warehouse_filter = \"\"\n    if filters.get(\"warehouse\"):\n        warehouse_filter = \"AND sle.warehouse = %(warehouse)s\"\n\n    results = frappe.db.sql(\"\"\"\n        SELECT\n            sle.item_code,\n            sle.warehouse,\n            SUM(CASE WHEN sle.posting_date < %(from_date)s THEN sle.actual_qty ELSE 0 END) AS opening_stock,\n            SUM(CASE WHEN sle.posting_date BETWEEN %(from_date)s AND %(to_date)s AND sle.actual_qty > 0 THEN sle.actual_qty ELSE 0 END) AS quantity_in,\n            SUM(CASE WHEN sle.posting_date BETWEEN %(from_date)s AND %(to_date)s AND sle.actual_qty < 0 THEN ABS(sle.actual_qty) ELSE 0 END) AS quantity_out,\n            SUM(CASE WHEN sle.posting_date <= %(to_date)s THEN sle.actual_qty ELSE 0 END) AS closing_stock\n        FROM `tabStock Ledger Entry` sle\n        WHERE sle.docstatus < 2 {warehouse_filter}\n        GROUP BY sle.item_code, sle.warehouse\n    \"\"\".format(warehouse_filter=warehouse_filter), filters, as_dict=True)\n\n    data.extend(results)\n\n    return columns, data\n",
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "parent": "Simplified Stock Balance Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   },
+   {
+    "parent": "Simplified Stock Balance Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Simplified Stock Balance Report",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-05-16 04:48:19.217041",
+  "module": "Upande Kikwetu",
+  "name": "Daily Order Pick List(No filters)",
+  "prepared_report": 0,
+  "query": "SELECT \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t5.customer, '</div>'), t5.customer)\n         ELSE '' END AS Customer,\n         \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t5.priority_level, '</div>'), t5.priority_level)\n         ELSE '' END AS \"Priority Level\",\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t5.number_of_boxes, '</div>'), t5.number_of_boxes)\n         ELSE '' END AS \"Total Boxes\",\n         \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         CONCAT('<img src=\"', t5.custom_qr_code, '\" width=\"100\"/>') \n         ELSE '' END AS qr_image,\n         \n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t4.item_name, '</div>'), t4.item_name) AS Variety,\n    \n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t5.custom_total_stems, '</div>'), t5.custom_total_stems)\n         ELSE '' END AS \"Total Stems\",\n         \n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t4.uom, '</div>'), t4.uom) AS UOM,\n    \n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', FORMAT(t4.qty, 0), '</div>'), FORMAT(t4.qty, 0)) AS Bunches,\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', FORMAT(t4.custom_stem_length, 0), '</div>'), FORMAT(t4.custom_stem_length, 0)) AS \"Stem Length\",\n    IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', FORMAT(t4.custom_number_of_boxes, 0), '</div>'), FORMAT(t4.custom_number_of_boxes, 0)) AS \"Number of Boxes\",\n\n    CASE WHEN ROW_NUMBER() OVER (PARTITION BY t5.name ORDER BY t5.priority_level ASC) = 1 THEN \n         IF(t5.is_addition = 1, CONCAT('<div style=\"background-color:#9f9694\">', t5.sales_order, '</div>'), t5.sales_order)\n         ELSE '' END AS sales_order\n         \nFROM (\n    SELECT\n        t0.name,\n        t0.sales_order,\n        t0.priority_level,\n        t0.source_warehouse,\n        t0.customer,\n        t0.custom_qr_code,\n        t0.custom_warehouse,\n        t0.custom_comment,\n        t0.is_addition,\n        t0.custom_total_stems,\n        t0.number_of_boxes,\n        t0.packing_date,\n        t0.creation\n    FROM `tabOrder Pick List` AS t0\n) AS t5\nLEFT JOIN (\n    SELECT\n        t1.parent,\n        t1.sales_order AS tabpick_list_item_sales_order,\n        t1.item_group,\n        t1.item_code,\n        t1.warehouse,\n        t1.description,\n        t1.custom_stem_length,\n        t1.custom_number_of_boxes,\n        t1.qty,\n        t1.uom,\n        t1.item_name\n    FROM `tabPick List Item` AS t1\n) AS t4\n    ON t5.sales_order COLLATE utf8mb4_unicode_ci = t4.tabpick_list_item_sales_order COLLATE utf8mb4_unicode_ci\nORDER BY  t5.name;\n",
+  "ref_doctype": "Order Pick List",
+  "reference_report": null,
+  "report_name": "Daily Order Pick List(No filters)",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Daily Order Pick List(No filters)",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Packing Supervisor"
+   },
+   {
+    "parent": "Daily Order Pick List(No filters)",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "System Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[],\"fields\":[[\"default_sales_partner\",\"Customer\"],[\"_aggregate_column\",\"Customer\"]],\"order_by\":\"`tabCustomer`.`modified` desc\",\"add_totals_row\":0,\"page_length\":20,\"column_widths\":{\"default_sales_partner\":120,\"_aggregate_column\":200},\"group_by\":{\"group_by\":\"`tabCustomer`.`default_sales_partner`\",\"aggregate_function\":\"count\"}}",
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-05-22 11:40:59.039609",
+  "module": "Selling",
+  "name": "Customer by Sales person",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Customer",
+  "reference_report": null,
+  "report_name": "Customer by Sales person",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "parent": "Customer by Sales person",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts User"
+   },
+   {
+    "parent": "Customer by Sales person",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Accounts Manager"
+   },
+   {
+    "parent": "Customer by Sales person",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Manager"
+   },
+   {
+    "parent": "Customer by Sales person",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   },
+   {
+    "parent": "Customer by Sales person",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Master Manager"
+   },
+   {
+    "parent": "Customer by Sales person",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales User"
+   },
+   {
+    "parent": "Customer by Sales person",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Customer by Sales person",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Employee Self Service"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "Today",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Farm Harvest Summary",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "Today",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Farm Harvest Summary",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-06-10 15:36:18.814688",
+  "module": "Stock",
+  "name": "Farm Harvest Summary",
+  "prepared_report": 0,
+  "query": "SELECT\n    `t6`.`t_warehouse` AS `Greenhouse:Link/Warehouse:100`,\n    `t6`.`item_code` AS `variety:Link/Item:120`,\n    `t6`.`custom_stem_length` AS `stem_length:Data:100`,\n    SUM(`t6`.`qty`) AS `sum_of_qty:Int:100`\nFROM (\n    SELECT\n        `t5`.`t_warehouse`,\n        `t5`.`item_code`,\n        `t5`.`qty`,\n        `t5`.`posting_date`,\n        `t5`.`custom_stem_length`,\n        `t5`.`custom_harvester`\n    FROM (\n        SELECT\n            `t2`.`name`,\n            `t2`.`posting_date`,\n            `t2`.`stock_entry_type`,\n            `t2`.`custom_harvester`,\n            `t2`.`custom_stem_length`,\n            `t4`.`item_code`,\n            `t4`.`qty`,\n            `t4`.`t_warehouse`\n        FROM `tabStock Entry` AS `t2`\n        LEFT OUTER JOIN (\n            SELECT\n                `t1`.`name` AS `tabstock_entry_detail_name`,\n                `t1`.`item_code`,\n                `t1`.`qty`,\n                `t1`.`parent`,\n                `t1`.`t_warehouse`\n            FROM `tabStock Entry Detail` AS `t1`\n        ) AS `t4`\n        ON `t2`.`name` = `t4`.`parent`\n    ) AS `t5`\n    WHERE\n        `t5`.`stock_entry_type` = 'Harvesting'\n        AND `t5`.`posting_date` BETWEEN %(from_date)s AND %(to_date)s\n) AS `t6`\nGROUP BY\n    `t6`.`t_warehouse`,\n    `t6`.`item_code`,\n    `t6`.`custom_stem_length`\nORDER BY\n    `t6`.`t_warehouse`,\n    `t6`.`item_code`,\n    `t6`.`custom_stem_length`",
+  "ref_doctype": "Stock Entry",
+  "reference_report": null,
+  "report_name": "Farm Harvest Summary",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "Farm Harvest Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Farm Harvest Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   },
+   {
+    "parent": "Farm Harvest Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Manufacturing Manager"
+   },
+   {
+    "parent": "Farm Harvest Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Manufacturing User"
+   },
+   {
+    "parent": "Farm Harvest Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Agronomist Clerk"
+   },
+   {
+    "parent": "Farm Harvest Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Production Manager"
+   },
+   {
+    "parent": "Farm Harvest Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Harvest Manager"
+   },
+   {
+    "parent": "Farm Harvest Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Harvest User"
+   },
+   {
+    "parent": "Farm Harvest Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Packing Supervisor"
+   },
+   {
+    "parent": "Farm Harvest Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Pendekeza Packhouse Manager"
+   },
+   {
+    "parent": "Farm Harvest Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Assistant Packhouse Manager"
+   },
+   {
+    "parent": "Farm Harvest Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Turacco Packhouse Manager"
+   },
+   {
+    "parent": "Farm Harvest Summary",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Representative"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-06-12 13:48:48.125668",
+  "module": "Stock",
+  "name": "Receiving",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Stock Entry",
+  "reference_report": null,
+  "report_name": "Receiving",
+  "report_script": "SELECT\n    `outer`.`Greenhouse:Link/Warehouse:100` AS `Greenhouse:Link/Warehouse:100`,\n    `outer`.`variety:Link/Item:120` AS `variety:Link/Item:120`,\n    `outer`.`stem_length:Data:100` AS `stem_length:Data:100`,\n    `outer`.`sum_of_qty:Int:100` AS `sum_of_qty:Int:100`\nFROM (\n    SELECT\n        COALESCE(`t6`.`t_warehouse`, 'Grand Total') AS `Greenhouse:Link/Warehouse:100`,\n        `t6`.`item_code` AS `variety:Link/Item:120`,\n        `t6`.`custom_stem_length` AS `stem_length:Data:100`,\n        SUM(`t6`.`qty`) AS `sum_of_qty:Int:100`,\n        `t6`.`t_warehouse` AS `sort_warehouse`,\n        `t6`.`item_code` AS `sort_item_code`,\n        `t6`.`custom_stem_length` AS `sort_stem_length`\n    FROM (\n        SELECT\n            `t5`.`t_warehouse`,\n            `t5`.`item_code`,\n            `t5`.`qty`,\n            `t5`.`posting_date`,\n            `t5`.`custom_stem_length`,\n            `t5`.`custom_harvester`\n        FROM (\n            SELECT\n                `t2`.`name`,\n                `t2`.`posting_date`,\n                `t2`.`stock_entry_type`,\n                `t2`.`custom_harvester`,\n                `t2`.`custom_stem_length`,\n                `t4`.`item_code`,\n                `t4`.`qty`,\n                `t4`.`t_warehouse`\n            FROM `tabStock Entry` AS `t2`\n            LEFT OUTER JOIN (\n                SELECT\n                    `t1`.`name` AS `tabstock_entry_detail_name`,\n                    `t1`.`item_code`,\n                    `t1`.`qty`,\n                    `t1`.`parent`,\n                    `t1`.`t_warehouse`\n                FROM `tabStock Entry Detail` AS `t1`\n            ) AS `t4`\n            ON `t2`.`name` = `t4`.`parent`\n        ) AS `t5`\n        WHERE\n            `t5`.`stock_entry_type` = 'Receiving'\n            AND `t5`.`posting_date` BETWEEN %(from_date)s AND %(to_date)s\n    ) AS `t6`\n    GROUP BY\n        `t6`.`t_warehouse`,\n        `t6`.`item_code`,\n        `t6`.`custom_stem_length`\n    WITH ROLLUP\n    HAVING\n        (`t6`.`item_code` IS NOT NULL AND `t6`.`custom_stem_length` IS NOT NULL)\n        OR (`t6`.`t_warehouse` IS NULL AND `t6`.`item_code` IS NULL AND `t6`.`custom_stem_length` IS NULL)\n        OR (`t6`.`t_warehouse` IS NOT NULL AND `t6`.`item_code` IS NULL AND `t6`.`custom_stem_length` IS NULL)\n) AS `outer`\nORDER BY\n    COALESCE(`outer`.`sort_warehouse`, 'ZZZZ'),\n    CASE\n        WHEN `outer`.`variety:Link/Item:120` IS NULL AND `outer`.`stem_length:Data:100` IS NULL THEN 1\n        ELSE 0\n    END,\n    COALESCE(`outer`.`sort_item_code`, 'ZZZZ'),\n    COALESCE(`outer`.`sort_stem_length`, 'ZZZZ')",
+  "report_type": "Script Report",
+  "roles": [],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "Today",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 0,
+    "options": "",
+    "parent": "Farm Receiving Report(With Subtotals)",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "Today",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Farm Receiving Report(With Subtotals)",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-06-12 13:51:12.897969",
+  "module": "Stock",
+  "name": "Farm Receiving Report(With Subtotals)",
+  "prepared_report": 0,
+  "query": "SELECT\n    `outer`.`Greenhouse:Link/Warehouse:100` AS `Greenhouse:Link/Warehouse:100`,\n    `outer`.`variety:Link/Item:120` AS `variety:Link/Item:120`,\n    `outer`.`stem_length:Data:100` AS `stem_length:Data:100`,\n    `outer`.`sum_of_qty:Int:100` AS `sum_of_qty:Int:100`\nFROM (\n    SELECT\n        COALESCE(`t6`.`s_warehouse`, 'Grand Total') AS `Greenhouse:Link/Warehouse:100`,\n        `t6`.`item_code` AS `variety:Link/Item:120`,\n        `t6`.`custom_stem_length` AS `stem_length:Data:100`,\n        SUM(`t6`.`qty`) AS `sum_of_qty:Int:100`,\n        `t6`.`s_warehouse` AS `sors_warehouse`,\n        `t6`.`item_code` AS `sort_item_code`,\n        `t6`.`custom_stem_length` AS `sort_stem_length`\n    FROM (\n        SELECT\n            `t5`.`s_warehouse`,\n            `t5`.`item_code`,\n            `t5`.`qty`,\n            `t5`.`posting_date`,\n            `t5`.`custom_stem_length`,\n            `t5`.`custom_harvester`\n        FROM (\n            SELECT\n                `t2`.`name`,\n                `t2`.`posting_date`,\n                `t2`.`stock_entry_type`,\n                `t2`.`custom_harvester`,\n                `t2`.`custom_stem_length`,\n                `t4`.`item_code`,\n                `t4`.`qty`,\n                `t4`.`s_warehouse`\n            FROM `tabStock Entry` AS `t2`\n            LEFT OUTER JOIN (\n                SELECT\n                    `t1`.`name` AS `tabstock_entry_detail_name`,\n                    `t1`.`item_code`,\n                    `t1`.`qty`,\n                    `t1`.`parent`,\n                    `t1`.`s_warehouse`\n                FROM `tabStock Entry Detail` AS `t1`\n            ) AS `t4`\n            ON `t2`.`name` = `t4`.`parent`\n        ) AS `t5`\n        WHERE\n            `t5`.`stock_entry_type` = 'Receiving'\n            AND `t5`.`posting_date` BETWEEN %(from_date)s AND %(to_date)s\n    ) AS `t6`\n    GROUP BY\n        `t6`.`s_warehouse`,\n        `t6`.`item_code`,\n        `t6`.`custom_stem_length`\n    WITH ROLLUP\n    HAVING\n        (`t6`.`item_code` IS NOT NULL AND `t6`.`custom_stem_length` IS NOT NULL)\n        OR (`t6`.`s_warehouse` IS NULL AND `t6`.`item_code` IS NULL AND `t6`.`custom_stem_length` IS NULL)\n        OR (`t6`.`s_warehouse` IS NOT NULL AND `t6`.`item_code` IS NULL AND `t6`.`custom_stem_length` IS NULL)\n) AS `outer`\nORDER BY\n    COALESCE(`outer`.`sors_warehouse`, 'ZZZZ'),\n    CASE\n        WHEN `outer`.`variety:Link/Item:120` IS NULL AND `outer`.`stem_length:Data:100` IS NULL THEN 1\n        ELSE 0\n    END,\n    COALESCE(`outer`.`sort_item_code`, 'ZZZZ'),\n    COALESCE(`outer`.`sort_stem_length`, 'ZZZZ')",
+  "ref_doctype": "Stock Entry",
+  "reference_report": null,
+  "report_name": "Farm Receiving Report(With Subtotals)",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "Today",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 0,
+    "options": "",
+    "parent": "Tota Harvest Report Per Farm",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "Today",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Tota Harvest Report Per Farm",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "%",
+    "fieldname": "warehouse",
+    "fieldtype": "Link",
+    "label": "Warehouse",
+    "mandatory": 1,
+    "options": "Warehouse",
+    "parent": "Tota Harvest Report Per Farm",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "%",
+    "fieldname": "variety",
+    "fieldtype": "Link",
+    "label": "Variety",
+    "mandatory": 1,
+    "options": "Item",
+    "parent": "Tota Harvest Report Per Farm",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-06-24 16:07:43.361199",
+  "module": "Stock",
+  "name": "Tota Harvest Report Per Farm",
+  "prepared_report": 0,
+  "query": "SELECT\n    Greenhouse,\n    Variety,\n    `40CM`,\n    `50CM`,\n    `60CM`,\n    `70CM`,\n    `80CM`,\n    `90CM`,\n    Total\nFROM (\n    SELECT\n        COALESCE(t.t_warehouse, 'Unknown') AS Greenhouse,\n        COALESCE(t.item_code, 'Unknown') AS Variety,\n        SUM(CASE WHEN t.custom_stem_length = '40CM' THEN t.qty ELSE 0 END) AS `40CM`,\n        SUM(CASE WHEN t.custom_stem_length = '50CM' THEN t.qty ELSE 0 END) AS `50CM`,\n        SUM(CASE WHEN t.custom_stem_length = '60CM' THEN t.qty ELSE 0 END) AS `60CM`,\n        SUM(CASE WHEN t.custom_stem_length = '70CM' THEN t.qty ELSE 0 END) AS `70CM`,\n        SUM(CASE WHEN t.custom_stem_length = '80CM' THEN t.qty ELSE 0 END) AS `80CM`,\n        SUM(CASE WHEN t.custom_stem_length = '90CM' THEN t.qty ELSE 0 END) AS `90CM`,\n        SUM(t.qty) AS Total\n    FROM (\n        SELECT\n            se.name,\n            se.posting_date,\n            se.stock_entry_type,\n            se.custom_harvester,\n            se.custom_stem_length,\n            sed.item_code,\n            sed.qty,\n            sed.t_warehouse\n        FROM `tabStock Entry` AS se\n        LEFT JOIN `tabStock Entry Detail` AS sed ON se.name = sed.parent\n        WHERE\n            se.stock_entry_type = 'Harvesting'\n            AND se.posting_date BETWEEN COALESCE(%(from_date)s, DATE_SUB(CURDATE(), INTERVAL 1 YEAR)) AND COALESCE(%(to_date)s, CURDATE())\n            AND (%(warehouse)s IS NULL OR sed.t_warehouse = %(warehouse)s)\n            AND (%(variety)s IS NULL OR sed.item_code = %(variety)s)\n    ) AS t\n    GROUP BY COALESCE(t.t_warehouse, 'Unknown'), COALESCE(t.item_code, 'Unknown')\n) AS result\nORDER BY\n    Greenhouse,\n    Variety;\n",
+  "ref_doctype": "Stock Entry",
+  "reference_report": null,
+  "report_name": "Tota Harvest Report Per Farm",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "Today",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "No Of Transcations",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "Today",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "No Of Transcations",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-06-26 10:41:31.688583",
+  "module": "Upande Kikwetu",
+  "name": "No Of Transcations",
+  "prepared_report": 0,
+  "query": "WITH transaction_summary AS (\n    -- Purchase Order\n    SELECT \n        'Purchase Order' as transaction_type,\n        'Buying' as category,\n        CASE \n            WHEN workflow_state = 'Draft' THEN 'Draft'\n            WHEN workflow_state = 'Awaiting Finance Approval' THEN 'Awaiting Finance Approval'\n            WHEN workflow_state = 'Awaiting Farm Managers Approval' THEN 'Awaiting Farm Managers Approval'\n            WHEN workflow_state = 'Awaiting Directors Approval' THEN 'Awaiting Directors Approval'\n            WHEN workflow_state = 'Awaiting Bill Approval' THEN 'Awaiting Bill Approval'\n            WHEN workflow_state = 'Approved' THEN 'Approved'\n            WHEN workflow_state = 'Bill Approved' THEN 'Bill Approved'\n            ELSE COALESCE(workflow_state, 'Unknown')\n        END as document_status,\n        DATE_FORMAT(MIN(transaction_date), '%%Y-%%m-%%d') as earliest_date,\n        DATE_FORMAT(MAX(transaction_date), '%%Y-%%m-%%d') as latest_date,\n        COUNT(CASE WHEN DATE(transaction_date) = CURDATE() - INTERVAL 1 DAY THEN 1 END) as yesterday_count,\n        COUNT(CASE WHEN DATE(transaction_date) = CURDATE() THEN 1 END) as today_count,\n        COUNT(CASE WHEN transaction_date >= NOW() - INTERVAL 7 DAY THEN 1 END) as last_7_days,\n        COUNT(*) as count\n    FROM `tabPurchase Order`\n    GROUP BY workflow_state\n\n    UNION ALL\n\n    -- Purchase Invoice\n    SELECT \n        'Purchase Invoice' as transaction_type,\n        'Accounting' as category,\n        COALESCE(status, 'Unknown') as document_status,\n        DATE_FORMAT(MIN(posting_date), '%%Y-%%m-%%d') as earliest_date,\n        DATE_FORMAT(MAX(posting_date), '%%Y-%%m-%%d') as latest_date,\n        COUNT(CASE WHEN DATE(posting_date) = CURDATE() - INTERVAL 1 DAY THEN 1 END) as yesterday_count,\n        COUNT(CASE WHEN DATE(posting_date) = CURDATE() THEN 1 END) as today_count,\n        COUNT(CASE WHEN posting_date >= NOW() - INTERVAL 7 DAY THEN 1 END) as last_7_days,\n        COUNT(*) as count\n    FROM `tabPurchase Invoice`\n    GROUP BY status\n\n    UNION ALL\n\n    -- Purchase Receipt\n    SELECT \n        'Purchase Receipt' as transaction_type,\n        'Stock' as category,\n        COALESCE(status, 'Unknown') as document_status,\n        DATE_FORMAT(MIN(posting_date), '%%Y-%%m-%%d') as earliest_date,\n        DATE_FORMAT(MAX(posting_date), '%%Y-%%m-%%d') as latest_date,\n        COUNT(CASE WHEN DATE(posting_date) = CURDATE() - INTERVAL 1 DAY THEN 1 END) as yesterday_count,\n        COUNT(CASE WHEN DATE(posting_date) = CURDATE() THEN 1 END) as today_count,\n        COUNT(CASE WHEN posting_date >= NOW() - INTERVAL 7 DAY THEN 1 END) as last_7_days,\n        COUNT(*) as count\n    FROM `tabPurchase Receipt`\n    GROUP BY status\n\n    UNION ALL\n\n    -- Stock Entry\n    SELECT \n        'Stock Entry' as transaction_type,\n        'Stock' as category,\n        COALESCE(stock_entry_type, 'Unknown') as document_status,\n        DATE_FORMAT(MIN(posting_date), '%%Y-%%m-%%d') as earliest_date,\n        DATE_FORMAT(MAX(posting_date), '%%Y-%%m-%%d') as latest_date,\n        COUNT(CASE WHEN DATE(posting_date) = CURDATE() - INTERVAL 1 DAY THEN 1 END) as yesterday_count,\n        COUNT(CASE WHEN DATE(posting_date) = CURDATE() THEN 1 END) as today_count,\n        COUNT(CASE WHEN posting_date >= NOW() - INTERVAL 7 DAY THEN 1 END) as last_7_days,\n        COUNT(*) as count\n    FROM `tabStock Entry`\n    GROUP BY stock_entry_type\n\n    UNION ALL\n\n    -- Sales Order\n    SELECT \n        'Sales Order' as transaction_type,\n        'Selling' as category,\n        COALESCE(status, 'Unknown') as document_status,\n        DATE_FORMAT(MIN(transaction_date), '%%Y-%%m-%%d') as earliest_date,\n        DATE_FORMAT(MAX(transaction_date), '%%Y-%%m-%%d') as latest_date,\n        COUNT(CASE WHEN DATE(transaction_date) = CURDATE() - INTERVAL 1 DAY THEN 1 END) as yesterday_count,\n        COUNT(CASE WHEN DATE(transaction_date) = CURDATE() THEN 1 END) as today_count,\n        COUNT(CASE WHEN transaction_date >= NOW() - INTERVAL 7 DAY THEN 1 END) as last_7_days,\n        COUNT(*) as count\n    FROM `tabSales Order`\n    GROUP BY status\n\n    UNION ALL\n\n    -- Sales Invoice\n    SELECT \n        'Sales Invoice' as transaction_type,\n        'Selling' as category,\n        COALESCE(status, 'Unknown') as document_status,\n        DATE_FORMAT(MIN(posting_date), '%%Y-%%m-%%d') as earliest_date,\n        DATE_FORMAT(MAX(posting_date), '%%Y-%%m-%%d') as latest_date,\n        COUNT(CASE WHEN DATE(posting_date) = CURDATE() - INTERVAL 1 DAY THEN 1 END) as yesterday_count,\n        COUNT(CASE WHEN DATE(posting_date) = CURDATE() THEN 1 END) as today_count,\n        COUNT(CASE WHEN posting_date >= NOW() - INTERVAL 7 DAY THEN 1 END) as last_7_days,\n        COUNT(*) as count\n    FROM `tabSales Invoice`\n    GROUP BY status\n)\nSELECT * FROM transaction_summary\nORDER BY category, transaction_type, \n    CASE document_status \n        WHEN 'Draft' THEN 1 \n        WHEN 'Open' THEN 2 \n        WHEN 'Submitted' THEN 3 \n        WHEN 'Cancelled' THEN 99 \n        ELSE 50 \n    END;\n",
+  "ref_doctype": "Report",
+  "reference_report": null,
+  "report_name": "No Of Transcations",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [],
+  "is_standard": "No",
+  "javascript": null,
+  "json": "{\"filters\":[[\"Stock Entry\",\"docstatus\",\"=\",\"1\",false],[\"Stock Entry\",\"posting_date\",\"Timespan\",\"today\",false],[\"Stock Entry\",\"stock_entry_type\",\"=\",\"Rejects\"]],\"fields\":[[\"name\",\"Stock Entry\"],[\"docstatus\",\"Stock Entry\"],[\"stock_entry_type\",\"Stock Entry\"],[\"posting_date\",\"Stock Entry\"],[\"posting_time\",\"Stock Entry\"],[\"from_warehouse\",\"Stock Entry\"],[\"to_warehouse\",\"Stock Entry\"],[\"custom_bunched_by\",\"Stock Entry\"],[\"qty\",\"Stock Entry Detail\"]],\"order_by\":\"`tabStock Entry`.`modified` desc\",\"add_totals_row\":true,\"page_length\":20,\"column_widths\":{},\"group_by\":null}",
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-06-17 22:29:58.103576",
+  "module": "Stock",
+  "name": "Total Stock Rejects",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Stock Entry",
+  "reference_report": null,
+  "report_name": "Total Stock Rejects",
+  "report_script": null,
+  "report_type": "Report Builder",
+  "roles": [
+   {
+    "parent": "Total Stock Rejects",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "Total Stock Rejects",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   },
+   {
+    "parent": "Total Stock Rejects",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Manufacturing Manager"
+   },
+   {
+    "parent": "Total Stock Rejects",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Manufacturing User"
+   },
+   {
+    "parent": "Total Stock Rejects",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Production Manager"
+   },
+   {
+    "parent": "Total Stock Rejects",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Harvest Manager"
+   },
+   {
+    "parent": "Total Stock Rejects",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Harvest User"
+   },
+   {
+    "parent": "Total Stock Rejects",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Packing Supervisor"
+   },
+   {
+    "parent": "Total Stock Rejects",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Pendekeza Packhouse Manager"
+   },
+   {
+    "parent": "Total Stock Rejects",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Assistant Packhouse Manager"
+   },
+   {
+    "parent": "Total Stock Rejects",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Turacco Packhouse Manager"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "Today",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Greenhouse Supervisor's Summary",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "Today",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Greenhouse Supervisor's Summary",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "%",
+    "fieldname": "warehouse",
+    "fieldtype": "Link",
+    "label": "Greenhouse",
+    "mandatory": 1,
+    "options": "Warehouse",
+    "parent": "Greenhouse Supervisor's Summary",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-07-01 09:32:22.915106",
+  "module": "Stock",
+  "name": "Greenhouse Supervisor's Summary",
+  "prepared_report": 0,
+  "query": "SELECT\n    combined.`Greenhouse:Link/Warehouse:100`,\n    combined.`variety:Link/Item:120`,\n    combined.`stem_length:Data:100`,\n    combined.`sum_of_qty:Int:100`\nFROM (\n    -- Breakdown by stem length FIRST\n    SELECT\n        t6.t_warehouse AS `Greenhouse:Link/Warehouse:100`,\n        t6.item_code AS `variety:Link/Item:120`,\n        t6.custom_stem_length AS `stem_length:Data:100`,\n        SUM(t6.qty) AS `sum_of_qty:Int:100`,\n        0 AS `sort_order`\n    FROM (\n        SELECT\n            t2.name,\n            t2.posting_date,\n            t2.stock_entry_type,\n            t2.custom_harvester,\n            t2.custom_stem_length,\n            t4.item_code,\n            t4.qty,\n            t4.t_warehouse\n        FROM `tabStock Entry` AS t2\n        LEFT JOIN `tabStock Entry Detail` AS t4 ON t2.name = t4.parent\n        WHERE\n            t2.stock_entry_type = 'Harvesting'\n            AND t2.posting_date BETWEEN %(from_date)s AND %(to_date)s\n            AND t4.t_warehouse = %(warehouse)s\n    ) AS t6\n    GROUP BY t6.t_warehouse, t6.item_code, t6.custom_stem_length\n\n    UNION ALL\n\n    -- TOTAL row comes LAST\n    SELECT\n        t6.t_warehouse AS `Greenhouse:Link/Warehouse:100`,\n        t6.item_code AS `variety:Link/Item:120`,\n        'TOTAL' AS `stem_length:Data:100`,\n        SUM(t6.qty) AS `sum_of_qty:Int:100`,\n        1 AS `sort_order`\n    FROM (\n        SELECT\n            t2.name,\n            t2.posting_date,\n            t2.stock_entry_type,\n            t2.custom_harvester,\n            t2.custom_stem_length,\n            t4.item_code,\n            t4.qty,\n            t4.t_warehouse\n        FROM `tabStock Entry` AS t2\n        LEFT JOIN `tabStock Entry Detail` AS t4 ON t2.name = t4.parent\n        WHERE\n            t2.stock_entry_type = 'Harvesting'\n            AND t2.posting_date BETWEEN %(from_date)s AND %(to_date)s\n            AND t4.t_warehouse = %(warehouse)s\n    ) AS t6\n    GROUP BY t6.t_warehouse, t6.item_code\n) AS combined\n\nORDER BY\n    COALESCE(`combined`.`Greenhouse:Link/Warehouse:100`, 'ZZZZ'),\n    `combined`.`variety:Link/Item:120`,\n    `combined`.`sort_order`,\n    `combined`.`stem_length:Data:100`\n",
+  "ref_doctype": "Stock Entry",
+  "reference_report": null,
+  "report_name": "Greenhouse Supervisor's Summary",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "Today",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Grading Report",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "Today",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Grading Report",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-06-12 11:18:14.734173",
+  "module": "Stock",
+  "name": "Grading Report",
+  "prepared_report": 0,
+  "query": "SELECT\n    `t6`.`item_code` AS `Variety:Link/Item:120`,\n    `t6`.`custom_stem_length` AS `length:Data:100`,\n    `t6`.`uom` AS `Bunched_By:Link/UOM:100`,\n    SUM(`t6`.`qty`) AS `No_Of_Bunches:Int:100`\nFROM (\n    SELECT\n        `t5`.`item_code`,\n        `t5`.`qty`,\n        `t5`.`posting_date`,\n        `t5`.`custom_stem_length`,\n        `t5`.`custom_harvester`,\n        `t5`.`uom`\n    FROM (\n        SELECT\n            `t2`.`name`,\n            `t2`.`posting_date`,\n            `t2`.`stock_entry_type`,\n            `t2`.`custom_harvester`,\n            `t2`.`custom_stem_length`,\n            `t4`.`item_code`,\n            `t4`.`qty`,\n            `t4`.`uom`\n        FROM `tabStock Entry` AS `t2`\n        LEFT OUTER JOIN (\n            SELECT\n                `t1`.`name` AS `tabstock_entry_detail_name`,\n                `t1`.`item_code`,\n                `t1`.`qty`,\n                `t1`.`parent`,\n                `t1`.`uom`\n            FROM `tabStock Entry Detail` AS `t1`\n        ) AS `t4`\n        ON `t2`.`name` = `t4`.`parent`\n    ) AS `t5`\n    WHERE\n        `t5`.`stock_entry_type` = 'Grading'\n        AND `t5`.`posting_date` BETWEEN %(from_date)s AND %(to_date)s\n) AS `t6`\nGROUP BY\n    `t6`.`item_code`,\n    `t6`.`custom_stem_length`,\n    `t6`.`uom`\nORDER BY\n    `t6`.`item_code`,\n    `t6`.`custom_stem_length`,\n    `t6`.`uom`\n",
+  "ref_doctype": "Stock Entry",
+  "reference_report": null,
+  "report_name": "Grading Report",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 1,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "Today",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "Today",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-06-12 11:06:55.771556",
+  "module": "Stock",
+  "name": "No of Bunches Per Grader",
+  "prepared_report": 0,
+  "query": "SELECT\n    `t6`.`custom_grader_name` AS `Grader Name`,\n    SUM(`t6`.`qty`) AS `No of Bunches`\nFROM (\n    SELECT\n        `t5`.`custom_grader_name`,\n        `t5`.`qty`,\n        `t5`.`posting_date`\n    FROM (\n        SELECT\n            `t2`.`posting_date`,\n            `t2`.`stock_entry_type`,\n            `t2`.`custom_grader_name`,\n            `t4`.`qty`\n        FROM `tabStock Entry` AS `t2`\n        LEFT OUTER JOIN (\n            SELECT\n                `t1`.`qty`,\n                `t1`.`parent`\n            FROM `tabStock Entry Detail` AS `t1`\n        ) AS `t4`\n        ON `t2`.`name` = `t4`.`parent`\n    ) AS `t5`\n    WHERE\n        `t5`.`stock_entry_type` = 'Grading'\n        AND `t5`.`posting_date` BETWEEN %(from_date)s AND %(to_date)s\n) AS `t6`\nGROUP BY\n    `t6`.`custom_grader_name`\nORDER BY\n    `t6`.`custom_grader_name`",
+  "ref_doctype": "Stock Entry",
+  "reference_report": null,
+  "report_name": "No of Bunches Per Grader",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [
+   {
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock Manager"
+   },
+   {
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Stock User"
+   },
+   {
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Manufacturing Manager"
+   },
+   {
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Manufacturing User"
+   },
+   {
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Agronomist Clerk"
+   },
+   {
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Production Manager"
+   },
+   {
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Harvest Manager"
+   },
+   {
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Harvest User"
+   },
+   {
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Packing Supervisor"
+   },
+   {
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Pendekeza Packhouse Manager"
+   },
+   {
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Assistant Packhouse Manager"
+   },
+   {
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Turacco Packhouse Manager"
+   },
+   {
+    "parent": "No of Bunches Per Grader",
+    "parentfield": "roles",
+    "parenttype": "Report",
+    "role": "Sales Representative"
+   }
+  ],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "Today",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 0,
+    "options": "",
+    "parent": "Farm Harvest Report(With Subtotals)",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "Today",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Farm Harvest Report(With Subtotals)",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-06-12 12:41:00.417300",
+  "module": "Stock",
+  "name": "Farm Harvest Report(With Subtotals)",
+  "prepared_report": 0,
+  "query": "SELECT\n    `outer`.`Greenhouse:Link/Warehouse:100` AS `Greenhouse:Link/Warehouse:100`,\n    `outer`.`variety:Link/Item:120` AS `variety:Link/Item:120`,\n    `outer`.`stem_length:Data:100` AS `stem_length:Data:100`,\n    `outer`.`sum_of_qty:Int:100` AS `sum_of_qty:Int:100`\nFROM (\n    SELECT\n        COALESCE(`t6`.`t_warehouse`, 'Grand Total') AS `Greenhouse:Link/Warehouse:100`,\n        `t6`.`item_code` AS `variety:Link/Item:120`,\n        `t6`.`custom_stem_length` AS `stem_length:Data:100`,\n        SUM(`t6`.`qty`) AS `sum_of_qty:Int:100`,\n        `t6`.`t_warehouse` AS `sort_warehouse`,\n        `t6`.`item_code` AS `sort_item_code`,\n        `t6`.`custom_stem_length` AS `sort_stem_length`\n    FROM (\n        SELECT\n            `t5`.`t_warehouse`,\n            `t5`.`item_code`,\n            `t5`.`qty`,\n            `t5`.`posting_date`,\n            `t5`.`custom_stem_length`,\n            `t5`.`custom_harvester`\n        FROM (\n            SELECT\n                `t2`.`name`,\n                `t2`.`posting_date`,\n                `t2`.`stock_entry_type`,\n                `t2`.`custom_harvester`,\n                `t2`.`custom_stem_length`,\n                `t4`.`item_code`,\n                `t4`.`qty`,\n                `t4`.`t_warehouse`\n            FROM `tabStock Entry` AS `t2`\n            LEFT OUTER JOIN (\n                SELECT\n                    `t1`.`name` AS `tabstock_entry_detail_name`,\n                    `t1`.`item_code`,\n                    `t1`.`qty`,\n                    `t1`.`parent`,\n                    `t1`.`t_warehouse`\n                FROM `tabStock Entry Detail` AS `t1`\n            ) AS `t4`\n            ON `t2`.`name` = `t4`.`parent`\n        ) AS `t5`\n        WHERE\n            `t5`.`stock_entry_type` = 'Harvesting'\n            AND `t5`.`posting_date` BETWEEN %(from_date)s AND %(to_date)s\n    ) AS `t6`\n    GROUP BY\n        `t6`.`t_warehouse`,\n        `t6`.`item_code`,\n        `t6`.`custom_stem_length`\n    WITH ROLLUP\n    HAVING\n        (`t6`.`item_code` IS NOT NULL AND `t6`.`custom_stem_length` IS NOT NULL)\n        OR (`t6`.`t_warehouse` IS NULL AND `t6`.`item_code` IS NULL AND `t6`.`custom_stem_length` IS NULL)\n        OR (`t6`.`t_warehouse` IS NOT NULL AND `t6`.`item_code` IS NULL AND `t6`.`custom_stem_length` IS NULL)\n) AS `outer`\nORDER BY\n    COALESCE(`outer`.`sort_warehouse`, 'ZZZZ'),\n    CASE\n        WHEN `outer`.`variety:Link/Item:120` IS NULL AND `outer`.`stem_length:Data:100` IS NULL THEN 1\n        ELSE 0\n    END,\n    COALESCE(`outer`.`sort_item_code`, 'ZZZZ'),\n    COALESCE(`outer`.`sort_stem_length`, 'ZZZZ')",
+  "ref_doctype": "Stock Entry",
+  "reference_report": null,
+  "report_name": "Farm Harvest Report(With Subtotals)",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "Today",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "No Of Created Records",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "Today",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "No Of Created Records",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-06-12 13:07:23.119629",
+  "module": "Upande Kikwetu",
+  "name": "No Of Created Records",
+  "prepared_report": 0,
+  "query": "SELECT 'Purchase Order (Draft)' AS name, COUNT(name) AS document_count\nFROM `tabPurchase Order`\nWHERE workflow_state = 'Draft'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Order (Awaiting Finance Approval)', COUNT(name)\nFROM `tabPurchase Order`\nWHERE workflow_state = 'Awaiting Finance Approval'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Order (Awaiting Farm Managers Approval)', COUNT(name)\nFROM `tabPurchase Order`\nWHERE workflow_state = 'Awaiting Farm Managers Approval'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Order (Awaiting Directors Approval)', COUNT(name)\nFROM `tabPurchase Order`\nWHERE workflow_state = 'Awaiting Directors Approval'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Order (Awaiting Bill Approval)', COUNT(name)\nFROM `tabPurchase Order`\nWHERE workflow_state = 'Awaiting Bill Approval'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Order (Approved)', COUNT(name)\nFROM `tabPurchase Order`\nWHERE workflow_state = 'Approved'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Order (Bill Approved)', COUNT(name)\nFROM `tabPurchase Order`\nWHERE workflow_state = 'Bill Approved'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Invoice (Draft)', COUNT(name)\nFROM `tabPurchase Invoice`\nWHERE status = 'Draft'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Invoice (Return)', COUNT(name)\nFROM `tabPurchase Invoice`\nWHERE status = 'Return'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Invoice (Credit Note Issued)', COUNT(name)\nFROM `tabPurchase Invoice`\nWHERE status = 'Credit Note Issued'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Invoice (Submitted)', COUNT(name)\nFROM `tabPurchase Invoice`\nWHERE status = 'Submitted'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Invoice (Paid)', COUNT(name)\nFROM `tabPurchase Invoice`\nWHERE status = 'Paid'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Invoice (Partly Paid)', COUNT(name)\nFROM `tabPurchase Invoice`\nWHERE status = 'Partly Paid'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Invoice (Unpaid)', COUNT(name)\nFROM `tabPurchase Invoice`\nWHERE status = 'Unpaid'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Invoice (Unpaid and Discounted)', COUNT(name)\nFROM `tabPurchase Invoice`\nWHERE status = 'Unpaid and Discounted'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Invoice (Partly Paid and Discounted)', COUNT(name)\nFROM `tabPurchase Invoice`\nWHERE status = 'Partly Paid and Discounted'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Invoice (Overdue and Discounted)', COUNT(name)\nFROM `tabPurchase Invoice`\nWHERE status = 'Overdue and Discounted'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Invoice (Overdue)', COUNT(name)\nFROM `tabPurchase Invoice`\nWHERE status = 'Overdue'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Invoice (Cancelled)', COUNT(name)\nFROM `tabPurchase Invoice`\nWHERE status = 'Cancelled'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Invoice (Internal Transfer)', COUNT(name)\nFROM `tabPurchase Invoice`\nWHERE status = 'Internal Transfer'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Receipt (Draft)', COUNT(name)\nFROM `tabPurchase Receipt`\nWHERE status = 'Draft'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Receipt (Return)', COUNT(name)\nFROM `tabPurchase Receipt`\nWHERE status LIKE '%%Re%%'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Receipt (Partly Billed)', COUNT(name)\nFROM `tabPurchase Receipt`\nWHERE status = 'Partly Billed'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Receipt (To Bill)', COUNT(name)\nFROM `tabPurchase Receipt`\nWHERE status = 'To Bill'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Receipt (Completed)', COUNT(name)\nFROM `tabPurchase Receipt`\nWHERE status = 'Completed'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Receipt (Return Issued)', COUNT(name)\nFROM `tabPurchase Receipt`\nWHERE status = 'Return Issued'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Receipt (Cancelled)', COUNT(name)\nFROM `tabPurchase Receipt`\nWHERE status = 'Cancelled'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Purchase Receipt (Closed)', COUNT(name)\nFROM `tabPurchase Receipt`\nWHERE status = 'Closed'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Stock Entry (Harvesting)', COUNT(name)\nFROM `tabStock Entry`\nWHERE stock_entry_type = 'Harvesting'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Stock Entry (Grading)', COUNT(name)\nFROM `tabStock Entry`\nWHERE stock_entry_type = 'Grading'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Stock Entry (Receiving)', COUNT(name)\nFROM `tabStock Entry`\nWHERE stock_entry_type = 'Receiving'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Stock Entry (Packing)', COUNT(name)\nFROM `tabStock Entry`\nWHERE stock_entry_type = 'Packing'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Order (Draft)', COUNT(name)\nFROM `tabSales Order`\nWHERE status = 'Draft'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Order (On Hold)', COUNT(name)\nFROM `tabSales Order`\nWHERE status = 'On Hold'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Order (To Deliver and Bill)', COUNT(name)\nFROM `tabSales Order`\nWHERE status = 'To Deliver and Bill'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Order (To Bill)', COUNT(name)\nFROM `tabSales Order`\nWHERE status = 'To Bill'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Order (To Deliver)', COUNT(name)\nFROM `tabSales Order`\nWHERE status = 'To Deliver'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Order (Completed)', COUNT(name)\nFROM `tabSales Order`\nWHERE status = 'Completed'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Order (Cancelled)', COUNT(name)\nFROM `tabSales Order`\nWHERE status = 'Cancelled'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Order (Closed)', COUNT(name)\nFROM `tabSales Order`\nWHERE status = 'Closed'\nAND transaction_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Invoice (Draft)', COUNT(name)\nFROM `tabSales Invoice`\nWHERE status = 'Draft'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Invoice (Return)', COUNT(name)\nFROM `tabSales Invoice`\nWHERE status = 'Return'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Invoice (Credit Note Issued)', COUNT(name)\nFROM `tabSales Invoice`\nWHERE status = 'Credit Note Issued'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Invoice (Submitted)', COUNT(name)\nFROM `tabSales Invoice`\nWHERE status = 'Submitted'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Invoice (Paid)', COUNT(name)\nFROM `tabSales Invoice`\nWHERE status = 'Paid'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Invoice (Partly Paid)', COUNT(name)\nFROM `tabSales Invoice`\nWHERE status = 'Partly Paid'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Invoice (Unpaid)', COUNT(name)\nFROM `tabSales Invoice`\nWHERE status = 'Unpaid'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Invoice (Unpaid and Discounted)', COUNT(name)\nFROM `tabSales Invoice`\nWHERE status = 'Unpaid and Discounted'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Invoice (Partly Paid and Discounted)', COUNT(name)\nFROM `tabSales Invoice`\nWHERE status = 'Partly Paid and Discounted'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Invoice (Overdue and Discounted)', COUNT(name)\nFROM `tabSales Invoice`\nWHERE status = 'Overdue and Discounted'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Invoice (Overdue)', COUNT(name)\nFROM `tabSales Invoice`\nWHERE status = 'Overdue'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Invoice (Cancelled)', COUNT(name)\nFROM `tabSales Invoice`\nWHERE status = 'Cancelled'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s\n\nUNION ALL\n\nSELECT 'Sales Invoice (Internal Transfer)', COUNT(name)\nFROM `tabSales Invoice`\nWHERE status = 'Internal Transfer'\nAND posting_date BETWEEN %(from_date)s AND %(to_date)s;\n",
+  "ref_doctype": "Report",
+  "reference_report": null,
+  "report_name": "No Of Created Records",
+  "report_script": null,
+  "report_type": "Query Report",
+  "roles": [],
+  "timeout": 0
+ },
+ {
+  "add_total_row": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": "Today",
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Date",
+    "mandatory": 0,
+    "options": "",
+    "parent": "Harvested Vs Received Report",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   },
+   {
+    "default": "Today",
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Date",
+    "mandatory": 0,
+    "options": null,
+    "parent": "Harvested Vs Received Report",
+    "parentfield": "filters",
+    "parenttype": "Report",
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": "Kikwetu Letterhead",
+  "modified": "2025-06-12 14:19:36.782220",
+  "module": "Stock",
+  "name": "Harvested Vs Received Report",
+  "prepared_report": 0,
+  "query": "SELECT\n    outer_data.`Greenhouse:Link/Warehouse:100`,\n    outer_data.`variety:Link/Item:120`,\n    outer_data.`harvested_qty:Int:100`,\n    outer_data.`received_qty:Int:100`,\n    (outer_data.`harvested_qty:Int:100` - outer_data.`received_qty:Int:100`) AS `variance:Int:100`\nFROM (\n    SELECT\n        COALESCE(harvest.`t_warehouse`, 'Grand Total') AS `Greenhouse:Link/Warehouse:100`,\n        harvest.`item_code` AS `variety:Link/Item:120`,\n        SUM(harvest.`qty`) AS `harvested_qty:Int:100`,\n        COALESCE(SUM(receive.`qty`), 0) AS `received_qty:Int:100`,\n        harvest.`t_warehouse` AS `sort_warehouse`,\n        harvest.`item_code` AS `sort_item_code`\n    FROM (\n        SELECT\n            se.`name`,\n            se.`posting_date`,\n            se.`custom_bucket_id`,\n            sed.`item_code`,\n            sed.`qty`,\n            sed.`t_warehouse`\n        FROM `tabStock Entry` se\n        LEFT JOIN `tabStock Entry Detail` sed ON se.name = sed.parent\n        WHERE se.stock_entry_type = 'Harvesting'\n          AND se.posting_date BETWEEN %(from_date)s AND %(to_date)s\n    ) AS harvest\n    LEFT JOIN (\n        SELECT\n            se.`name`,\n            se.`posting_date`,\n            se.`custom_bucket_id`,\n            sed.`item_code`,\n            sed.`qty`\n        FROM `tabStock Entry` se\n        LEFT JOIN `tabStock Entry Detail` sed ON se.name = sed.parent\n        WHERE se.stock_entry_type = 'Receiving'\n          AND se.posting_date BETWEEN %(from_date)s AND %(to_date)s\n    ) AS receive\n    ON harvest.`custom_bucket_id` = receive.`custom_bucket_id`\n    AND harvest.`posting_date` = receive.`posting_date`\n    AND harvest.`item_code` = receive.`item_code`\n    GROUP BY\n        harvest.`t_warehouse`,\n        harvest.`item_code`\n    WITH ROLLUP\n    HAVING\n        harvest.`item_code` IS NOT NULL\n        OR (harvest.`t_warehouse` IS NOT NULL AND harvest.`item_code` IS NULL)\n        OR (harvest.`t_warehouse` IS NULL AND harvest.`item_code` IS NULL)\n) AS outer_data\nORDER BY\n    -- Prioritize regular rows (both fields NOT NULL), then subtotals, then grand total\n    CASE\n        WHEN outer_data.`sort_warehouse` IS NOT NULL AND outer_data.`sort_item_code` IS NOT NULL THEN 0  -- regular item rows\n        WHEN outer_data.`sort_warehouse` IS NOT NULL AND outer_data.`sort_item_code` IS NULL THEN 1  -- subtotal per warehouse\n        ELSE 2  -- grand total\n    END,\n    COALESCE(outer_data.`sort_warehouse`, 'ZZZZ'),\n    COALESCE(outer_data.`sort_item_code`, 'ZZZZ')\n",
+  "ref_doctype": "Stock Entry",
+  "reference_report": null,
+  "report_name": "Harvested Vs Received Report",
+  "report_script": "",
+  "report_type": "Query Report",
+  "roles": [],
+  "timeout": 0
+ }
+]

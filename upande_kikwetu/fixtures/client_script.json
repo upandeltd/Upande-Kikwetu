@@ -497,6 +497,17 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
+  "dt": "Consolidated Pack List",
+  "enabled": 1,
+  "modified": "2025-06-29 16:01:13.512296",
+  "module": null,
+  "name": "Repack Items",
+  "script": "frappe.ui.form.on('Consolidated Pack List', {\n    refresh(frm) {\n        frm.add_custom_button(\"Repack Items\", () => {\n            if (!frm.doc.repack_items || frm.doc.repack_items.length === 0) {\n                frappe.msgprint(\"Please fill in the Repack Items table before proceeding.\");\n                return;\n            }\n\n            frappe.call({\n                method: \"your_app.api.repack_items\",\n                args: {\n                    docname: frm.doc.name\n                },\n                callback(r) {\n                    if (!r.exc) {\n                        frappe.msgprint(\"Repack completed successfully.\");\n                        frm.reload_doc();\n                    }\n                }\n            });\n        });\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
   "dt": "Tendepay Statement Importer",
   "enabled": 1,
   "modified": "2025-07-03 16:04:22.536602",
@@ -508,12 +519,12 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
-  "dt": "Update hooks file",
+  "dt": "Hooks File Update",
   "enabled": 1,
-  "modified": "2025-07-08 19:07:21.529006",
-  "module": "Upande Kikwetu",
+  "modified": "2025-07-12 10:51:06.946532",
+  "module": "Upande Hooks Updater",
   "name": "Hooks Updater",
-  "script": "frappe.ui.form.on('Update hooks file', {\n    pull_latest_customizations(frm) {\n        frappe.call({\n            method: \"upande_kikwetu.server_scripts.update_hooks_from_recent_customizations.update_hooks_file\",\n            callback: function(response) {\n                const data = response.message;\n\n                if (data && data.fixtures) {\n                    frm.set_value(\"customizations\", data.fixtures);\n\n                    if (data.skipped) {\n                        const skipped_text = Object.entries(data.skipped)\n                            .map(([doctype, names]) => `${doctype}: ${names.join(\", \")}`)\n                            .join(\"\\n\");\n\n                        frm.set_value(\"skipped_duplicates\", skipped_text);\n                    } else {\n                        frm.set_value(\"skipped_duplicates\", \"\");\n                    }\n\n                    frappe.show_alert({\n                        message: __(\"✅ Fixtures pulled and updated.\"),\n                        indicator: 'green'\n                    });\n\n                    // Autosave the form\n                    frm.save();\n                } else {\n                    frappe.msgprint(\"⚠️ No data returned from server.\");\n                }\n            },\n            error: function(err) {\n                frappe.msgprint(\"❌ Server error.\");\n                console.error(err);\n            }\n        });\n    }\n});\n",
+  "script": "frappe.ui.form.on('Hooks File Update', {\n    pull_latest_customizations(frm) {\n        let module_value = frm.doc.module || \"\";\n        let current_user = frappe.session.user;\n\n        frappe.call({\n            method: \"upande_hooks_updater.server_scripts.update_hooks_from_recent_customizations.update_hooks_file\",\n            args: {\n                module: module_value,\n                currentUser: current_user\n            },\n            callback: function(response) {\n                const data = response.message;\n\n                if (data && data.fixtures) {\n                    frm.set_value(\"customizations\", data.fixtures);\n                    frm.set_value(\"my_customizations\", JSON.stringify(data.users_customizations, null, 2));\n\n                    if (data.skipped) {\n                        const skipped_text = Object.entries(data.skipped)\n                            .map(([doctype, names]) => `${doctype}: ${names.join(\", \")}`)\n                            .join(\"\\n\");\n\n                        frm.set_value(\"skipped_duplicates\", skipped_text);\n                    } else {\n                        frm.set_value(\"skipped_duplicates\", \"\");\n                    }\n\n                    frappe.show_alert({\n                        message: __(\"✅ Fixtures pulled and updated.\"),\n                        indicator: 'green'\n                    });\n\n                    frm.save();\n                } else {\n                    frappe.msgprint(\"⚠️ No data returned from server.\");\n                }\n            },\n            error: function(err) {\n                frappe.msgprint(\"❌ Server error.\");\n                console.error(err);\n            }\n        });\n    }\n});\n",
   "view": "Form"
  }
 ]

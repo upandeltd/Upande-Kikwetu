@@ -295,6 +295,27 @@ whitelisted_methods = {
 # }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 fixtures = [
     {
         "dt": "Report",
@@ -329,6 +350,35 @@ fixtures = [
         ]
     },
     {
+        "dt": "Workspace",
+        "filters": [
+            ["name", "in", [
+                "Hooks Updater",
+                "Reports",
+                "Print Labels",
+                "Scan Stock",
+            ]]
+        ]
+    },
+    {
+        "dt": "Notification",
+        "filters": [
+            ["name", "in", [
+                "Proforma sales invoice",
+                "Notify Manager on SRV Submit",
+                "Notify HOD SRV is Rejected",
+                "Notify Store Clerk on Security Approval",
+                "Notify Manager on Inter-Farm Transfer Submit",
+                "Purchase Order Finance Manager Approval Notification",
+                "Purchase Order Farm Manger Approval Notification",
+                "Purchase Order Director Approval Notification",
+                "Purchase Order Rejected Notification",
+                "Purchase Order Approved Notification",
+                "SRV Approval",
+            ]]
+        ]
+    },
+    {
         "dt": "DocType",
         "filters": [
             ["name", "in", [
@@ -336,32 +386,218 @@ fixtures = [
                 "Box Details",
                 "Box Label",
                 "Box Label Item",
+                "Breeders",
                 "Bucket QR Code",
                 "Bunch QR Code",
                 "Custom Doctype 1",
+                "Dispatch Form",
+                "Dispatch Form Item",
                 "Farm",
                 "Grader QR Code",
                 "Greenhouse Sections",
                 "Harvest",
                 "Harvest Reject Items",
                 "Harvest Rejects",
+                "Hooks File Update",
                 "Internal Delivery Note",
                 "Internal Delivery Note Item",
+                "Item Group Price",
                 "Label Print",
                 "Pack List Item",
+                "Packing List",
+                "Packing Qty Confirmation",
                 "QR Code",
                 "QR Sequence",
                 "Rejection Reason",
                 "Rejects Data",
                 "Rejects Data Items",
+                "SKU Summary",
                 "Scan",
                 "Scan Check",
                 "Scan Check List",
                 "Scan Location",
                 "Scanned Items",
+                "Stem Length",
                 "Tendepay Statement Importer",
                 "Truck Loading Manifest",
-                "Update hooks file",
+            ]]
+        ]
+    },
+    {
+        "dt": "Client Script",
+        "filters": [
+            ["name", "in", [
+                "Hooks Updater",
+                "Tende Pay Statement Imports",
+                "Repack Items",
+                "Get-Items-From-button(SI)",
+                "Generate Bucket Codes",
+                "Grading Stock Entry",
+                "Vehicle Registration and Mileages",
+                "Employee and Cost Center",
+                "Hide Filter Button",
+                "WHT Calculator WHT Payment Template",
+                "WHT Calculator W-VAT Template",
+                "Default Warehouse setting SO",
+                "Sales order Consignee",
+                "CPL NO OF STEMS CALC",
+                "completion % on FPL",
+                "OPL Stems Calc Automation to FPL",
+                "Income Account Toggle",
+                "FPL Completion %",
+                "Available quantity in sales order",
+                "Set default Target warehouse",
+                "Consignee Update",
+                "Sales invoice Status",
+                "Chemical Request",
+                "Scan QR IN SCAN",
+                "Change status after save",
+                "Harvest Scan V2",
+                "Scan via honeywell v2",
+                "Scan Via Honeywell",
+                "New Form After Save",
+                "Harvest Scan",
+                "All harvest labels in use",
+                "Sales Tracker Button",
+                "Sales Order connection with FPL and OPL",
+                "Calculation Of Total Stems",
+                "Amount Calc Based on IGP",
+                "SO Week Automation",
+                "Ensure Bucket Is Scanned On Save",
+                "Field Rejects Stock Entry",
+                "Grading Traceability Symbols",
+                "Ensure Uppercase in Bay Field",
+                "Remove Read Only on Field",
+                "Transfer Grading Stock",
+                "Qr Code gen",
+                "Scan QR Button",
+                "Close Box Button",
+                "Archive Employee",
+                "Scan Data Field Listener",
+                "Populate Number of Items",
+            ]]
+        ]
+    },
+    {
+        "dt": "Server Script",
+        "filters": [
+            ["name", "in", [
+                "greenHouseSupervisorSummary",
+                "loadTruck",
+                "Create Box Labels",
+                "createOrUpdateFarmPackList",
+                "RFQ Send CC Emails",
+                "inkBirdBLE",
+                "automate",
+                "Get-items-from-api",
+                "Delivery Note Script",
+                "FetchGreenhouseByBucketId",
+                "UpdateBucketStatus",
+                "Credit Limit Alert",
+                "Validate Stock Entry",
+                "Create cpl",
+                "Completeness tracker CPL",
+                "Packed% on FPL",
+                "sales Invoic etest",
+                "Get Pick List with Farm Packlist",
+                "fetch stems from opl to fpl",
+                "CPL complete percentage tracker",
+                "Material Transfer Submit",
+                "FPL Completeness Tracker",
+                "Amount Calc Based on IGP",
+                "Automate Rejects Material Issue",
+                "Harvest Stock Entry",
+                "Stock Entry Script",
+                "Stock Entry After Save",
+            ]]
+        ]
+    },
+    {
+        "dt": "Print Format",
+        "filters": [
+            ["name", "in", [
+                "test bunch label",
+                "Trial Bunch Print Format",
+                "Box Label - QR Code",
+                "Box label1",
+                "Request For Quotation KF",
+                "Trial Bunch Print Format 2",
+                "bunch",
+                "maina bunch",
+                "Test Bucket KF",
+                "Test Bunch",
+                "Sales invoice - KF",
+                "Farm Pack List - KF",
+                "Purchase Invoice KF",
+                "Material Request Transfer",
+                "For OPL",
+                "Harvest Label Perm",
+                "Sales order-KF",
+                "Purchase Order KF",
+                "Supplier Quotation KF",
+                "Purchase Receipt KF",
+                "Materials Print Format(Temp)",
+                "Material Request: Transfer",
+                "Transfer 1",
+                "Grader QR Print format 2",
+                "Grader QR Print Format",
+                "Harvest Label 2",
+                "Bunch QR Code",
+                "Harvest Label",
+                "Box Label",
+                "QR Code Only",
+                "Farm Pack List",
+                "Sales Invoice Print",
+                "Purchase Receipt Serial and Batch Bundle Print",
+                "Dunning Letter",
+                "POS Invoice",
+                "IRS 1099 Form",
+                "Return POS Invoice",
+                "Purchase eInvoice",
+                "Point of Sale",
+                "Pick List",
+                "Sales Invoice Return",
+                "Credit Note",
+                "Sales Auditing Voucher",
+                "Journal Auditing Voucher",
+                "Bank and Cash Payment Voucher",
+                "Purchase Auditing Voucher",
+                "Detailed Tax Invoice",
+                "Tax Invoice",
+                "Simplified Tax Invoice",
+                "Drop Shipping Format",
+                "Payment Receipt Voucher",
+                "Cheque Printing Format",
+            ]]
+        ]
+    },
+    {
+        "dt": "Workflow",
+        "filters": [
+            ["name", "in", [
+                "Material Request Workflow",
+                "Purchase Order Approval Workflow 2",
+                "Stores Workflow 2",
+                "Sales Invoice",
+                "Stores Workflow",
+                "fpl",
+                "Purchase Order Approval Workflow",
+            ]]
+        ]
+    },
+    {
+        "dt": "Workflow Action Master",
+        "filters": [
+            ["name", "in", [
+                "Forward to Farm Manager",
+                "Submit bill for Approval",
+                "Cancel",
+                "Forward to Security",
+                "Final Approval",
+                "Submit for Approval",
+                "Review",
+                "Reject",
+                "Approve",
             ]]
         ]
     },
@@ -1017,202 +1253,6 @@ fixtures = [
                 "Quotation-base_rounded_total-hidden",
                 "Supplier-naming_series-hidden",
                 "Supplier-naming_series-reqd",
-            ]]
-        ]
-    },
-    {
-        "dt": "Client Script",
-        "filters": [
-            ["name", "in", [
-                "Hooks Updater",
-                "Tende Pay Statement Imports",
-                "Get-Items-From-button(SI)",
-                "Generate Bucket Codes",
-                "Grading Stock Entry",
-                "Vehicle Registration and Mileages",
-                "Employee and Cost Center",
-                "Hide Filter Button",
-                "WHT Calculator WHT Payment Template",
-                "WHT Calculator W-VAT Template",
-                "Default Warehouse setting SO",
-                "Sales order Consignee",
-                "CPL NO OF STEMS CALC",
-                "completion % on FPL",
-                "OPL Stems Calc Automation to FPL",
-                "Income Account Toggle",
-                "FPL Completion %",
-                "Available quantity in sales order",
-                "Set default Target warehouse",
-                "Consignee Update",
-                "Sales invoice Status",
-                "Chemical Request",
-                "Scan QR IN SCAN",
-                "Change status after save",
-                "Harvest Scan V2",
-                "Scan via honeywell v2",
-                "Scan Via Honeywell",
-                "New Form After Save",
-                "Harvest Scan",
-                "All harvest labels in use",
-                "Sales Tracker Button",
-                "Sales Order connection with FPL and OPL",
-                "Calculation Of Total Stems",
-                "Amount Calc Based on IGP",
-                "SO Week Automation",
-                "Ensure Bucket Is Scanned On Save",
-                "Field Rejects Stock Entry",
-                "Grading Traceability Symbols",
-                "Ensure Uppercase in Bay Field",
-                "Remove Read Only on Field",
-                "Transfer Grading Stock",
-                "Qr Code gen",
-                "Scan QR Button",
-                "Close Box Button",
-                "Archive Employee",
-                "Scan Data Field Listener",
-                "Populate Number of Items",
-            ]]
-        ]
-    },
-    {
-        "dt": "Server Script",
-        "filters": [
-            ["name", "in", [
-                "greenHouseSupervisorSummary",
-                "loadTruck",
-                "Create Box Labels",
-                "createOrUpdateFarmPackList",
-                "RFQ Send CC Emails",
-                "inkBirdBLE",
-                "automate",
-                "Get-items-from-api",
-                "Delivery Note Script",
-                "FetchGreenhouseByBucketId",
-                "UpdateBucketStatus",
-                "Credit Limit Alert",
-                "Validate Stock Entry",
-                "Create cpl",
-                "Completeness tracker CPL",
-                "Packed% on FPL",
-                "sales Invoic etest",
-                "Get Pick List with Farm Packlist",
-                "fetch stems from opl to fpl",
-                "CPL complete percentage tracker",
-                "Material Transfer Submit",
-                "FPL Completeness Tracker",
-                "Amount Calc Based on IGP",
-                "Automate Rejects Material Issue",
-                "Harvest Stock Entry",
-                "Stock Entry Script",
-                "Stock Entry After Save",
-            ]]
-        ]
-    },
-    {
-        "dt": "Print Format",
-        "filters": [
-            ["name", "in", [
-                "test bunch label",
-                "Trial Bunch Print Format",
-                "Box Label - QR Code",
-                "Box label1",
-                "Request For Quotation KF",
-                "Trial Bunch Print Format 2",
-                "bunch",
-                "maina bunch",
-                "Test Bucket KF",
-                "Test Bunch",
-                "Sales invoice - KF",
-                "Farm Pack List - KF",
-                "Purchase Invoice KF",
-                "Material Request Transfer",
-                "For OPL",
-                "Harvest Label Perm",
-                "Sales order-KF",
-                "Purchase Order KF",
-                "Supplier Quotation KF",
-                "Purchase Receipt KF",
-                "Materials Print Format(Temp)",
-                "Material Request: Transfer",
-                "Transfer 1",
-                "Grader QR Print format 2",
-                "Grader QR Print Format",
-                "Harvest Label 2",
-                "Bunch QR Code",
-                "Harvest Label",
-                "Box Label",
-                "QR Code Only",
-                "Sales Invoice Print",
-                "Purchase Receipt Serial and Batch Bundle Print",
-                "Dunning Letter",
-                "POS Invoice",
-                "IRS 1099 Form",
-                "Return POS Invoice",
-                "Purchase eInvoice",
-                "Point of Sale",
-                "Pick List",
-                "Sales Invoice Return",
-                "Credit Note",
-                "Sales Auditing Voucher",
-                "Journal Auditing Voucher",
-                "Bank and Cash Payment Voucher",
-                "Purchase Auditing Voucher",
-                "Detailed Tax Invoice",
-                "Tax Invoice",
-                "Simplified Tax Invoice",
-                "Drop Shipping Format",
-                "Payment Receipt Voucher",
-                "Cheque Printing Format",
-            ]]
-        ]
-    },
-    {
-        "dt": "Workflow",
-        "filters": [
-            ["name", "in", [
-                "Material Request Workflow",
-                "Purchase Order Approval Workflow 2",
-                "Stores Workflow 2",
-                "Sales Invoice",
-                "Stores Workflow",
-                "fpl",
-                "Purchase Order Approval Workflow",
-            ]]
-        ]
-    },
-    {
-        "dt": "Workflow Action Master",
-        "filters": [
-            ["name", "in", [
-                "Forward to Farm Manager",
-                "Submit bill for Approval",
-                "Cancel",
-                "Forward to Security",
-                "Final Approval",
-                "Submit for Approval",
-                "Review",
-                "Reject",
-                "Approve",
-            ]]
-        ]
-    },
-    {
-        "dt": "Notification",
-        "filters": [
-            ["name", "in", [
-                "Proforma sales invoice",
-                "Notify Manager on SRV Submit",
-                "Notify HOD SRV is Rejected",
-                "Notify Store Clerk on Security Approval",
-                "Notify Manager on Inter-Farm Transfer Submit",
-                "Purchase Order Finance Manager Approval Notification",
-                "Purchase Order Farm Manger Approval Notification",
-                "Purchase Order Director Approval Notification",
-                "Purchase Order Rejected Notification",
-                "Purchase Order Approved Notification",
-                "SRV Approval",
-                "Material Request Receipt Notification",
-                "Notification for new fiscal year",
             ]]
         ]
     },

@@ -183,6 +183,11 @@ doc_events = {
     
     }
 }
+scheduler_events = {
+    "daily": [
+        "upande_kikwetu.raven.report_sender.send_daily_summary"
+    ]
+}
 
 # Scheduled Tasks
 # ---------------

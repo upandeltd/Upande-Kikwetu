@@ -359,5 +359,24 @@
   "reference_doctype": null,
   "script": "try:\n    # Get incoming JSON payload\n    data = frappe.request.get_json()\n    if not data:\n        frappe.throw(_(\"No data received\"))\n\n    # Extract fields\n    customer_id = data.get(\"customer_id\")\n    box_number = data.get(\"box_number\")\n    sale_order_id = data.get(\"sale_order_id\")\n    order_pick_list_id = data.get(\"order_pick_list_id\")\n    farm_pack_list_id = data.get(\"farm_pack_list_id\")\n    date = data.get(\"date\")\n    manifest_entry_name = data.get(\"manifest_entry_name\")\n    \n    if not manifest_entry_name:\n        frappe.throw(_(\"Missing parent document reference\"))\n\n    # Load the parent doc\n    doc = frappe.get_doc(\"Truck Loading Manifest\", manifest_entry_name)\n\n    # Append a row to child table\n    doc.append(\"box_details\", {\n        \"box_number\": box_number,\n        \"order_picklist\": order_pick_list_id,\n        \"customer\": customer_id,\n        \"sale_order_number\": sale_order_id,\n        \"date\": date,\n        \"farm_packlist\": farm_pack_list_id\n    })\n\n    doc.save()\n    frappe.db.commit()\n\n    frappe.response[\"message\"] = {\n        \"status\": \"success\",\n        \"message\": \"Box detail added\"\n    }\n\n\nexcept Exception as e:\n    frappe.log_error(message=e, title=\"Truck Loading Manifest Error\")\n    frappe.throw(_(\"Error processing manifest: \") + str(e))",
   "script_type": "API"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "After Save",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2025-07-22 11:24:17.990705",
+  "module": null,
+  "name": "Farm Code on Sales Order",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "Sales Order",
+  "script": "code = set()\nfor row in doc.items:\n    if row.custom_source_warehouse:\n        farm = frappe.db.get_value(\"Warehouse\", row.custom_source_warehouse, \"custom_farm\")\n        if farm:\n            farm_code = frappe.db.get_value(\"Farm\", farm, \"farm_code\")\n            if farm_code:\n                code.add(farm_code)\nif code:\n    doc.db_set(\"custom_farm_code\", \"\\n\".join(sorted(code)))\n",
+  "script_type": "DocType Event"
  }
 ]

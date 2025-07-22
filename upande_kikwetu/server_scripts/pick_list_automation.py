@@ -45,8 +45,8 @@ def create_pick_list_for_sales_order(doc, method=None):
         fields=[
             "item_code", "item_name", "stock_uom", "uom", "qty",
             "custom_source_warehouse", "conversion_factor", "stock_qty",
-            "custom_length", "against_blanket_order", "custom_box_id",
-            "custom_box_label","custom_number_of_boxes"
+            "custom_length", "against_blanket_order", "custom_mix_number",
+            "custom_box_mark","custom_number_of_boxes"
         ])
     # Validate and group items
     for item in sales_order_items:
@@ -100,9 +100,10 @@ def create_pick_list_for_sales_order(doc, method=None):
                         "sales_order": sales_order.name,
                         "sales_order_item": item.name,
                         "custom_consignee": item.custom_consignee,
+                        "custom_priority_level": item.custom_priority_level,
                         "custom_truck_details": item.custom_truck_details,
-                        "custom_box_id": item.custom_box_id,
-                        "custom_box_label": item.custom_box_label,
+                        "mix_number": item.custom_mix_number,
+                        "custom_box_mark": item.custom_box_mark,
                     })
 
                 # If item is against blanket order, set the reference

@@ -71,7 +71,6 @@ def create_pick_list_for_sales_order(doc, method=None):
     try:
         for warehouse, items in warehouse_groups.items():
             order_pick_list = frappe.new_doc("Order Pick List")
-            order_pick_list.purpose = "Delivery"
             order_pick_list.sales_order = sales_order.name
             order_pick_list.customer = sales_order.customer
             order_pick_list.custom_stems = "custom_stems"

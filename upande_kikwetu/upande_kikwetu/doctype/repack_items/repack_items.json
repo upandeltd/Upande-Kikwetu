@@ -1,0 +1,55 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-06-29 15:56:04.668929",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item_code",
+  "box_id_from",
+  "quantity_to_repack",
+  "target_box_id",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "label": "Item Code",
+   "options": "Item"
+  },
+  {
+   "fieldname": "box_id_from",
+   "fieldtype": "Data",
+   "label": "Box ID (From)"
+  },
+  {
+   "fieldname": "quantity_to_repack",
+   "fieldtype": "Data",
+   "label": "Quantity to Repack"
+  },
+  {
+   "fieldname": "target_box_id",
+   "fieldtype": "Data",
+   "label": "Target Box ID"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Data",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-06-29 16:38:08.837287",
+ "modified_by": "Administrator",
+ "module": "Upande Kikwetu",
+ "name": "Repack Items",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

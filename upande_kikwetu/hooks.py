@@ -176,9 +176,17 @@ doc_events = {
     "Farm Pack List": {
         "before_cancel":
         "upande_kikwetu.server_scripts.fpl_to_cpl_link.before_cancel",
+        # "on_submit":
+        # "upande_kikwetu.server_scripts.create_box_sticker.create_box_sticker"
         "on_submit":
         "upande_kikwetu.server_scripts.box_label_creation.generate_box_labels_with_qr"
+    
     }
+}
+scheduler_events = {
+    "daily": [
+        "upande_kikwetu.raven.report_sender.send_daily_summary"
+    ]
 }
 
 # Scheduled Tasks
@@ -303,7 +311,7 @@ fixtures = [
                             "Field Rejects Stock Entry", "Grading Traceability Symbols", "Ensure Uppercase in Bay Field",
                             "Remove Read Only on Field", "Transfer Grading Stock", "Qr Code gen", "Scan QR Button", "Close Box Button",
                             "Grading Stock Entry", "Archive Employee", "Scan Data Field Listener", "Populate Number of Items", "Consignee Update", "CPL NO OF STEMS CALC","Sales order Consignee",
-                            "Income Account Toggle","Get-Items-From-button(SI)","Sales order Consignee","Available quantity in sales order","WHT Calculator W-VAT Template","WHT Calculator WHT Payment Template"]]
+                            "Income Account Toggle","Get-Items-From-button(SI)","Sales order Consignee","Available quantity in sales order","Repack Items","WHT Calculator W-VAT Template","WHT Calculator WHT Payment Template","Repack Items"]]
         ]
     },
     {

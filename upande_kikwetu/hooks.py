@@ -175,11 +175,14 @@ doc_events = {
     "Farm Pack List": {
         "before_cancel":
         "upande_kikwetu.server_scripts.fpl_to_cpl_link.before_cancel",
-    },
-    "Box Label": {
-        "before_save:"
-        "upande_kikwetu.server_scripts.boxlabel_qr_sticker.before_save"
+        # "on_submit":
+        # "upande_kikwetu.server_scripts.create_box_sticker.create_box_sticker"
+        "on_submit":
+        "upande_kikwetu.server_scripts.box_label_creation.generate_box_labels_with_qr"
     }
+}
+scheduler_events = {
+    "daily": ["upande_kikwetu.raven.report_sender.send_daily_summary"]
 }
 
 # Scheduled Tasks
@@ -314,7 +317,9 @@ fixtures = [{
             "Consignee Update", "CPL NO OF STEMS CALC",
             "Sales order Consignee", "Income Account Toggle",
             "Get-Items-From-button(SI)", "Sales order Consignee",
-            "Available quantity in sales order"
+            "Available quantity in sales order", "Repack Items",
+            "WHT Calculator W-VAT Template",
+            "WHT Calculator WHT Payment Template", "Repack Items"
         ]
     ]]
 }, {
@@ -329,7 +334,10 @@ fixtures = [{
             "Automate Rejects Material Issue", "Harvest Stock Entry",
             "Stock Entry Script", "Stock Entry After Save",
             "Get Pick List with Farm Packlist", "Packed% on FPL",
-            "Completeness tracker CPL"
+            "Completeness tracker CPL", "Credit Limit Alert",
+            "UpdateBucketStatus", "FetchGreenhouseByBucketId",
+            "RFQ Send CC Emails", "createOrUpdateFarmPackList", "loadTruck",
+            "Farm Code on Sales Order"
         ]
     ]]
 }, {
@@ -346,7 +354,8 @@ fixtures = [{
             "Packing Qty Confirmation", "QR Code", "QR Codes", "QR Sequence",
             "Rejection Reason", "SKU Summary", "Scan", "Scan Check",
             "Scan Check List", "Scan Location", "Scanned Items", "Stem Length",
-            "Harvest Rejects", "Harvest Reject Items"
+            "Harvest Rejects", "Harvest Reject Items",
+            "Truck Loading Manifest", "Box Details"
         ]
     ]]
 }]

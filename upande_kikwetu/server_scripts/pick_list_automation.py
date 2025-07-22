@@ -45,8 +45,8 @@ def create_pick_list_for_sales_order(doc, method=None):
         fields=[
             "item_code", "item_name", "stock_uom", "uom", "qty",
             "custom_source_warehouse", "conversion_factor", "stock_qty",
-            "custom_length", "against_blanket_order", "custom_box_id",
-            "custom_box_label","custom_number_of_boxes"
+            "custom_length", "against_blanket_order", "custom_mix_number",
+            "custom_box_mark","custom_number_of_boxes"
         ])
     # Validate and group items
     for item in sales_order_items:
@@ -71,12 +71,12 @@ def create_pick_list_for_sales_order(doc, method=None):
     try:
         for warehouse, items in warehouse_groups.items():
             order_pick_list = frappe.new_doc("Order Pick List")
-            order_pick_list.purpose = "Delivery"
             order_pick_list.sales_order = sales_order.name
             order_pick_list.customer = sales_order.customer
             order_pick_list.custom_stems = "custom_stems"
             order_pick_list.date_created = nowdate()
-
+            order_pick_list.custom_box_type = sales_order.custom_box_type
+            order_pick_list.custom_priority_level = sales_order.custom_priority_level
             # Calculate total quantity for this warehouse
             total_stock_qty = sales_order.total_qty
             order_pick_list.for_qty = total_stock_qty
@@ -100,9 +100,10 @@ def create_pick_list_for_sales_order(doc, method=None):
                         "sales_order": sales_order.name,
                         "sales_order_item": item.name,
                         "custom_consignee": item.custom_consignee,
+                        "custom_priority_level": item.custom_priority_level,
                         "custom_truck_details": item.custom_truck_details,
-                        "custom_box_id": item.custom_box_id,
-                        "custom_box_label": item.custom_box_label,
+                        "custom_mix_number": item.custom_mix_number,
+                        "custom_box_mark": item.custom_box_mark,
                     })
 
                 # If item is against blanket order, set the reference

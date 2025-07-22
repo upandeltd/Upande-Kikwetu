@@ -2,7 +2,7 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "naming_series:",
- "creation": "2025-05-16 12:27:47.635166",
+ "creation": "2025-07-18 12:17:37.092819",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -15,8 +15,10 @@
   "date_created",
   "naming_series",
   "column_break_dlav",
+  "box_type",
   "locations_section",
-  "locations"
+  "locations",
+  "amended_from"
  ],
  "fields": [
   {
@@ -78,12 +80,28 @@
   {
    "fieldname": "column_break_dlav",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Order Pick List",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "box_type",
+   "fieldtype": "Data",
+   "label": "Box Type"
   }
  ],
+ "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-05-16 12:28:57.256611",
+ "modified": "2025-07-21 11:02:49.194269",
  "modified_by": "Administrator",
  "module": "Upande Kikwetu",
  "name": "Order Pick List",
@@ -104,6 +122,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

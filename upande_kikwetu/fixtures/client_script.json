@@ -2,6 +2,28 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
+  "dt": "Journal Entry",
+  "enabled": 1,
+  "modified": "2025-05-18 23:46:46.461216",
+  "module": "Upande Kikwetu",
+  "name": "WHT Calculator W-VAT Template",
+  "script": "frappe.ui.form.on('Journal Entry Account', {\n    reference_name(frm, cdt, cdn) {\n         if (frm.doc.from_template !== 'W-VAT Template') {\n            return;\n        }\n        let row = locals[cdt][cdn];\n\n        if (row.reference_type === 'Purchase Invoice' && row.reference_name) {\n            frappe.db.get_doc('Purchase Invoice', row.reference_name)\n                .then(doc => {\n                    const two_percent = flt(doc.total) * 0.02;\n\n                    setTimeout(() => {\n                        console.log(\"Overriding default with 2% values:\");\n                        console.log(\"Total:\", doc.total);\n                        console.log(\"2% of Total:\", two_percent);\n\n                        frm.doc.accounts.forEach(acc => {\n                            acc.debit_in_account_currency = 0;\n                            acc.credit_in_account_currency = 0;\n                        });\n\n                        frm.doc.accounts.forEach(acc => {\n                            if (acc.account === 'Trade Payables - KF') {\n                                acc.debit_in_account_currency = two_percent;\n                            } else if (acc.account === '200218 - Withholding Vat Payable - KF') {\n                                acc.credit_in_account_currency = two_percent;\n                            }\n                        });\n                        frm.doc.total_debit=two_percent\n                        frm.doc.total_credit=two_percent\n                        \n                        frm.refresh_field('total_debit');\n                        frm.refresh_field('total_credit');\n                        frm.refresh_field('accounts');\n\n                        frm.doc.difference=frm.doc.total_debit - frm.doc.total_credit\n                        frm.refresh_field('difference');\n                    }, 100); // 100ms delay to override ERPNext logic\n                    \n                })\n                .catch(err => {\n                    console.error(\"Failed to fetch Purchase Invoice:\", err);\n                });\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Journal Entry",
+  "enabled": 1,
+  "modified": "2025-05-18 23:47:09.722673",
+  "module": "Upande Kikwetu",
+  "name": "WHT Calculator WHT Payment Template",
+  "script": "frappe.ui.form.on('Journal Entry Account', {\n    reference_name(frm, cdt, cdn) {\n         if (frm.doc.from_template !== 'WHT Payment Template') {\n            return;\n        }\n        let row = locals[cdt][cdn];\n\n        if (row.reference_type === 'Purchase Invoice' && row.reference_name) {\n            frappe.db.get_doc('Purchase Invoice', row.reference_name)\n                .then(doc => {\n                    const five_percent = flt(doc.total) * 0.05;\n\n                    setTimeout(() => {\n                        console.log(\"Overriding default with 5% values:\");\n                        console.log(\"Total:\", doc.total);\n                        console.log(\"5% of Total:\", five_percent);\n\n                        frm.doc.accounts.forEach(acc => {\n                            acc.debit_in_account_currency = 0;\n                            acc.credit_in_account_currency = 0;\n                        });\n\n                        frm.doc.accounts.forEach(acc => {\n                            if (acc.account === 'Trade Payables - KF') {\n                                acc.debit_in_account_currency = five_percent;\n                            } else if (acc.account === '200217 - Withholding Tax Payable - KF') {\n                                acc.credit_in_account_currency = five_percent;\n                            }\n                        });\n                        frm.doc.total_debit=five_percent\n                        frm.doc.total_credit=five_percent\n                        \n                        frm.refresh_field('total_debit');\n                        frm.refresh_field('total_credit');\n                        frm.refresh_field('accounts');\n\n                        frm.doc.difference=frm.doc.total_debit - frm.doc.total_credit\n                        frm.refresh_field('difference');\n                    }, 100); // 100ms delay to override ERPNext logic\n                    \n                })\n                .catch(err => {\n                    console.error(\"Failed to fetch Purchase Invoice:\", err);\n                });\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
   "dt": "Stock Entry",
   "enabled": 0,
   "modified": "2025-03-13 02:53:00.320459",
@@ -393,6 +415,17 @@
   "module": "Upande Kikwetu",
   "name": "Get-Items-From-button(SI)",
   "script": "frappe.ui.form.on(\"Sales Invoice\", {\n    refresh(frm) {\n        if (frm.doc.docstatus === 0) {\n            frm.add_custom_button(__(\"Consolidated Pack List\"), function () {\n                erpnext.utils.map_current_doc({\n                    method: \"upande_kikwetu.server_scripts.make_si_from_cpl_button.make_sales_invoice_from_pack_list\",\n                    source_doctype: \"Consolidated Pack List\",\n                    target: frm,\n                    setters: [\n                        {\n                            fieldtype: \"Link\",\n                            label: __(\"Customer\"),\n                            options: \"Customer\",\n                            fieldname: \"custom_customer\",\n                            default: frm.doc.customer,\n                        }\n                    ],\n                    get_query_filters: {\n                        docstatus: 1\n                        // exclude company or custom_sales_invoice for now\n                    }\n                });\n            }, __(\"Get Items From\"));\n        }\n    }\n});\n",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Consolidated Pack List",
+  "enabled": 1,
+  "modified": "2025-06-29 16:01:13.512296",
+  "module": null,
+  "name": "Repack Items",
+  "script": "frappe.ui.form.on('Consolidated Pack List', {\n    refresh(frm) {\n        frm.add_custom_button(\"Repack Items\", () => {\n            if (!frm.doc.repack_items || frm.doc.repack_items.length === 0) {\n                frappe.msgprint(\"Please fill in the Repack Items table before proceeding.\");\n                return;\n            }\n\n            frappe.call({\n                method: \"your_app.api.repack_items\",\n                args: {\n                    docname: frm.doc.name\n                },\n                callback(r) {\n                    if (!r.exc) {\n                        frappe.msgprint(\"Repack completed successfully.\");\n                        frm.reload_doc();\n                    }\n                }\n            });\n        });\n    }\n});\n",
   "view": "Form"
  }
 ]

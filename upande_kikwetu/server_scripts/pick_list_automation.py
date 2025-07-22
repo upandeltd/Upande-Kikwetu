@@ -76,7 +76,8 @@ def create_pick_list_for_sales_order(doc, method=None):
             order_pick_list.customer = sales_order.customer
             order_pick_list.custom_stems = "custom_stems"
             order_pick_list.date_created = nowdate()
-
+            order_pick_list.custom_box_type = sales_order.custom_box_type
+            order_pick_list.custom_priority_level = sales_order.custom_priority_level
             # Calculate total quantity for this warehouse
             total_stock_qty = sales_order.total_qty
             order_pick_list.for_qty = total_stock_qty
@@ -102,7 +103,7 @@ def create_pick_list_for_sales_order(doc, method=None):
                         "custom_consignee": item.custom_consignee,
                         "custom_priority_level": item.custom_priority_level,
                         "custom_truck_details": item.custom_truck_details,
-                        "mix_number": item.custom_mix_number,
+                        "custom_mix_number": item.custom_mix_number,
                         "custom_box_mark": item.custom_box_mark,
                     })
 

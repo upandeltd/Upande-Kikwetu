@@ -320,7 +320,7 @@ fixtures = [
             ["name", "in", ["Delivery Note Script", "CPL complete percentage tracker", "Material Transfer Submit",
                              "Create cpl", "Amount Calc Based on IGP",
                             "Create Box Labels", "Automate Rejects Material Issue",
-                            "Harvest Stock Entry", "Stock Entry Script", "Stock Entry After Save","Get Pick List with Farm Packlist","Packed% on FPL","Completeness tracker CPL","Credit Limit Alert","UpdateBucketStatus","FetchGreenhouseByBucketId","RFQ Send CC Emails","createOrUpdateFarmPackList","loadTruck"]]
+                            "Harvest Stock Entry", "Stock Entry Script", "Stock Entry After Save","Get Pick List with Farm Packlist","Packed% on FPL","Completeness tracker CPL","Credit Limit Alert","UpdateBucketStatus","FetchGreenhouseByBucketId","RFQ Send CC Emails","createOrUpdateFarmPackList","loadTruck","Farm Code on Sales Order"]]
         ]
     },
     {

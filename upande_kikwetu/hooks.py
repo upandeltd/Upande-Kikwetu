@@ -176,8 +176,7 @@ doc_events = {
     "Farm Pack List": {
         "before_cancel":
         "upande_kikwetu.server_scripts.fpl_to_cpl_link.before_cancel",
-        # "on_submit":
-        # "upande_kikwetu.server_scripts.create_box_sticker.create_box_sticker"
+     
         "on_submit":
         "upande_kikwetu.server_scripts.box_label_creation.generate_box_labels_with_qr"
     

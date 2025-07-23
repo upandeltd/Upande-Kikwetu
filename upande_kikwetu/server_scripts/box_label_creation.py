@@ -34,16 +34,22 @@ def generate_box_labels_with_qr(self, method):
         opl_doc = frappe.get_doc("Order Pick List", opl[0].name)
         sales_order_doc = frappe.get_doc("Sales Order", sales_order_id)
 
-        # Group by box_id
+        # Get max box_number from existing Box Labels
+        max_box_number = frappe.db.sql("""
+            SELECT COALESCE(MAX(box_number), 0) as max_box_number
+            FROM `tabBox Label`
+            WHERE order_pick_list = %s
+        """, (opl_doc.name,), as_dict=True)[0].max_box_number or 0
+
+        # Group by mix_number or fallback to index
         boxes = defaultdict(list)
         for item in pack_list_items:
-            if item.box_id:
-                boxes[str(item.box_id)].append(item)
+            mix_number = str(item.mix_number) if item.mix_number else f"single_{item.idx}"
+            boxes[mix_number].append(item)
 
         if not boxes:
-            frappe.throw("Please enter 'box_id' for at least one item before submission.")
+            frappe.throw("No valid items found for box label generation.")
 
-        # Existing labels
         existing_labels = frappe.get_all(
             "Box Label",
             filters={"order_pick_list": opl_doc.name},
@@ -52,18 +58,19 @@ def generate_box_labels_with_qr(self, method):
         existing_box_numbers = {str(d.box_number) for d in existing_labels}
 
         created_labels = []
+        current_box_number = max_box_number + 1
 
-        for box_id, items in boxes.items():
+        for mix_number, items in boxes.items():
             try:
-                if str(box_id) in existing_box_numbers:
-                    frappe.msgprint(f"Box {box_id} already has a label. Skipping.")
-                    continue
+                while str(current_box_number) in existing_box_numbers:
+                    frappe.msgprint(f"Box number {current_box_number} already used. Incrementing.")
+                    current_box_number += 1
 
                 total_stems = sum(row.custom_number_of_stems for row in items)
 
                 new_label = frappe.new_doc("Box Label")
                 new_label.customer = self.custom_customer
-                new_label.box_number = int(box_id)
+                new_label.box_number = current_box_number
                 new_label.order_pick_list = opl_doc.name
                 new_label.pack_rate = total_stems
                 new_label.date = opl_doc.date_created
@@ -71,6 +78,7 @@ def generate_box_labels_with_qr(self, method):
                 new_label.consignee = sales_order_doc.custom_consignee
                 new_label.truck_details = sales_order_doc.custom_truck_details
                 new_label.farm_pack_list_link = self.name
+                # ⚠️ Name is NOT set manually here — let Frappe handle it
 
                 for row in items:
                     new_label.append("box_item", {
@@ -79,19 +87,49 @@ def generate_box_labels_with_qr(self, method):
                         "qty": row.bunch_qty
                     })
 
-                new_label.insert()
+                required_fields = ["customer", "box_number", "order_pick_list", "pack_rate"]
+                missing_fields = [field for field in required_fields if not getattr(new_label, field, None)]
+                if missing_fields:
+                    frappe.log_error(
+                        message=f"Missing fields: {missing_fields}",
+                        title=f"QR Gen Missing B{current_box_number}"
+                    )
+                    frappe.msgprint(f"Cannot generate QR for Box {current_box_number}: Missing {missing_fields}")
+                    continue
+
+                if not new_label.box_item:
+                    frappe.log_error(
+                        message=f"No box items for box {current_box_number}",
+                        title=f"QR Gen No Items B{current_box_number}"
+                    )
+                    frappe.msgprint(f"Cannot generate QR for Box {current_box_number}: No box items")
+                    continue
+
+                new_label.insert(ignore_if_duplicate=True)
+                frappe.db.commit()
                 created_labels.append(new_label.name)
-                frappe.msgprint(f"Created Box Label: {new_label.name}")
+                frappe.msgprint(f"Created Box Label: {new_label.name} (Box {current_box_number})")
 
                 try:
                     generate_and_attach_box_qr(new_label)
-                except Exception:
-                    frappe.log_error(traceback.format_exc(), f"QR Generation Failed for {new_label.name}")
-                    frappe.msgprint(f"QR generation failed for Box {box_id}, but label was created.")
+                    frappe.msgprint(f"QR code generated for Box {current_box_number}")
+                except Exception as qr_error:
+                    frappe.log_error(
+                        message=f"{traceback.format_exc()}\nBox Label Data: {new_label.as_dict()}",
+                        title=f"QR Gen Fail B{current_box_number}"
+                    )
+                    frappe.msgprint(f"QR generation failed for Box {current_box_number}: {str(qr_error)}")
 
-            except Exception:
-                frappe.log_error(traceback.format_exc(), f"Error processing Box {box_id}")
-                frappe.throw(f"Failed while processing Box {box_id}. Check Error Log.")
+                current_box_number += 1
+
+            except Exception as e:
+                frappe.db.rollback()
+                frappe.log_error(
+                    message=traceback.format_exc(),
+                    title=f"Box Creation Fail B{current_box_number}"
+                )
+                frappe.msgprint(f"Failed processing Box {current_box_number}: {str(e)}")
+                current_box_number += 1
 
         if not created_labels:
             frappe.msgprint("No new Box Labels were created.")
@@ -99,5 +137,9 @@ def generate_box_labels_with_qr(self, method):
             frappe.msgprint(f"Created Box Labels: {', '.join(created_labels)}")
 
     except Exception:
-        frappe.log_error(traceback.format_exc(), f"Box Label Creation Failed for {self.name}")
+        frappe.db.rollback()
+        frappe.log_error(
+            message=traceback.format_exc(),
+            title=f"Box Label Fail {self.name}"[:139]
+        )
         frappe.throw("An unexpected error occurred during box label generation. See Error Log.")

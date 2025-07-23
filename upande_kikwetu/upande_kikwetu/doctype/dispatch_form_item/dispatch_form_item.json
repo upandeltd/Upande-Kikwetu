@@ -2,7 +2,6 @@
  "actions": [],
  "allow_rename": 1,
  "creation": "2025-02-18 00:02:16.244693",
- "custom": 1,
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -13,7 +12,8 @@
   "item_group",
   "no_of_boxes",
   "sales_order_id",
-  "box_id",
+  "mix_number",
+  "box_mark",
   "column_break_kfem",
   "item_code",
   "bunch_uom",
@@ -30,8 +30,10 @@
  ],
  "fields": [
   {
+   "columns": 1,
    "fieldname": "source_warehouse",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Source Warehouse",
    "options": "Warehouse"
   },
@@ -55,8 +57,10 @@
    "options": "Item Group"
   },
   {
+   "columns": 1,
    "fieldname": "no_of_boxes",
    "fieldtype": "Int",
+   "in_list_view": 1,
    "label": "No of Boxes"
   },
   {
@@ -66,17 +70,14 @@
    "options": "Sales Order"
   },
   {
-   "fieldname": "box_id",
-   "fieldtype": "Data",
-   "label": "Box ID"
-  },
-  {
    "fieldname": "column_break_kfem",
    "fieldtype": "Column Break"
   },
   {
+   "columns": 1,
    "fieldname": "item_code",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Item Code",
    "options": "Item"
   },
@@ -92,14 +93,18 @@
    "label": "Bunch Qty"
   },
   {
+   "columns": 1,
    "fieldname": "stem_length",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Stem Length",
    "options": "Stem Length"
   },
   {
+   "columns": 1,
    "fieldname": "stock_qty",
    "fieldtype": "Int",
+   "in_list_view": 1,
    "label": "Stock Qty"
   },
   {
@@ -137,17 +142,33 @@
    "fieldname": "s_number",
    "fieldtype": "Data",
    "label": "S_Number"
+  },
+  {
+   "columns": 1,
+   "fieldname": "mix_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Mix Number"
+  },
+  {
+   "columns": 1,
+   "fieldname": "box_mark",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Box Mark"
   }
  ],
+ "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-02-18 00:15:41.401529",
+ "modified": "2025-07-23 07:31:58.402687",
  "modified_by": "Administrator",
  "module": "Upande Kikwetu",
  "name": "Dispatch Form Item",
  "owner": "Administrator",
  "permissions": [],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

@@ -2,20 +2,20 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "naming_series:",
- "creation": "2025-07-18 12:17:37.092819",
+ "creation": "2025-07-22 11:59:26.474195",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "section_break_4j6i",
   "source_warehouse",
   "customer",
-  "purpose",
   "column_break_fdik",
   "sales_order",
   "date_created",
   "naming_series",
-  "column_break_dlav",
   "box_type",
+  "column_break_dlav",
+  "custom_priority_level",
   "locations_section",
   "locations",
   "amended_from"
@@ -37,12 +37,6 @@
    "fieldtype": "Link",
    "label": "Customer",
    "options": "Customer"
-  },
-  {
-   "fieldname": "purpose",
-   "fieldtype": "Select",
-   "label": "Purpose",
-   "options": "Material Transfer for Manufacture\nMaterial Transfer\nDelivery"
   },
   {
    "fieldname": "column_break_fdik",
@@ -92,16 +86,23 @@
    "search_index": 1
   },
   {
+   "fetch_from": "sales_order.custom_box_type",
    "fieldname": "box_type",
    "fieldtype": "Data",
    "label": "Box Type"
+  },
+  {
+   "fetch_from": "sales_order.custom_priority_level",
+   "fieldname": "custom_priority_level",
+   "fieldtype": "Data",
+   "label": "Priority Level"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-21 11:02:49.194269",
+ "modified": "2025-07-23 07:04:17.056239",
  "modified_by": "Administrator",
  "module": "Upande Kikwetu",
  "name": "Order Pick List",

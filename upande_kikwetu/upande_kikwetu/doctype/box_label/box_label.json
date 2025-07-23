@@ -1,0 +1,194 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:BOX-{order_pick_list}-{#####}",
+ "creation": "2025-07-22 11:59:27.341335",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "label_details_section",
+  "customer",
+  "length",
+  "box_number",
+  "order_pick_list",
+  "farm_pack_list_link",
+  "qr_code_image",
+  "column_break_ylwi",
+  "pack_rate",
+  "date",
+  "customer_purchase_order",
+  "consignee",
+  "truck_details",
+  "section_break_hads",
+  "box_item"
+ ],
+ "fields": [
+  {
+   "fieldname": "label_details_section",
+   "fieldtype": "Section Break",
+   "label": "Label Details"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "length",
+   "fieldtype": "Link",
+   "label": "Length",
+   "options": "Stem Length"
+  },
+  {
+   "fieldname": "box_number",
+   "fieldtype": "Int",
+   "label": "Box Number"
+  },
+  {
+   "fieldname": "order_pick_list",
+   "fieldtype": "Link",
+   "label": "Order Pick List",
+   "options": "Order Pick List"
+  },
+  {
+   "fieldname": "farm_pack_list_link",
+   "fieldtype": "Link",
+   "label": "Farm Pack List Link",
+   "options": "Farm Pack List",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "qr_code_image",
+   "fieldtype": "Attach",
+   "label": "Qr code Image",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_ylwi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pack_rate",
+   "fieldtype": "Int",
+   "label": "Pack Rate"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "customer_purchase_order",
+   "fieldtype": "Data",
+   "label": "Customer Purchase Order"
+  },
+  {
+   "fieldname": "consignee",
+   "fieldtype": "Data",
+   "label": "Consignee"
+  },
+  {
+   "fieldname": "truck_details",
+   "fieldtype": "Data",
+   "label": "Truck Details"
+  },
+  {
+   "fieldname": "section_break_hads",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "box_item",
+   "fieldtype": "Table",
+   "label": "Box Item",
+   "options": "Box Label Item"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-07-23 08:13:41.816152",
+ "modified_by": "Administrator",
+ "module": "Upande Kikwetu",
+ "name": "Box Label",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Assistant Packhouse Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Turacco Packhouse Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Burguret Packhouse Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Pendekeza Packhouse Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Packing Supervisor",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

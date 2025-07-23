@@ -4,91 +4,79 @@ import traceback
 from datetime import datetime
 from upande_kikwetu.utils.qr_utils import generate_and_attach_box_qr
 
-MAX_ERROR_TITLE_LENGTH = 140
-
-def truncate_title(title, max_length=MAX_ERROR_TITLE_LENGTH):
-    return title[:max_length]
-
 def generate_box_labels_with_qr(self, method):
-    # Step 1: Ensure the Farm Pack List is submitted
-    frappe.msgprint("🔹 Step 1: Checking document status…")
+    # STEP 1: Ensure Farm Pack List is submitted
+    frappe.msgprint("⚙️ 1) Checking Farm Pack List submission…")
     if self.docstatus == 0:
-        frappe.msgprint("   • Document is draft. Submitting now…")
+        frappe.msgprint("   • It’s a draft. Submitting now…")
         self.submit()
         frappe.db.commit()
-        frappe.msgprint("   ✓ Document submitted.")
+        frappe.msgprint("   ✔️ Submitted.")
     if self.docstatus != 1:
-        frappe.throw("Document must be submitted before generating box labels.")
+        frappe.throw("Farm Pack List must be submitted before generating labels.")
 
-    # Step 2: Announce start of processing
-    frappe.msgprint("🔹 Step 2: Beginning box-label + QR-code generation…")
-
-    # Validate pack list items
+    # STEP 2: Quick sanity check
+    frappe.msgprint("⚙️ 2) Verifying pack_list_item…")
     if not self.pack_list_item:
-        frappe.msgprint("   ⚠️ No pack list items to process. Exiting.")
+        frappe.msgprint("   ⚠️ No items found. Exiting.")
         return
 
-    # Step 3: Load related Order Pick List and Sales Order
-    frappe.msgprint("🔹 Step 3: Fetching Order Pick List & Sales Order…")
+    # STEP 3: Load related documents
+    frappe.msgprint("⚙️ 3) Fetching Order Pick List & Sales Order…")
     so_name = self.custom_sales_order
-    opl = frappe.db.get_all(
-        "Order Pick List",
-        filters={"sales_order": so_name},
-        fields=["name"],
-        limit_page_length=1
-    )
+    opl = frappe.db.get_value("Order Pick List",
+                              {"sales_order": so_name},
+                              "name")
     if not opl:
-        frappe.throw("No Order Pick List found for this Sales Order.")
-    opl_name = opl[0].name
-    opl_doc = frappe.get_doc("Order Pick List", opl_name)
+        frappe.throw(f"No Order Pick List found for Sales Order {so_name}")
+    opl_doc = frappe.get_doc("Order Pick List", opl)
     so_doc  = frappe.get_doc("Sales Order", so_name)
-    frappe.msgprint(f"   ✓ Found OPL {opl_name}")
+    frappe.msgprint(f"   ✔️ Found OPL {opl}")
 
-    # Step 4: Build existing box number set
-    frappe.msgprint("🔹 Step 4: Loading existing box numbers…")
-    existing = frappe.get_all(
-        "Box Label",
-        filters={"order_pick_list": opl_name},
-        fields=["box_number"]
-    )
-    used = {str(d.box_number) for d in existing}
-    next_box = max([int(n) for n in used if n.isdigit()] or [0]) + 1
-    frappe.msgprint(f"   ✓ Next available box number: {next_box}")
+    # STEP 4: Build used‐box set
+    frappe.msgprint("⚙️ 4) Loading existing Box Label numbers…")
+    used_nums = set(frappe.get_all("Box Label",
+                                   filters={"order_pick_list": opl},
+                                   pluck="box_number"))
+    next_box = (max(map(int, used_nums)) + 1) if used_nums else 1
+    frappe.msgprint(f"   ✔️ Next available box_number = {next_box}")
 
-    # Step 5: Group pack list items into “boxes”
-    frappe.msgprint("🔹 Step 5: Grouping items into boxes…")
+    # STEP 5: Group items into boxes
+    frappe.msgprint("⚙️ 5) Grouping pack list items…")
     boxes = defaultdict(list)
     for row in self.pack_list_item:
-        key = str(row.mix_number) if row.mix_number else f"single_{row.idx}"
-        boxes[key].append(row)
-    frappe.msgprint(f"   ✓ Created {len(boxes)} box group(s)")
+        key = row.mix_number or f"single_{row.idx}"
+        boxes[str(key)].append(row)
+    frappe.msgprint(f"   ✔️ {len(boxes)} group(s) ready")
 
     created = []
 
-    # Step 6: Iterate groups and create labels + QR
+    # STEP 6: Iterate, check existence, insert, QR
     for idx, (mix_key, items) in enumerate(boxes.items(), start=1):
-        frappe.msgprint(f"🔹 Step 6.{idx}: Processing box group “{mix_key}”…")
+        frappe.msgprint(f"⚙️ 6.{idx}) Processing group “{mix_key}” → Box #{next_box}")
 
-        # Skip used box_numbers
-        while str(next_box) in used:
+        # Skip until free
+        while next_box in used_nums:
             next_box += 1
 
-        # Skip if a label already exists for this box_number
-        if frappe.db.exists("Box Label", {
-            "order_pick_list": opl_name,
+        # 6.a) Existence check
+        existing = frappe.db.exists("Box Label", {
+            "order_pick_list": opl,
             "box_number": next_box
-        }):
-            frappe.msgprint(f"   • Box #{next_box} already has a label. Skipping.")
+        })
+        if existing:
+            frappe.msgprint(f"   • Box #{next_box} already labeled as {existing}. Skipping.")
+            used_nums.add(next_box)
             next_box += 1
             continue
 
-        # Build new Box Label
+        # 6.b) Create new Box Label
         total_stems = sum(r.custom_number_of_stems for r in items)
-        label = frappe.new_doc("Box Label")
-        label.update({
+        lbl = frappe.new_doc("Box Label")
+        lbl.update({
             "customer": self.custom_customer,
             "box_number": next_box,
-            "order_pick_list": opl_name,
+            "order_pick_list": opl,
             "pack_rate": total_stems,
             "date": opl_doc.date_created,
             "customer_purchase_order": so_doc.po_no,
@@ -97,45 +85,40 @@ def generate_box_labels_with_qr(self, method):
             "farm_pack_list_link": self.name
         })
         for r in items:
-            label.append("box_item", {
+            lbl.append("box_item", {
                 "variety": r.item_code,
                 "uom":     r.bunch_uom,
                 "qty":     r.bunch_qty
             })
 
-        # Insert and commit
-        frappe.msgprint(f"   • Creating Box Label for Box #{next_box}…")
+        frappe.msgprint(f"   • Inserting Box Label for Box #{next_box}…")
         try:
-            label.insert()
+            lbl.insert()
             frappe.db.commit()
-            created.append(label.name)
-            frappe.msgprint(f"     ✓ Label {label.name} created.")
+            created.append(lbl.name)
+            used_nums.add(next_box)
+            frappe.msgprint(f"     ✔️ Created {lbl.name}")
         except Exception as e:
             frappe.db.rollback()
-            frappe.log_error(
-                message=traceback.format_exc(),
-                title=truncate_title(f"Create Fail Box {next_box}")
-            )
-            frappe.msgprint(f"     ⚠️ Failed to create label for Box #{next_box}: {e}")
+            frappe.msgprint(f"     ⚠️ Insert failed: {e}")
+            frappe.log_error(message=traceback.format_exc(),
+                             title=f"Insert Fail Box {next_box}")
             next_box += 1
             continue
 
-        # Generate QR
-        frappe.msgprint(f"   • Generating QR for Box #{next_box}…")
+        # 6.c) Always generate QR (even if it existed before)
+        frappe.msgprint(f"   • Generating QR for {lbl.name}…")
         try:
-            generate_and_attach_box_qr(label)
-            frappe.msgprint(f"     🎉 QR attached for Box #{next_box}.")
-        except Exception as qr_e:
-            frappe.log_error(
-                message=traceback.format_exc(),
-                title=truncate_title(f"QR Fail Box {next_box}")
-            )
-            frappe.msgprint(f"     ⚠️ QR failed for Box #{next_box}: {qr_e}")
+            generate_and_attach_box_qr(lbl)
+        except Exception as e:
+            frappe.msgprint(f"     ⚠️ QR generation failed: {e}")
+            frappe.log_error(message=traceback.format_exc(),
+                             title=f"QR Fail Box {next_box}")
 
         next_box += 1
 
-    # Step 7: Final summary
+    # STEP 7: Wrap up
     if created:
-        frappe.msgprint(f"🏁 Done! Created labels: {', '.join(created)}")
+        frappe.msgprint(f"🏁 Done! Labels created: {', '.join(created)}")
     else:
         frappe.msgprint("📭 No new labels were created.")
